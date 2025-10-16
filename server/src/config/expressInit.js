@@ -7,7 +7,8 @@ function expressInit(app) {
     app.use(cors({
         origin: process.env.CLIENT_URL,
         credentials: true,
-        allowedHeaders: 'Contet-Type, Authorization'
+        allowedMethods: 'GET, POST, PUT, DELETE, OPTIONS',
+        allowedHeaders: 'Contet-Type, Authorization',
     }));
 
     // app.use('/api', routes);
