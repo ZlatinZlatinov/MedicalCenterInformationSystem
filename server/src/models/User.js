@@ -67,6 +67,11 @@ const User = sequelize.define('User', {
     timestamps: true,
     underscored: true,
     freezeTableName: true,
+    paranoid: true,
+    deletedAt: {
+        type: DataTypes.DATE,
+        allowNull: true
+    },
     hooks: {
         beforeCreate: async (user) => {
             if (user.password) {
