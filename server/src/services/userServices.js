@@ -13,6 +13,10 @@ async function findUserByEmail(email) {
     return newUser;
 }
 
+async function createUser(userData) {
+    return User.create(userData);
+}
+
 async function updateUser(id, user) {
     const updatedUser = await User.update(user, { where: { id } });
     return updatedUser;
@@ -27,6 +31,7 @@ module.exports = {
     findUserById,
     findAllUsers,
     findUserByEmail,
+    createUser,
     updateUser,
     deleteUser
 };
