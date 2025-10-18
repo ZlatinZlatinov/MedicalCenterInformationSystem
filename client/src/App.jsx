@@ -1,12 +1,15 @@
-import reactLogo from './assets/react.svg'
-
+import NavBar from "./Components/NavBar/NavBar";
+import SiteMain from "./Components/SiteMain/SiteMain";
+import Footer from "./Components/Footer/Footer";
 
 function App() {
   
 
   return (
     <>
-      <p>Hello</p>
+      <NavBar/>
+      <SiteMain/>
+      <Footer/>
     </>
   )
 }
