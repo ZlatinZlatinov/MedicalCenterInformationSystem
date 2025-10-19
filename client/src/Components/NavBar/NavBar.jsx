@@ -8,14 +8,14 @@ function NavBar() {
             </div> 
 
             <ul className="main-nav">
-                <li><Link>Home</Link></li>
-                <li><Link>About</Link></li>
-                <li><Link>Contact</Link></li>
+                <li><Link to='/'>Home</Link></li>
+                <li><Link to='/about'>About</Link></li>
+                <li><Link to='/contact'>Contact</Link></li>
             </ul>
 
             <div className="auth-btns">
-                <Link>Login</Link>
-                <Link>Register</Link>
+                <Link to='/login'>Login</Link>
+                <Link to='/register'>Register</Link>
             </div>
         </nav>
     );
