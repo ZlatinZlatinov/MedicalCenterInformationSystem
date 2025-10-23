@@ -3,10 +3,6 @@ const { sequelize } = require('../config/db');
 const crypto = require('crypto');
 const User = require('./User');
 
-// TODO: Check for allowNull and beforeCreate options
-// Not sure if creating user triggers an error and when 
-// beforeCreate is triggered.
-
 const EmailToken = sequelize.define('EmailToken', {
     userId: {
         type: DataTypes.UUID,
@@ -18,24 +14,24 @@ const EmailToken = sequelize.define('EmailToken', {
     },
     token: {
         type: DataTypes.STRING,
-        // allowNull: false,
+        allowNull: false,
+        defaultValue: () => {
+            return crypto.randomBytes(32).toString('hex');
+        }
     },
     expiresAt: {
         type: DataTypes.DATE,
-        // allowNull: false,
-    },
+        allowNull: false,
+        defaultValue: () => {
+            return new Date(Date.now() + 1000 * 60 * 60 * 24); // 24 hours
+        }
+    }
 }, {
     tableName: 'emailtoken',
     timestamps: true,
     underscored: true,
     freezeTableName: true,
     paranoid: true,
-    hooks: {
-        beforeCreate: (tokenInstance) => {
-            tokenInstance.token = crypto.randomBytes(32).toString('hex');
-            tokenInstance.expiresAt = new Date(Date.now() + 1000 * 60 * 60 * 24); // 24 hours
-        }
-    }
 });
 
 User.hasOne(EmailToken, { onDelete: 'CASCADE' });
