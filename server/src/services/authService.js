@@ -5,6 +5,10 @@ const { findUserByEmail, createUser } = require('./userServices');
 async function loginUser(email, password) {
     const user = await findUserByEmail(email);
 
+    if(!user.isVerified) {
+        throw new Error("Please verify your email!");
+    }
+
     const isValid = await user.validate(password);
 
     if (!isValid) {

@@ -9,8 +9,7 @@ async function findAllUsers(limit, offset) {
 }
 
 async function findUserByEmail(email) {
-    const newUser = await User.findOne({ where: { email } });
-    return newUser;
+    return User.findOne({ where: { email } });
 }
 
 async function createUser(userData) {

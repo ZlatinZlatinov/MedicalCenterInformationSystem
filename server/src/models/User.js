@@ -17,7 +17,11 @@ const User = sequelize.define('User', {
     email: {
         type: DataTypes.STRING,
         unique: true,
-        allowNull: false
+        allowNull: false, 
+        validate: {
+            isEmail: true,
+            notEmpty: true
+        }
     },
     password: {
         type: DataTypes.STRING,
@@ -61,17 +65,13 @@ const User = sequelize.define('User', {
     updatedAt: {
         type: DataTypes.DATE,
         allowNull: true
-    },
+    }
 }, {
     tableName: 'users',
     timestamps: true,
     underscored: true,
     freezeTableName: true,
     paranoid: true,
-    deletedAt: {
-        type: DataTypes.DATE,
-        allowNull: true
-    },
     hooks: {
         beforeCreate: async (user) => {
             if (user.password) {

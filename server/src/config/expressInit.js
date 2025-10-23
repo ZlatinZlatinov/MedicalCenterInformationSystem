@@ -1,6 +1,6 @@
 const express = require('express');
 const cors = require('cors');
-const  { routes } = require('./routes.js');
+const { routes } = require('./routes');
 
 function expressInit(app) {
     app.use(express.json());
@@ -11,7 +11,7 @@ function expressInit(app) {
         allowedHeaders: 'Contet-Type, Authorization',
     }));
 
-    // app.use('/api', routes);
+    app.use('/api', routes);
 
     const port = process.env.PORT || 3033;
 
