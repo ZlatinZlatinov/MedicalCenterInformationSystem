@@ -1,0 +1,41 @@
+#site-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 0.5px solid var(--primary-text-color);
+    padding: 0.5rem 0rem;
+} 
+
+#nav-bar > .main-nav {
+    display: flex;
+    justify-content: space-between;
+    gap: 3rem;
+} 
+
+.main-nav a, 
+.auth-btns a {
+    font-size: 1.4rem;
+} 
+
+.main-nav a {
+    font-weight: bold;
+    color: var(--primary-text-color);
+} 
+
+.main-nav a:hover {
+    color: black;
+}
+
+.auth-btns {
+    display: flex;
+    gap: 2rem;
+}
+
+.site-logo a {
+    font-size: 2.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: black;
+    font-weight: bold;
+}
