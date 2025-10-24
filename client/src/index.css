@@ -1,6 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Comfortaa:wght@300..700&display=swap');
 @import url('./styles/variables.css'); 
 @import url('./styles/navbar.css');
+@import url('./styles/authForm.css');
 
 * {
     margin: 0;
@@ -16,6 +17,10 @@ html {
 
 a {
     text-decoration: none;
+}
+
+label {
+    display: block;
 }
 
 ul {
