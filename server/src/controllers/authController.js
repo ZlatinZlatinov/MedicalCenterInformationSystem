@@ -55,9 +55,9 @@ authController.post('/register', async (req, res) => {
     }
 });
 
-authController.get('/verify-email', async (req, res) => {
+authController.post('/verify-email', async (req, res) => {
     try {
-        const token = req.query.token;
+        const token = req.body.verificationToken;
 
         if (!token) {
             res.status(400).json({ message: "Invalid token!" });
@@ -76,7 +76,7 @@ authController.get('/verify-email', async (req, res) => {
         await tokenRecord.User.save();
         await tokenRecord.destroy();
 
-        res.status(200).json({ message: "Email verified successfully." })
+        res.status(202).json({ message: "Email verified successfully." })
     } catch (error) {
         console.error("Oops, something went wrong: ", error);
 
