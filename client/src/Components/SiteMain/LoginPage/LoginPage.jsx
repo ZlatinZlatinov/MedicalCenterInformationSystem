@@ -1,27 +1,82 @@
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import { Activity, MoveLeft } from 'lucide-react';
+import { useState } from "react";
+import { loginUser } from "../../../services/authService";
+// import useSignIn from "react-auth-kit/hooks/useSignIn";
 
 function LoginPage() {
+    // const signIn = useSignIn();
+    const navigate = useNavigate();
+    const [formMessage, setFormMessage] = useState("Sign in to access your MediCare account");
+    const [formData, setFormData] = useState({
+        email: '',
+        password: ''
+    });
+
+    function handleOnChange(e) {
+        const name = e.target.name;
+        const value = e.target.value;
+
+        setFormData(prev => ({
+            ...prev,
+            [name]: value
+        }));
+    }
+
+    async function handleOnSubmit(e) {
+        e.preventDefault();
+
+        try {
+            const authData = await loginUser(formData);
+            // signIn({
+            //     auth:'cookie' /*{
+            //         token: authData.accessToken,
+            //         type: 'Bearer'
+            //     }*/,
+            //     userState: {
+            //         username: authData.username,
+            //         userId: authData.id,
+            //     }
+            // });
+
+            navigate('/');
+        } catch (error) {
+            setFormMessage(error.message);
+        }
+    }
+
     return (
         <section id="login-page">
-            <form id="login-form" className="auth-form">
+            <form id="login-form" className="auth-form" onSubmit={handleOnSubmit}>
                 <div className="form-header">
                     <p className="form-logo">
-                        <Activity className="activity"/>
+                        <Activity className="activity" />
                     </p>
                     <h2 className="form-heading">Welcome Back</h2>
-                    <span>Sign in to access your MediCare account</span>
+                    <span>{formMessage}</span>
                 </div>
 
                 <div className="form-fields">
                     <div className="input-field">
                         <label htmlFor="email">Email</label>
-                        <input type="email" name="email" id="email" />
+                        <input
+                            type="email"
+                            name="email"
+                            id="email"
+                            value={formData.email}
+                            onChange={handleOnChange}
+                        />
                     </div>
 
                     <div className="input-field">
                         <label htmlFor="password">Password</label>
-                        <input type="password" name="password" id="password" />
+                        <input
+                            type="password"
+                            name="password"
+                            id="password"
+                            value={formData.password}
+                            onChange={handleOnChange}
+                        />
                     </div>
 
                     <div className="form-btn">
@@ -32,7 +87,7 @@ function LoginPage() {
 
                 <div className="form-footer">
                     <p>Don't have an account? <Link to='/register' className="blue-redirect">Register here</Link></p>
-                    <p><Link to='/' className="form-redirect"><MoveLeft/><span>Back To Home</span></Link></p>
+                    <p><Link to='/' className="form-redirect"><MoveLeft /><span>Back To Home</span></Link></p>
                 </div>
             </form>
         </section>
