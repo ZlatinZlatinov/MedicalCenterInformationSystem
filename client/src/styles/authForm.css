@@ -1,5 +1,6 @@
 #login-page, 
-#register-page {
+#register-page,
+#verify-email {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -93,4 +94,8 @@
 .blue-redirect {
     color: var(--primary-blue);
     text-decoration: underline;
+} 
+
+.text-center {
+    text-align: center;
 }
