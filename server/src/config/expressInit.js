@@ -5,10 +5,10 @@ const { routes } = require('./routes');
 function expressInit(app) {
     app.use(express.json());
     app.use(cors({
-        origin: process.env.CLIENT_URL,
+        origin: [process.env.CLIENT_URL],
         credentials: true,
         allowedMethods: 'GET, POST, PUT, DELETE, OPTIONS',
-        allowedHeaders: 'Contet-Type, Authorization',
+        allowedHeaders: 'Content-Type, Authorization'
     }));
 
     app.use('/api', routes);
