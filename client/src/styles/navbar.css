@@ -29,6 +29,23 @@
 .auth-btns {
     display: flex;
     gap: 2rem;
+} 
+
+.auth-btns .profile-btn {
+    border-radius: 1rem;
+    padding: 1rem 2rem;
+    border: solid 1px var(--primary-text-color);
+    color: black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+} 
+
+.profile-btn:hover {
+    color: var(--primary-white);
+    background-color: var(--primary-blue);
+    border-color: var(--primary-blue);
 }
 
 .site-logo a {
