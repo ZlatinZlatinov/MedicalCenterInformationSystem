@@ -1,11 +1,11 @@
 import { Link, useNavigate } from "react-router";
 import { Activity, MoveLeft } from 'lucide-react';
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { loginUser } from "../../../services/authService";
-// import useSignIn from "react-auth-kit/hooks/useSignIn";
+import { UserContext } from "../../../Contexts/UserContext";
 
 function LoginPage() {
-    // const signIn = useSignIn();
+    const { setAuthUserData } = useContext(UserContext);
     const navigate = useNavigate();
     const [formMessage, setFormMessage] = useState("Sign in to access your MediCare account");
     const [formData, setFormData] = useState({
@@ -28,16 +28,13 @@ function LoginPage() {
 
         try {
             const authData = await loginUser(formData);
-            // signIn({
-            //     auth:'cookie' /*{
-            //         token: authData.accessToken,
-            //         type: 'Bearer'
-            //     }*/,
-            //     userState: {
-            //         username: authData.username,
-            //         userId: authData.id,
-            //     }
-            // });
+
+            setAuthUserData({
+                username: authData.username,
+                email: authData.email,
+                accessToken: authData.accessToken,
+                isLoggedIn: true,
+            });
 
             navigate('/');
         } catch (error) {
