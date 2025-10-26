@@ -1,7 +1,11 @@
 import { Link } from 'react-router';
-import { Activity } from 'lucide-react';
+import { Activity, User } from 'lucide-react';
+import { useContext } from 'react';
+import { UserContext } from '../../Contexts/UserContext';
 
 function NavBar() {
+    const { authUserData } = useContext(UserContext);
+
     return (
         <header id='site-header'>
             <div className="site-logo">
@@ -19,10 +23,15 @@ function NavBar() {
                 </ul>
             </nav>
 
-            <div className="auth-btns">
-                <Link to='/login' className='btn orange-btn'>Login</Link>
-                <Link to='/register' className='btn blue-btn'>Register</Link>
-            </div>
+            {authUserData.isLoggedIn ?
+                <div className='auth-btns'>
+                    <Link to='/dashboard' className='profile-btn'><User size={20} /><span>{authUserData.username}</span></Link>
+                    <Link to='/logout' className='btn orange-btn'>Logout</Link>
+                </div> :
+                <div className="auth-btns">
+                    <Link to='/login' className='btn orange-btn'>Login</Link>
+                    <Link to='/register' className='btn blue-btn'>Register</Link>
+                </div>}
         </header>
     );
 }
