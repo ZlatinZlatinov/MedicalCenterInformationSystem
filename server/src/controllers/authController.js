@@ -1,7 +1,7 @@
 const { sendVerificationEmail } = require('../config/mail');
 const { loginUser } = require('../services/authService');
 const { createVerificationToken, getTokenRecord } = require('../services/tokenService');
-const { createUser, findUserByEmail, verifyUser } = require('../services/userServices');
+const { createUser, findUserByEmail } = require('../services/userServices');
 const { errorParser } = require('../utils/errorParser');
 
 const authController = require('express').Router();
@@ -13,8 +13,8 @@ authController.post('/login', async (req, res) => {
     const password = req.body.password;
 
     try {
-        const accessToken = await loginUser(email, password);
-        res.json({ accessToken });
+        const payload = await loginUser(email, password);
+        res.json(payload);
     } catch (error) {
         console.log("Oops, something went wrong: ", error);
 
@@ -53,6 +53,10 @@ authController.post('/register', async (req, res) => {
 
         res.status(400).json({ message });
     }
+});
+
+authController.post('/logout', async (req, res) => {
+    console.log("Logout not implemented yet!");
 });
 
 authController.post('/verify-email', async (req, res) => {
