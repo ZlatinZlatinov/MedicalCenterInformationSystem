@@ -30,6 +30,8 @@ function LoginPage() {
             const authData = await loginUser(formData);
 
             setAuthUserData({
+                id: authData.id,
+                role: authData.role,
                 username: authData.username,
                 email: authData.email,
                 accessToken: authData.accessToken,

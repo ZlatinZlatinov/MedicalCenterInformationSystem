@@ -6,6 +6,8 @@ import { UserContext } from "./Contexts/UserContext";
 
 function App() {
   const [authUserData, setAuthUserData] = useState({
+    id: "",
+    role: "",
     username: "Guest",
     email: "",
     accessToken: "",
