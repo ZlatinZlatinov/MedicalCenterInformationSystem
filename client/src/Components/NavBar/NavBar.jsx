@@ -1,10 +1,31 @@
-import { Link } from 'react-router';
+import { Link, useNavigate } from 'react-router';
 import { Activity, User } from 'lucide-react';
 import { useContext } from 'react';
 import { UserContext } from '../../Contexts/UserContext';
+import { logOutUser } from '../../services/authService';
 
 function NavBar() {
-    const { authUserData } = useContext(UserContext);
+    const navigate = useNavigate();
+    const { authUserData, setAuthUserData } = useContext(UserContext);
+
+    async function handleLogOut() {
+        try {
+            await logOutUser(authUserData.accessToken);
+
+            setAuthUserData(old => ({
+                id: "",
+                role: "",
+                username: "Guest",
+                email: "",
+                accessToken: "",
+                isLoggedIn: false,
+            }));
+
+            navigate('/');
+        } catch (error) {
+            alert(error.message);
+        }
+    }
 
     return (
         <header id='site-header'>
@@ -26,7 +47,7 @@ function NavBar() {
             {authUserData.isLoggedIn ?
                 <div className='auth-btns'>
                     <Link to='/dashboard' className='profile-btn'><User size={20} /><span>{authUserData.username}</span></Link>
-                    <Link to='/logout' className='btn orange-btn'>Logout</Link>
+                    <button className='btn orange-btn' onClick={handleLogOut}>Logout</button>
                 </div> :
                 <div className="auth-btns">
                     <Link to='/login' className='btn orange-btn'>Login</Link>
