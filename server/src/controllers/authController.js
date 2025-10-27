@@ -1,5 +1,5 @@
 const { sendVerificationEmail } = require('../config/mail');
-const { loginUser } = require('../services/authService');
+const { loginUser, logOutUser } = require('../services/authService');
 const { createVerificationToken, getTokenRecord } = require('../services/tokenService');
 const { createUser, findUserByEmail } = require('../services/userServices');
 const { errorParser } = require('../utils/errorParser');
@@ -56,7 +56,15 @@ authController.post('/register', async (req, res) => {
 });
 
 authController.post('/logout', async (req, res) => {
-    console.log("Logout not implemented yet!");
+    const token = req.body.accessToken;
+
+    try {
+        await logOutUser(token);
+        res.status(204).json({ message: "User logged out." });
+    } catch (error) {
+        const message = errorParser(error);
+        res.status(500).json({ message });
+    }
 });
 
 authController.post('/verify-email', async (req, res) => {
