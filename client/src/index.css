@@ -2,6 +2,7 @@
 @import url('./styles/variables.css'); 
 @import url('./styles/navbar.css');
 @import url('./styles/authForm.css');
+@import url('./styles/dashboard.css');
 
 * {
     margin: 0;
