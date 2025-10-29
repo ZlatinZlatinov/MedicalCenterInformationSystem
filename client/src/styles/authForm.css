@@ -1,6 +1,7 @@
 #login-page, 
 #register-page,
-#verify-email {
+#verify-email,
+#doc-schedule {
     display: flex;
     justify-content: center;
     align-items: center;

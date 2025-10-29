@@ -7,6 +7,7 @@ import LoginPage from './LoginPage/LoginPage';
 import RegisterPage from './RegisterPage/RegisterPage';
 import VerifyEmail from './VerifyEmail/VerifyEmail';
 import Dashboard from './Dashboard/Dashboard';
+import DoctorSchedule from './DoctorSchedule/DoctorScheDule';
 
 function SiteMain() {
     return (
@@ -19,6 +20,7 @@ function SiteMain() {
                 <Route path='/register' element={<RegisterPage />} />
                 <Route path='/verify-email' element={<VerifyEmail />} />
                 <Route path='/dashboard' element={<Dashboard />} /> {/*Should be protected*/}
+                <Route path='/schedule' element={<DoctorSchedule />} /> {/*Should be protected*/}
             </Routes>
         </main>
     );
