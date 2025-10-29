@@ -10,7 +10,7 @@ export async function loginUser(userData) {
     });
 
     if (response.status !== 200) {
-        throw new Error("Login failed!");
+        throw new Error("Login failed!\nWrong email or password!");
     }
 
     const data = await response.json();
