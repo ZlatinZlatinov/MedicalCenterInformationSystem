@@ -1,6 +1,10 @@
 const { sequelize } = require('../config/db');
 const User = require('../models/User');
 const EmailToken = require('../models/EmailToken');
+const Specialties = require('../models/Specialties');
+const Departments = require('../models/Departments');
+const Doctor = require('../models/Doctor');
+const DoctorSchedule = require('../models/DoctorSchedule');
 
 async function syncDatabase(force = flase) {
     try {
