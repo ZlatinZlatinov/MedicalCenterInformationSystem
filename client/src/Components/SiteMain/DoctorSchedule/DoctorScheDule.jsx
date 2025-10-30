@@ -1,9 +1,12 @@
 import { useState } from "react";
+import { createSchedule } from "../../../services/doctorService";
+import { useNavigate } from "react-router";
 
 const startTime = '09:00';
 const endTime = '17:00';
 
 function DoctorSchedule() {
+    const navigate = useNavigate();
     const [formData, setFormData] = useState({
         duration: '15 minutes',
         isFree: false,
@@ -31,10 +34,55 @@ function DoctorSchedule() {
         }));
     }
 
-    function handleOnSubmit(e) {
+    async function handleOnSubmit(e) {
         e.preventDefault();
 
-        console.log(formData);
+        const payload = {
+            price: formData.price,
+            duration: Number(formData.duration.split(' ')[0]),
+            isFree: formData.isFree,
+            weekDays: [
+                {
+                    dayOfWeek: 'Monday',
+                    startTime: formData.mondayStart,
+                    endTime: formData.mondayEnd,
+                    isAvailable: true,
+                },
+                {
+                    dayOfWeek: 'Tuesday',
+                    startTime: formData.tuesdayStart,
+                    endTime: formData.tuesdayEnd,
+                    isAvailable: true,
+                },
+                {
+                    dayOfWeek: 'Wednesday',
+                    startTime: formData.wednesdayStart,
+                    endTime: formData.wednesdayEnd,
+                    isAvailable: true,
+                },
+                {
+                    dayOfWeek: 'Thursday',
+                    startTime: formData.thursdayStart,
+                    endTime: formData.thursdayEnd,
+                    isAvailable: true,
+                },
+                {
+                    dayOfWeek: 'Friday',
+                    startTime: formData.fridayStart,
+                    endTime: formData.fridayEnd,
+                    isAvailable: true,
+                },
+            ]
+        }
+
+        try {
+            await createSchedule(payload);
+            console.log("Schedule created!");
+            navigate('/dashboard');
+        } catch (error) {
+            console.log(error);
+            alert("Oops, something went wrong!");
+        }
     }
 
     return (
