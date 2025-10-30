@@ -3,6 +3,7 @@
 @import url('./styles/navbar.css');
 @import url('./styles/authForm.css');
 @import url('./styles/dashboard.css');
+@import url('./styles/schedule.css');
 
 * {
     margin: 0;
