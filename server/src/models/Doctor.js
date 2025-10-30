@@ -1,6 +1,6 @@
 const { DataTypes } = require('sequelize');
 const { sequelize } = require('../config/db'); 
-
+//TODO: Update doctor model, too much collumns
 const Doctor = sequelize.define('Doctor', {
     id: {
         type: DataTypes.INTEGER,
