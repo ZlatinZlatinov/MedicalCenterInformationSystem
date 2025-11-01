@@ -1,0 +1,100 @@
+#doctor-details {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    padding: 4rem 0rem;
+} 
+
+.doctor-details-content {
+    grid-column-end: span 2;
+}
+
+.details-main-info,
+.details-education {
+    border: 1px solid var(--primary-text-color);
+    border-radius: var(--border-radius);
+    padding: 1.5rem;
+} 
+
+.details-main-info {
+    margin-bottom: 2rem;
+}
+
+.details-main-info .main-info-header {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+} 
+
+.main-info-img {
+    width: 250px;
+    height: 250px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+} 
+
+.main-info-img img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: 50%;
+} 
+
+.main-info-heading {
+    padding: 3rem 0rem;
+} 
+
+.main-info-heading h3 {
+    font-size: 1.5rem;
+    font-weight: bold;
+} 
+
+.main-info-details h4,
+.details-education h4,
+.book-doctor-heading h4 {
+    font-size: 1.3rem;
+} 
+
+.main-info-details p {
+    font-size: 1.1rem;
+    color: var(--secondary-text-color);
+} 
+
+.details-education ul {
+    display: flex;
+    flex-direction: column;
+    gap: 0.7rem;
+}
+
+.details-education li {
+    font-size: 1.1rem;
+    color: var(--secondary-text-color);
+} 
+
+.book-doctor {
+    border: 1px solid var(--primary-text-color);
+    border-radius: var(--border-radius);
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 4rem;
+} 
+
+.book-doctor-btn {
+    border-radius: var(--border-radius);
+    padding: 0.6rem 1.2rem;
+    font-size: 1.2rem;
+    border: 1px solid var(--primary-blue);
+    width: 100%;
+    font-weight: bold;
+    display: block;
+    text-align: center;
+    text-decoration: none;
+    background-color: var(--primary-blue);
+    color: #f3f3f3;
+} 
+
+.book-doctor-btn:hover {
+    cursor: pointer;
+    color: var(--primary-white);
+}

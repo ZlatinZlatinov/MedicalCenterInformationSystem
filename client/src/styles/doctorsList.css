@@ -79,7 +79,7 @@
     color: var(--primary-white);
 } 
 
-.doctor-card-content .doctor-card-experience {
+.doctor-card-experience {
     border: 1px solid var(--primary-green);
     background-color: var(--primary-green);
     border-radius: var(--border-radius);
