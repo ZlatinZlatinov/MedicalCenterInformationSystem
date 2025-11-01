@@ -4,6 +4,7 @@
 @import url('./styles/authForm.css');
 @import url('./styles/dashboard.css');
 @import url('./styles/schedule.css');
+@import url('./styles/doctorsList.css');
 
 * {
     margin: 0;

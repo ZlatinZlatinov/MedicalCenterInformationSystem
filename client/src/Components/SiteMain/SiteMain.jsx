@@ -8,6 +8,8 @@ import RegisterPage from './RegisterPage/RegisterPage';
 import VerifyEmail from './VerifyEmail/VerifyEmail';
 import Dashboard from './Dashboard/Dashboard';
 import DoctorSchedule from './DoctorSchedule/DoctorScheDule';
+import DoctorDetails from './DoctorDetails/DoctorDetails';
+import DoctorsList from './DoctorsList/DoctorsList';
 
 function SiteMain() {
     return (
@@ -21,6 +23,8 @@ function SiteMain() {
                 <Route path='/verify-email' element={<VerifyEmail />} />
                 <Route path='/dashboard' element={<Dashboard />} /> {/*Should be protected*/}
                 <Route path='/schedule' element={<DoctorSchedule />} /> {/*Should be protected*/}
+                <Route path='/doctors' element={<DoctorsList />} />
+                <Route path='/doctors/:doctorId' element={<DoctorDetails />} />
             </Routes>
         </main>
     );
