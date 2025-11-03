@@ -1,5 +1,5 @@
 const { DataTypes } = require('sequelize');
-const { sequelize } = require('../config/db'); 
+const { sequelize } = require('../config/db');
 //TODO: Update doctor model, too much collumns
 const Doctor = sequelize.define('Doctor', {
     id: {
@@ -25,7 +25,7 @@ const Doctor = sequelize.define('Doctor', {
             key: 'id',
         },
     },
-    departmentId:{
+    departmentId: {
         type: DataTypes.INTEGER,
         allowNull: false,
         references: {
@@ -38,7 +38,7 @@ const Doctor = sequelize.define('Doctor', {
         allowNull: false,
     },
     education: {
-        type: DataTypes.STRING, 
+        type: DataTypes.STRING,
     },
     description: {
         type: DataTypes.TEXT,
@@ -57,31 +57,16 @@ const Doctor = sequelize.define('Doctor', {
         allowNull: false,
         defaultValue: false,
     },
-    pricePerHour: {
-        type: DataTypes.DECIMAL(10, 2),
-        allowNull: false,
-        defaultValue: 0,
-    },
     profilePicture: {
         type: DataTypes.STRING,
         allowNull: false,
         defaultValue: 'default.jpg',
     },
-    availability: {
-        type: DataTypes.JSON,
-        allowNull: false,
-        defaultValue: [],
-    },
 }, {
     tableName: 'doctors',
     timestamps: true,
     underscored: true,
-    freezeTableName: true,
-    hooks: {
-        beforeCreate: async (doctor) => {
-            doctor.availability = JSON.stringify(doctor.availability);
-        },
-    }
-}); 
+    freezeTableName: true
+});
 
 module.exports = Doctor;
