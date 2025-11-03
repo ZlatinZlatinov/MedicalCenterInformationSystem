@@ -2,6 +2,8 @@ const Appointments = require('../models/Appointment');
 const DoctorSchedule  = require('../models/DoctorSchedule');
 //TODO:PATIENTS Should not be able to schedule new appointment for the same doctor,
 // before their current appointment hasnt passed
+
+//TODO: After creating appointment send email to the user.
 async function createAppointment(appointmentData) {
     console.log(appointmentData);
     return {message: "Appointment created."}
@@ -91,7 +93,7 @@ function generateTimeSlots(startTime, endTime, duration) {
 } 
 
 async function bookAppointment(appointmentData) {
-    const { doctorId, patientId, appointmentDate, appointmentTime, isNzok } = appointmentData;
+    const { doctorId, patientId, appointmentDate, appointmentTime, isNzok, isInitial } = appointmentData;
     
     // Use a transaction with proper isolation level
     const result = await sequelize.transaction({
@@ -168,6 +170,7 @@ async function bookAppointment(appointmentData) {
             duration: schedule.duration,
             price: schedule.price,
             isNzok: isNzok || false,
+            isInitial,
             status: 'pending'
         }, { transaction: t });
         
@@ -215,5 +218,8 @@ function formatTime(minutes) {
 }
 
 module.exports = {
-    createAppointment
+    createAppointment, 
+    getAvailableSlots,
+    bookAppointment,
+    cancelAppointment
 }
