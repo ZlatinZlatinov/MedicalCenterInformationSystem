@@ -72,7 +72,46 @@ const Appointments = sequelize.define('Appointments', {
 }, {
     tableName: 'appointments',
     timestamps: true,
-    underscored: true
+    underscored: true,
+    indexes: [
+        // CRITICAL: Unique constraint to prevent double bookings
+        {
+            unique: true,
+            fields: ['doctorId', 'appointmentDate', 'appointmentTime'],
+            name: 'unique_doctor_datetime',
+            where: {
+                status: {
+                    [sequelize.Sequelize.Op.notIn]: ['cancelled']
+                }
+            }
+        },
+        // Index for faster queries
+        {
+            fields: ['doctorId', 'appointmentDate']
+        },
+        {
+            fields: ['patientId', 'appointmentDate']
+        },
+        {
+            fields: ['status']
+        }
+    ],
+});
+
+// Add validation hooks
+Appointments.beforeCreate(async (appointment, options) => {
+    // Combine date and time into dateTime
+    const dateStr = appointment.appointmentDate;
+    const timeStr = appointment.appointmentTime;
+    appointment.dateTime = new Date(`${dateStr}T${timeStr}`);
+});
+
+Appointments.beforeUpdate(async (appointment, options) => {
+    if (appointment.changed('appointmentDate') || appointment.changed('appointmentTime')) {
+        const dateStr = appointment.appointmentDate;
+        const timeStr = appointment.appointmentTime;
+        appointment.dateTime = new Date(`${dateStr}T${timeStr}`);
+    }
 });
 
 module.exports = Appointments;
