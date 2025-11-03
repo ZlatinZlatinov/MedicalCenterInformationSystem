@@ -1,5 +1,5 @@
 :root {
-    --primary-white: #ffffff; 
+    --primary-white: #ffffff;
     --primary-blue: #3c83f6;
     --primary-orange: #f97015;
     --primary-text-color: #7a7e97;
@@ -7,4 +7,17 @@
     --primary-background-white: #fcfdff;
     --border-radius: 12px;
     --primary-green: #00d062;
+    --border-color: #e1e7ef;
+    --border-width: 0.5px;
+
+    /*CALENDAR*/
+    --primary-bg-color: #2c3542;
+    --calendar-bg-color: #1e242d;
+    --calendar-border-color: #0f1319;
+    --calendar-buttons-color: #cd7f1a;
+    --weekdays-color: #78879e;
+    --days-color: #ddd;
+    --current-day-color: #ef9011;
+    --event-bg-color: #00a3ff;
+    --popup-bg-color: #161b22;
 }

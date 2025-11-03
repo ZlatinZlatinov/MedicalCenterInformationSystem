@@ -1,8 +1,11 @@
 import { useParams } from "react-router";
-import { CircleCheck, Calendar } from "lucide-react";
+import { CircleCheck, Calendar, CircleX } from "lucide-react";
+import { useState } from "react";
+import CalendarApp from "./Calendar";
 
 function DoctorDetails() {
     const params = useParams();
+    const [isHidden, setIsHidden] = useState(true);
     console.log(params.doctorId);
 
     return (
@@ -34,13 +37,13 @@ function DoctorDetails() {
 
                 {/* Education */}
                 <div className="details-education">
-                    <h4>Education</h4> 
+                    <h4>Education</h4>
 
                     <ul>
-                        <li><CircleCheck size={18} color="#00d062"/> <span>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Obcaecati, reiciendis praesentium accusantium fugiat mollitia, aperiam pariatur cum vel exercitationem quod dolorum! Sed est aliquam officiis assumenda libero ut aspernatur voluptas!</span></li>
-                        <li><CircleCheck size={18} color="#00d062"/> <span>Voluptatum cum debitis, autem aspernatur cupiditate fuga velit, corporis voluptatibus deserunt, itaque perspiciatis. Odio mollitia quisquam est ipsam nemo architecto et, molestias dolorem aspernatur veniam ut, cupiditate modi nobis exercitationem?</span></li>
-                        <li><CircleCheck size={18} color="#00d062"/> <span>Repellat, numquam nemo! Quasi nulla sequi, voluptatem quae impedit amet nam odio nemo reiciendis vel, molestiae distinctio voluptatum voluptate minus repudiandae ab officiis nobis est veritatis quaerat neque nisi sit?</span></li>
-                        <li><CircleCheck size={18} color="#00d062"/> <span>Perferendis molestias aut maxime aliquid saepe! Molestias totam magni cum similique ad, culpa dignissimos libero nam explicabo tempore adipisci! Repellendus quam nostrum fugit. Quis, quod iure. Voluptatum recusandae ullam omnis.</span></li>
+                        <li><CircleCheck size={18} color="#00d062" /> <span>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Obcaecati, reiciendis praesentium accusantium fugiat mollitia, aperiam pariatur cum vel exercitationem quod dolorum! Sed est aliquam officiis assumenda libero ut aspernatur voluptas!</span></li>
+                        <li><CircleCheck size={18} color="#00d062" /> <span>Voluptatum cum debitis, autem aspernatur cupiditate fuga velit, corporis voluptatibus deserunt, itaque perspiciatis. Odio mollitia quisquam est ipsam nemo architecto et, molestias dolorem aspernatur veniam ut, cupiditate modi nobis exercitationem?</span></li>
+                        <li><CircleCheck size={18} color="#00d062" /> <span>Repellat, numquam nemo! Quasi nulla sequi, voluptatem quae impedit amet nam odio nemo reiciendis vel, molestiae distinctio voluptatum voluptate minus repudiandae ab officiis nobis est veritatis quaerat neque nisi sit?</span></li>
+                        <li><CircleCheck size={18} color="#00d062" /> <span>Perferendis molestias aut maxime aliquid saepe! Molestias totam magni cum similique ad, culpa dignissimos libero nam explicabo tempore adipisci! Repellendus quam nostrum fugit. Quis, quod iure. Voluptatum recusandae ullam omnis.</span></li>
                     </ul>
                 </div>
             </div>
@@ -48,14 +51,20 @@ function DoctorDetails() {
             <div className="doctor-details-book">
                 <div className="book-doctor">
                     <div className="book-doctor-heading">
-                        <h4><Calendar color="#3c83f6" size={24}/>Book Appointment</h4>
+                        <h4><Calendar color="#3c83f6" size={24} />Book Appointment</h4>
                         <span>Schedule with Dr. Jeff Bezos</span>
-                    </div> 
+                    </div>
 
                     <div className="book-doctor-footer">
-                        <button className="book-doctor-btn">Book</button>
+                        <button className="book-doctor-btn" onClick={() => setIsHidden(!isHidden)}>Book</button>
                     </div>
                 </div>
+            </div>
+
+            <div className={isHidden ? "hidden" : "book-calendar"}>
+                <CalendarApp />
+
+                <button className="close-btn" onClick={() => setIsHidden(!isHidden)}><CircleX color="white" size={30} /></button>
             </div>
         </section>
     );
