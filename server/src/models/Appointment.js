@@ -43,7 +43,7 @@ const Appointments = sequelize.define('Appointments', {
     isNzok: {
         type: DataTypes.BOOLEAN
     },
-    duraion: {
+    duration: {
         type: DataTypes.INTEGER,
         allowNull: false,
         defaultValue: 30
@@ -75,25 +75,28 @@ const Appointments = sequelize.define('Appointments', {
     underscored: true,
     indexes: [
         // CRITICAL: Unique constraint to prevent double bookings
+        // Note: MySQL doesn't support partial indexes with WHERE clauses
+        // Cancelled appointments exclusion must be handled at application level
+        // Using snake_case column names since underscored: true converts camelCase to snake_case
         {
             unique: true,
-            fields: ['doctorId', 'appointmentDate', 'appointmentTime'],
-            name: 'unique_doctor_datetime',
-            where: {
-                status: {
-                    [sequelize.Sequelize.Op.notIn]: ['cancelled']
-                }
-            }
+            fields: ['doctor_id', 'appointment_date', 'appointment_time'],
+            name: 'unique_doctor_datetime'
         },
-        // Index for faster queries
+        // Index for faster queries by doctor and date
         {
-            fields: ['doctorId', 'appointmentDate']
+            fields: ['doctor_id', 'appointment_date'],
+            name: 'idx_doctor_appointment_date'
         },
+        // Index for faster queries by patient and date
         {
-            fields: ['patientId', 'appointmentDate']
+            fields: ['patient_id', 'appointment_date'],
+            name: 'idx_patient_appointment_date'
         },
+        // Index for status filtering
         {
-            fields: ['status']
+            fields: ['status'],
+            name: 'idx_appointment_status'
         }
     ],
 });
