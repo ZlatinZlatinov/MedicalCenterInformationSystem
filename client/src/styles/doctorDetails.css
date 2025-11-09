@@ -219,7 +219,20 @@
     border-radius: 50%;
     color: var(--primary-white);
     box-shadow: 0 0 1.5rem 1rem rgba(239, 144, 17, 0.3);
-} 
+}
+
+.days span.selected {
+    background-color: var(--primary-blue);
+    color: var(--primary-white);
+    border-radius: 50%;
+    font-weight: bold;
+}
+
+.days span.selected.current-day {
+    background-color: var(--primary-blue);
+    color: var(--primary-white);
+    box-shadow: 0 0 1.5rem 1rem rgba(0, 0, 0, 0.2);
+}
 
 .time-slots {
     display: grid;
@@ -228,7 +241,8 @@
     gap: 1rem;
     padding: 2rem 0rem;
     border-top: 1px solid var(--primary-text-color);
-} 
+    border-bottom: 1px solid var(--primary-text-color);
+}
 
 .time-slot-btn {
     border: solid #e1e7ef;
@@ -239,10 +253,46 @@
     border-radius: var(--border-radius);
 } 
 
-.time-slot-btn:hover {
+.time-slot-btn:not(:disabled):hover {
     border-color: var(--primary-blue);
     background-color: var(--primary-blue);
     color: var(--primary-white);
+} 
+
+.booked {
+    text-decoration: line-through;
+    background-color: var(--primary-text-color);
+    cursor: not-allowed;
+} 
+
+.time-slot-btn.selected {
+    background-color: var(--primary-blue);
+    color: var(--primary-white);
+}
+
+.book-btn {
+    padding: 2rem 0rem;
+    width: 90%;
+}
+
+.book-appointment-btn {
+    width: 100%;
+    text-align: center;
+    color: var(--primary-blue);
+    background-color: var(--primary-white);
+    border: 1px solid var(--primary-blue);
+    border-radius: var(--border-radius);
+    padding: 0.5rem 1rem;
+    font-size: 1.4rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.book-appointment-btn:hover {
+    background-color: var(--primary-blue);
+    color: var(--primary-white);
+    border: 1px solid var(--primary-blue);
 }
 
 /* RESPONSIVE */ 
