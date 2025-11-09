@@ -6,7 +6,7 @@ const Departments = require('../models/Departments');
 const Doctor = require('../models/Doctor');
 const DoctorSchedule = require('../models/DoctorSchedule');
 const Appointments = require('../models/Appointment');
-/*
+
 async function syncDatabase(force = flase) {
     try {
         await sequelize.authenticate();
@@ -30,18 +30,4 @@ async function syncDatabase(force = flase) {
 
 const forceSync = process.argv.includes('--force');
 
-syncDatabase(forceSync);*/ 
-
-async function syncDB() {
-    await sequelize.authenticate(); 
-
-    await User.sync({alter: true});
-    await EmailToken.sync({alter: true});
-    await Specialties.sync({alter: true});
-    await Departments.sync({alter: true});
-    await Doctor.sync({alter: true});
-    await DoctorSchedule.sync({alter: true});
-    await Appointments.sync({alter: true});
-} 
-
-syncDB();
+syncDatabase(forceSync);
