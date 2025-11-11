@@ -6,9 +6,9 @@ const { loginUser, logOutUser } = require('../services/authService');
 const { createVerificationToken, getTokenRecord } = require('../services/tokenService');
 const { createUser, findUserByEmail } = require('../services/userServices');
 const { errorParser } = require('../utils/errorParser');
-const { hasUser } = require('../middlewares/guard');
+const { hasUser, isGuest } = require('../middlewares/guard');
 
-authController.post('/login',
+authController.post('/login', isGuest(),
     body('email').trim().notEmpty().escape().bail().isEmail()
         .withMessage("Please enter valid email addres!"),
     body('password').trim().notEmpty().escape().bail().isLength({ min: 6 })
@@ -34,7 +34,7 @@ authController.post('/login',
         }
     });
 
-authController.post('/register',
+authController.post('/register', isGuest(),
     body('username').trim().notEmpty().escape().bail().isLength({ min: 5 })
         .withMessage("Username is required!"),
     body('email').trim().notEmpty().escape().bail().isEmail()
