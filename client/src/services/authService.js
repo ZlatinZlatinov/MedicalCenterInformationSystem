@@ -38,18 +38,16 @@ export async function registerUser(userData) {
 
 export async function logOutUser(accessToken) {
     const response = await fetch(import.meta.env.VITE_SERVER_URL + END_POINT + '/logout', {
-        method: 'POST',
+        method: 'GET',
         headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ accessToken })
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${accessToken}`
+        }
     });
 
     if (response.status !== 204) {
         throw new Error("Logout failed!");
     }
-
-    sessionStorage.removeItem('accessToken');//Implement a hook
 }
 
 export async function verifyEmail(verificationToken) {
