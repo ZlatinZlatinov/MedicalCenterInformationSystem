@@ -1,5 +1,5 @@
 const authController = require('express').Router();
-const { body, validationResult } = require('express-validator');
+const { body, header, validationResult } = require('express-validator');
 
 const { sendVerificationEmail } = require('../config/mail');
 const { loginUser, logOutUser } = require('../services/authService');
@@ -81,19 +81,25 @@ authController.post('/register', isGuest(),
         }
     });
 
-authController.post('/logout', hasUser(),
-    body('accessToken').trim().notEmpty().escape().isJWT()
-        .withMessage("Invalid token!"),
+authController.get('/logout', hasUser(),
+    header('Authorization').trim().notEmpty().bail()
+        .withMessage("Authorization header is required!"),
     async (req, res) => {
-        const token = req.body.accessToken;
-
+        const token = req.token;
+        
         try {
+            const errors = validationResult(req);
+
+            if (!errors.isEmpty()) {
+                return res.status(400).json(errors.array());
+            }
+
             await logOutUser(token);
             res.status(204).json({ message: "User logged out." });
         } catch (error) {
             const message = errorParser(error);
-            console.log(message);
-            res.status(500).json({ message });
+            console.log(error);
+            res.status(400).json({ message });
         }
     });
 
