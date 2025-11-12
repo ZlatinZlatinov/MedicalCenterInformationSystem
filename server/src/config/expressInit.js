@@ -2,6 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const helmet = require('helmet');
 const { routes } = require('./routes');
+const sesion = require('../middlewares/session');
 
 function expressInit(app) {
     app.use(helmet());
@@ -13,6 +14,7 @@ function expressInit(app) {
         allowedHeaders: 'Content-Type, Authorization'
     }));
 
+    app.use(sesion());
     app.use('/api', routes);
 
     const port = process.env.PORT || 3033;
