@@ -1,25 +1,17 @@
 import { Link, useNavigate } from 'react-router';
 import { Activity, User } from 'lucide-react';
-import { useContext } from 'react';
-import { UserContext } from '../../Contexts/UserContext';
 import { logOutUser } from '../../services/authService';
+import { useAuth } from '../../Hooks/useAuth';
 
 function NavBar() {
     const navigate = useNavigate();
-    const { authUserData, setAuthUserData } = useContext(UserContext);
+    const { authUserData, setAuthUserData } = useAuth();
 
     async function handleLogOut() {
         try {
             await logOutUser(authUserData.accessToken);
 
-            setAuthUserData(old => ({
-                id: "",
-                role: "",
-                username: "Guest",
-                email: "",
-                accessToken: "",
-                isLoggedIn: false,
-            }));
+            setAuthUserData({});
 
             navigate('/');
         } catch (error) {
