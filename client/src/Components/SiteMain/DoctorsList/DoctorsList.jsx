@@ -39,7 +39,7 @@ function DoctorsList() {
 
             <div className="all-doctors">
                 {doctorsList.map((doc) => <DoctorCard
-                    key={doc.id}
+                    key={doc.doctorId}
                     doctorId={doc.doctorId}
                     imgSrc={doc.profilePicture}
                     doctorName={doc.username}

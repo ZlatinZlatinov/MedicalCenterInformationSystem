@@ -16,7 +16,7 @@ function DoctorCard({ doctorId, imgSrc, doctorName, department, specialty, exper
 
             <div className="doctor-card-content">
                 <p className="doctor-card-experience">{experience} years experience</p>
-                <Link to={`/${doctorId}`} className="doctor-card-details">View Details and Book</Link>
+                <Link to={`./${doctorId}`} className="doctor-card-details">View Details and Book</Link>
             </div>
         </div>
     );
