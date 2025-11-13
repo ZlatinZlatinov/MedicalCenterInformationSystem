@@ -1,6 +1,6 @@
 const END_POINT = "/api/doctor";
 
-export async function createSchedule(payload) {
+export async function createSchedule(payload) { //TODO: Add authorization header
     const response = await fetch(import.meta.env.VITE_SERVER_URL + END_POINT + '/schedule', {
         method: 'POST',
         headers: {
@@ -14,6 +14,16 @@ export async function createSchedule(payload) {
     }
 
     const data = await response.json();
+    return data;
+}
 
-    console.log(data);
+export async function getAllDoctors() {
+    const response = await fetch(import.meta.env.VITE_SERVER_URL + END_POINT + '/')
+
+    if (response.status !== 200) {
+        throw new Error("Doctors not found");
+    }
+
+    const data = await response.json();
+    return data;
 }
