@@ -43,7 +43,6 @@ doctorController.get('/:doctorId',
         .withMessage("Invalid doctor ID"),
     async (req, res) => {
         const doctorId = req.params.doctorId;
-
         try {
             const errors = validationResult(req);
 

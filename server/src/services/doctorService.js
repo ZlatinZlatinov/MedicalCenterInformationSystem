@@ -4,7 +4,29 @@ const Specialties = require('../models/Specialties');
 const User = require('../models/User');
 
 async function getDoctorById(doctorId) {
-    return Doctor.findByPk(doctorId);
+    const doctor = await Doctor.findOne({
+        where: {
+            id: doctorId
+        },
+        include: [
+            { model: User, as: 'User', attributes: ['username'], required: false },
+            { model: Departments, as: 'Department', attributes: ['name'] },
+            { model: Specialties, as: 'Specialty', attributes: ['name'] },
+        ],
+        attributes: ['profilePicture', 'education', 'description', 'experience'],
+    });
+
+    const doctorData = doctor.get({ plain: true });
+
+    return {
+        imgSrc: doctorData.profilePicture,
+        doctorName: doctorData.User?.username,
+        department: doctorData.Department?.name || null,
+        specialty: doctorData.Specialty.name || null,
+        experience: doctorData.experience,
+        description: doctorData.description,
+        education: doctorData.education
+    };
 }
 
 async function getDoctorsByFilters(filters) {
