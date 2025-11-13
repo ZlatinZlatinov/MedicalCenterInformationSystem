@@ -27,3 +27,15 @@ export async function getAllDoctors() {
     const data = await response.json();
     return data;
 }
+
+export async function getDoctorById(doctorId) {
+    const response = await fetch(import.meta.env.VITE_SERVER_URL + END_POINT + `/${doctorId}`);
+
+    if (response.status !== 200) {
+        throw new Error('Doctor Not Found!');
+    }
+
+    const data = await response.json();
+    
+    return data;
+}
