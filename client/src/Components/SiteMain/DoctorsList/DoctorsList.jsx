@@ -1,7 +1,23 @@
-import { Link } from "react-router";
-// import logo from './assets/profile-pic.jpg';
+import { useEffect, useState } from "react";
+import { getAllDoctors } from "../../../services/doctorService";
+import DoctorCard from "./DoctorCard";
 
 function DoctorsList() {
+    const [doctorsList, setDoctorsList] = useState([]);
+
+    useEffect(() => {
+        async function fetchDoctors() {
+            try {
+                const data = await getAllDoctors();
+                setDoctorsList(data);
+            } catch (error) {
+                console.error(error);
+                alert(error);
+            }
+        }
+
+        fetchDoctors();
+    }, []);
 
     return (
         <section id="doctors-list">
@@ -22,73 +38,15 @@ function DoctorsList() {
             </div>
 
             <div className="all-doctors">
-                <div className="doctor-card">
-                    <div className="doctor-card-header">
-                        <div className="doctor-card-img">
-                            <img src={"./public/images/bezos.png"} alt="Doctor profile picture" />
-                        </div>
-                        <div className="doctor-card-heading">
-                            <h4 className="doctor-card-title">Dr. Jeff Bezos</h4>
-                            <span className="doctor-card-department">Cariology</span> {/*Department */}
-                        </div>
-                    </div>
-
-                    <div className="doctor-card-content">
-                        <p className="doctor-card-experience">15 years experience</p>
-                        <Link to='./:doctorId' className="doctor-card-details">View Details and Book</Link>
-                    </div>
-                </div>
-
-                <div className="doctor-card">
-                    <div className="doctor-card-header">
-                        <div className="doctor-card-img">
-                            <img src={"./public/images/profile-pic.jpg"} alt="Doctor profile picture" />
-                        </div>
-                        <div className="doctor-card-heading">
-                            <h4 className="doctor-card-title">Dr. John Cena</h4>
-                            <span className="doctor-card-department">Cariology</span> {/*Department */}
-                        </div>
-                    </div>
-
-                    <div className="doctor-card-content">
-                        <p className="doctor-card-experience">15 years experience</p>
-                        <Link to='/:doctorId' className="doctor-card-details">View Details and Book</Link>
-                    </div>
-                </div> 
-
-                <div className="doctor-card">
-                    <div className="doctor-card-header">
-                        <div className="doctor-card-img">
-                            <img src={"./public/images/profile-pic.jpg"} alt="Doctor profile picture" />
-                        </div>
-                        <div className="doctor-card-heading">
-                            <h4 className="doctor-card-title">Dr. John Cena</h4>
-                            <span className="doctor-card-department">Cariology</span> {/*Department */}
-                        </div>
-                    </div>
-
-                    <div className="doctor-card-content">
-                        <p className="doctor-card-experience">15 years experience</p>
-                        <Link to='/:doctorId' className="doctor-card-details">View Details and Book</Link>
-                    </div>
-                </div> 
-
-                <div className="doctor-card">
-                    <div className="doctor-card-header">
-                        <div className="doctor-card-img">
-                            <img src={"./public/images/profile-pic.jpg"} alt="Doctor profile picture" />
-                        </div>
-                        <div className="doctor-card-heading">
-                            <h4 className="doctor-card-title">Dr. John Cena</h4>
-                            <span className="doctor-card-department">Cariology</span> {/*Department */}
-                        </div>
-                    </div>
-
-                    <div className="doctor-card-content">
-                        <p className="doctor-card-experience">15 years experience</p>
-                        <Link to='/:doctorId' className="doctor-card-details">View Details and Book</Link>
-                    </div>
-                </div>
+                {doctorsList.map((doc) => <DoctorCard
+                    key={doc.id}
+                    doctorId={doc.doctorId}
+                    imgSrc={doc.profilePicture}
+                    doctorName={doc.username}
+                    department={doc.department}
+                    specialty={doc.specialty}
+                    experience={doc.experience}
+                />)}
             </div>
         </section>
     );
