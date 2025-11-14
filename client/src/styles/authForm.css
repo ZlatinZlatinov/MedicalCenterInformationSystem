@@ -1,7 +1,8 @@
 #login-page, 
 #register-page,
 #verify-email,
-#doc-schedule {
+#doc-schedule,
+#doctor-register {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -25,7 +26,9 @@
 } 
 
 .auth-form div,
-.auth-form input {
+.auth-form input,
+.auth-form select,
+.auth-form textarea {
     width: 100%;
 }
 
@@ -51,7 +54,9 @@
     gap: 1rem;
 }
 
-.form-fields input {
+.form-fields input,
+.form-fields select, 
+.form-fields textarea {
     border-radius: var(--border-radius);
     padding: 0.5rem 0.6rem;
     font-size: 1.4rem;
@@ -59,6 +64,10 @@
     background-color: var(--primary-background-white);
     border: 1px solid gray;
 } 
+
+.form-fields textarea {
+    height: 10rem;
+}
 
 .form-btn {
     margin-top: 1rem;
