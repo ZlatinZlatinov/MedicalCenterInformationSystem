@@ -5,6 +5,7 @@ const { isDoctor, hasUser } = require('../middlewares/guard');
 const { createScheduleForAllDays } = require('../services/doctorSchedule');
 const { getDoctorById, getDoctorsByFilters, createDoctor } = require('../services/doctorService');
 const { errorParser } = require('../utils/errorParser');
+const { upload } = require('../config/fileStorage');
 
 // Create schedule
 doctorController.post('/schedule', isDoctor(),
@@ -91,11 +92,12 @@ doctorController.get('/',
     });
 
 // Register for a doctor
-doctorController.post('/register', hasUser(),
+doctorController.post('/register', hasUser(), upload.single('profilePicture'),
     async (req, res) => {
         const { specialtyId, departmentId, licenseNumber,
-            education, description, experience, profilePicture } = req.body;
+            education, description, experience } = req.body;
         const userId = req.user.id;
+        const profilePicture = `${process.env.SERVER_URL}/uploads/${req.file.filename}`;
 
         try {
             const payload = await createDoctor({
