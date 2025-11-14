@@ -36,6 +36,24 @@ export async function getDoctorById(doctorId) {
     }
 
     const data = await response.json();
-    
+
+    return data;
+}
+
+export async function registerDoctor(payload, accessToken) {
+    const response = await fetch(import.meta.env.VITE_SERVER_URL + END_POINT + '/register', {
+        method: 'POST',
+        headers: {
+            'Authorization': `Bearer ${accessToken}`
+        },
+        body: payload
+    });
+
+    if (response.status !== 200) {
+        throw new Error("Failed to upload");
+    }
+
+    const data = await response.json();
+
     return data;
 }
