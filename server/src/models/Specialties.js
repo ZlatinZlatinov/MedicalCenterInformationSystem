@@ -1,6 +1,6 @@
 const { DataTypes } = require('sequelize');
 const { sequelize } = require('../config/db'); 
-
+//TODO: update specialties to have departmentId
 const Specialties = sequelize.define('Specialties', {
     id: {
         type: DataTypes.INTEGER,
