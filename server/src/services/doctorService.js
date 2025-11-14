@@ -75,7 +75,12 @@ async function getDoctorsByFilters(filters) {
     });
 }
 
+async function createDoctor(payload) {
+    return Doctor.create(payload);
+}
+
 module.exports = {
     getDoctorById,
-    getDoctorsByFilters
+    getDoctorsByFilters,
+    createDoctor
 }

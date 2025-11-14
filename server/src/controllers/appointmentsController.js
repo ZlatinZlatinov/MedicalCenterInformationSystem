@@ -4,7 +4,7 @@ const { bookAppointment } = require('../services/appointmentsService');
 const { errorParser } = require('../utils/errorParser');
 
 const appontintmentsController = require('express').Router();
-
+//TODO: add data validation
 appontintmentsController.post('/', hasUser(),
     async (req, res) => {
         const { doctorId, doctorName, isInitial, isNzok, price, appointmentDate, appointmentTime } = req.body;

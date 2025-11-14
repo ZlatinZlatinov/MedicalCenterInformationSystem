@@ -1,11 +1,12 @@
 const doctorController = require('express').Router();
 const { body, validationResult, param, header, query } = require('express-validator');
 
-const { isDoctor } = require('../middlewares/guard');
+const { isDoctor, hasUser } = require('../middlewares/guard');
 const { createScheduleForAllDays } = require('../services/doctorSchedule');
-const { getDoctorById, getDoctorsByFilters } = require('../services/doctorService');
+const { getDoctorById, getDoctorsByFilters, createDoctor } = require('../services/doctorService');
 const { errorParser } = require('../utils/errorParser');
 
+// Create schedule
 doctorController.post('/schedule', isDoctor(),
     header('Authorization').trim().notEmpty().isJWT().bail()
         .withMessage("Authorization header is required!"),
@@ -67,7 +68,7 @@ doctorController.get('/',
         .withMessage('Invalid specialty id'),
     async (req, res) => {
         const query = req.query;
-    
+
         try {
             const errors = validationResult(req);
 
@@ -78,7 +79,7 @@ doctorController.get('/',
             const filters = {
                 departmentId: query.departmentId,
                 specialtyId: query.specialtyId,
-            }; 
+            };
 
             const payload = await getDoctorsByFilters(filters);
             res.json(payload);
@@ -86,6 +87,33 @@ doctorController.get('/',
             console.log("Oops, something went wrong, ", error);
             const message = errorParser(error);
             res.status(404).json({ message });
+        }
+    });
+
+// Register for a doctor
+doctorController.post('/register', hasUser(),
+    async (req, res) => {
+        const { specialtyId, departmentId, licenseNumber,
+            education, description, experience, profilePicture } = req.body;
+        const userId = req.user.id;
+
+        try {
+            const payload = await createDoctor({
+                userId,
+                specialtyId,
+                departmentId,
+                licenseNumber,
+                education,
+                description,
+                experience,
+                profilePicture,
+            });
+
+            res.json(payload);
+        } catch (error) {
+            console.log("Oops, something went wrong: \n", error);
+            const message = errorParser(error);
+            res.status(400).json({ message });
         }
     });
 
