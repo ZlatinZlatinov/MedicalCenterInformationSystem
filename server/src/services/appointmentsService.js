@@ -2,10 +2,8 @@ const Appointments = require('../models/Appointment');
 const DoctorSchedule = require('../models/DoctorSchedule');
 const { sequelize } = require('../config/db');
 const { Transaction, Op } = require('sequelize');
-//TODO:PATIENTS Should not be able to schedule new appointment for the same doctor,
-// before their current appointment hasnt passed
+//TODO: Doctors should not be able to book appointment for themselves
 
-//TODO: After creating appointment send email to the user.
 async function createAppointment(appointmentData) {
     console.log(appointmentData);
     return { message: "Appointment created." }
@@ -173,7 +171,7 @@ async function bookAppointment(appointmentData) {
             price: schedule.price,
             isNzok: isNzok || false,
             isInitial,
-            status: 'pending'
+            status: 'confirmed'
         }, { transaction: t });
 
         return appointment;
