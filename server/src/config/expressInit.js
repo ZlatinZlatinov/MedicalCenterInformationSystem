@@ -14,6 +14,7 @@ function expressInit(app) {
         allowedHeaders: 'Content-Type, Authorization'
     }));
 
+    app.use('/uploads', express.static('uploads'));
     app.use(sesion());
     app.use('/api', routes);
 
