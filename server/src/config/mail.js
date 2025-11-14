@@ -30,4 +30,23 @@ async function sendVerificationEmail(to, token) {
     console.log('Mail sent successfully to, ', to);
 }
 
-module.exports = { transporter, sendVerificationEmail };
+async function sendAppointmentConfirmationEmail(to, doctorName, appointmentDate, appointmentTime) {
+    const message = {
+        from: process.env.SMTP_SENDER,
+        to,
+        subject: 'Appointment Booked Succesfully',
+        html: `
+        <p>You have sucessfully booked an appointment for Dr. ${doctorName}</p>
+        <p>at ${appointmentDate}, ${appointmentTime}</p>
+        `
+    }; 
+
+    await transporter.sendMail(message); 
+    console.log('Confirmation appointment email sent!');
+}
+
+module.exports = { 
+    transporter, 
+    sendVerificationEmail,
+    sendAppointmentConfirmationEmail
+};
