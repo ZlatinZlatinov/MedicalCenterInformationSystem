@@ -38,7 +38,7 @@ function DoctorsList() {
             </div>
 
             <div className="all-doctors">
-                {doctorsList.map((doc) => <DoctorCard
+                {doctorsList[0] ? doctorsList.map((doc) => <DoctorCard
                     key={doc.doctorId}
                     doctorId={doc.doctorId}
                     imgSrc={doc.profilePicture}
@@ -46,7 +46,7 @@ function DoctorsList() {
                     department={doc.department}
                     specialty={doc.specialty}
                     experience={doc.experience}
-                />)}
+                />) : <p>No doctors were found</p>}
             </div>
         </section>
     );
