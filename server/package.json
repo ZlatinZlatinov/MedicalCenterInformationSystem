@@ -5,7 +5,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon index.js",
-    "sync:db": "node ./src/utils/dbSync.js"
+    "sync:db": "node ./src/utils/dbSync.js",
+    "seed:db": "node ./src/utils/seedDatabase.js"
   },
   "keywords": [],
   "author": "",
