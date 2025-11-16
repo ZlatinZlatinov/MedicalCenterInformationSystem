@@ -8,7 +8,7 @@ function Dashboard() {
 
     return (
         <section id="dashboard">
-            {authUserData.role === 'patient' && <PatientDashboard />}
+            {authUserData.role === 'user' && <PatientDashboard />}
             {authUserData.role === 'doctor' && <DoctorDashboard />}
             {authUserData.role === 'admin' && <AdminDashboard />}
         </section>
