@@ -2,6 +2,8 @@ const Appointments = require('../models/Appointment');
 const DoctorSchedule = require('../models/DoctorSchedule');
 const { sequelize } = require('../config/db');
 const { Transaction, Op } = require('sequelize');
+const Doctor = require('../models/Doctor');
+const User = require('../models/User');
 //TODO: Doctors should not be able to book appointment for themselves
 
 async function createAppointment(appointmentData) {
@@ -217,9 +219,30 @@ function formatTime(minutes) {
     return `${String(hours).padStart(2, '0')}:${String(mins).padStart(2, '0')}:00`;
 }
 
+async function getAppointmentsForPatient(where) {
+    const appointments = await Appointments.findAll({
+        where,
+        include: [
+            {
+                model: Doctor,
+                attributes: ['id', 'userId'],
+                include: [{
+                    model: User,
+                    attributes: ['username']
+                }]
+            }
+        ],
+        order: [['appointmentDate', 'ASC'], ['appointmentTime', 'ASC']]
+    }); 
+
+    return appointments;
+}
+
 module.exports = {
     createAppointment,
     getAvailableSlots,
     bookAppointment,
+    cancelAppointment,
+    getAppointmentsForPatient,
     cancelAppointment
 }
