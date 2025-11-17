@@ -6,6 +6,7 @@ const { createScheduleForAllDays } = require('../services/doctorSchedule');
 const { getDoctorById, getDoctorsByFilters, createDoctor } = require('../services/doctorService');
 const { errorParser } = require('../utils/errorParser');
 const { upload } = require('../config/fileStorage');
+const { getAvailableSlots } = require('../services/appointmentsService');
 
 // Create schedule
 doctorController.post('/schedule', isDoctor(),
@@ -118,6 +119,29 @@ doctorController.post('/register', hasUser(), upload.single('profilePicture'),
             res.status(400).json({ message });
         }
     });
+
+// Get availble time slots for a doctor on a specific date
+doctorController.get('/:doctorId/schedule', async (req, res) => {
+    try {
+        const doctorId = req.params.doctorId;
+        const { date } = req.query;
+
+        if (!date) {
+            return res.status(400).json({ message: "Date parameter is required!" });
+        }
+
+        const dateRegex = /^\d{4}-\d{2}-\d{2}$/;
+        if (!dateRegex.test(date)) {
+            return res.status(400).json({ message: "Invalid date format. Use YYYY-MM-DD" });
+        }
+
+        const payload = await getAvailableSlots(doctorId, date);
+        res.json(payload);
+    } catch (error) {
+        console.log("Oops, something went wrong: ", error);
+        res.status(400).json({ message: "Failed to fetch schedule." });
+    }
+});
 
 module.exports = {
     doctorController
