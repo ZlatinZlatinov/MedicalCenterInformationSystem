@@ -19,7 +19,7 @@ async function getAvailableSlots(doctorId, date) {
     // Get doctor's schedule for this day
     const schedule = await DoctorSchedule.findOne({
         where: {
-            doctorId,
+            doctorId: Number(doctorId),
             dayOfWeek,
             isAvailable: true
         }

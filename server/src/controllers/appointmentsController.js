@@ -7,7 +7,7 @@ const appontintmentsController = require('express').Router();
 //TODO: add data validation
 appontintmentsController.post('/', hasUser(),
     async (req, res) => {
-        const { doctorId, doctorName, isInitial, isNzok, price, appointmentDate, appointmentTime } = req.body;
+        const { doctorId, doctorName, isInitial, isNzok, appointmentDate, appointmentTime } = req.body;
         const patientId = req.user.id;
         const userEmail = req.user.email;
 
@@ -27,7 +27,6 @@ appontintmentsController.post('/', hasUser(),
                 doctorId: parseInt(doctorId),
                 patientId,
                 isInitial,
-                price,
                 appointmentDate,
                 appointmentTime,
                 isNzok: isNzok || false
