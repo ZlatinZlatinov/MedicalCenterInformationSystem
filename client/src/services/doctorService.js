@@ -57,3 +57,11 @@ export async function registerDoctor(payload, accessToken) {
 
     return data;
 }
+
+export async function getDoctorSchedule(doctorId, date) {
+    const response = await fetch(import.meta.env.VITE_SERVER_URL + END_POINT + `/${doctorId}/schedule?date=${date}`);
+
+    const data = await response.json();
+
+    return data;
+}
