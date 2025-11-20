@@ -6,7 +6,7 @@ import { getDoctorById } from "../../../services/doctorService";
 
 function DoctorDetails() {
     const params = useParams();
-    const [isHidden, setIsHidden] = useState(true);
+    const [isHidden, setIsHidden] = useState(false);
     const [doctorDetails, setDoctrorDetails] = useState({
         imgSrc: '', doctorName: '', department: '', specialty: '', experience: 0, description: '', education: ''
     });
@@ -76,11 +76,10 @@ function DoctorDetails() {
                 </div>
             </div>
 
-            <div className={isHidden ? "hidden" : "book-calendar"}>
-                <CalendarApp />
-
+            {isHidden && <div className={"book-calendar"}>
+                <CalendarApp doctorId={doctorId} doctorName={doctorDetails.doctorName} />
                 <button className="close-btn" onClick={() => setIsHidden(!isHidden)}><CircleX color="white" size={30} /></button>
-            </div>
+            </div>}
         </section>
     );
 }
