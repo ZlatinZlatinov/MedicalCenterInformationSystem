@@ -289,7 +289,11 @@
     transition: all 0.3s ease;
 }
 
-.book-appointment-btn:hover {
+.book-appointment-btn:disabled {
+    cursor: not-allowed;
+}
+
+.book-appointment-btn:not(:disabled):hover {
     background-color: var(--primary-blue);
     color: var(--primary-white);
     border: 1px solid var(--primary-blue);
