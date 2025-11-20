@@ -1,12 +1,11 @@
 const END_POINT = "/api/appointments";
 
-export async function bookAppointment(payload) {
-    console.log(payload);
-    
+export async function bookAppointment(payload, accessToken) {
     const response = await fetch(import.meta.env.VITE_SERVER_URL + END_POINT + '/', {
         method: 'POST',
         headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${accessToken}`
         },
         body: JSON.stringify(payload)
     });
