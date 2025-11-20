@@ -220,20 +220,164 @@ function formatTime(minutes) {
 }
 
 async function getAppointmentsForPatient(where) {
+    const now = new Date();
+    const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+    const todayStr = today.toISOString().split('T')[0];
+    const currentTimeStr = now.toTimeString().slice(0, 8);
+    
+    // Filter for upcoming appointments only
+    const whereClause = {
+        patientId: where.patientId,
+        [Op.or]: [
+            {
+                appointmentDate: {
+                    [Op.gt]: todayStr
+                }
+            },
+            {
+                [Op.and]: [
+                    { appointmentDate: todayStr },
+                    { appointmentTime: { [Op.gte]: currentTimeStr } }
+                ]
+            }
+        ]
+    };
+
+    // Handle status filtering
+    if (where.status) {
+        // If status is explicitly provided, use it (including 'canceled')
+        whereClause.status = where.status;
+    } else {
+        // Exclude canceled appointments by default
+        whereClause.status = {
+            [Op.notIn]: ['canceled']
+        };
+    }
+
     const appointments = await Appointments.findAll({
-        where,
+        where: whereClause,
         include: [
             {
                 model: Doctor,
+                as: 'Doctor',
                 attributes: ['id', 'userId'],
                 include: [{
                     model: User,
-                    attributes: ['username']
+                    as: 'User',
+                    attributes: ['username', 'email']
                 }]
             }
         ],
+        attributes: ['id', 'patientId', 'doctorId', 'isInitial', 'appointmentDate', 'appointmentTime', 'status', 'price'],
         order: [['appointmentDate', 'ASC'], ['appointmentTime', 'ASC']]
     }); 
+
+    return appointments;
+}
+
+async function getAppointmentsForDoctor(doctorId, filter = 'all') {
+    const now = new Date();
+    const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+    today.setHours(0, 0, 0, 0);
+    const todayStr = today.toISOString().split('T')[0];
+    const currentTimeStr = now.toTimeString().slice(0, 8);
+
+    let dateFilter = {};
+
+    switch (filter) {
+        case 'today':
+            dateFilter = {
+                appointmentDate: todayStr,
+                appointmentTime: { [Op.gte]: currentTimeStr }
+            };
+            break;
+        case 'week':
+            const nextWeek = new Date(today);
+            nextWeek.setDate(today.getDate() + 7);
+            const nextWeekStr = nextWeek.toISOString().split('T')[0];
+            dateFilter = {
+                [Op.or]: [
+                    {
+                        appointmentDate: {
+                            [Op.gt]: todayStr
+                        }
+                    },
+                    {
+                        [Op.and]: [
+                            { appointmentDate: todayStr },
+                            { appointmentTime: { [Op.gte]: currentTimeStr } }
+                        ]
+                    }
+                ],
+                appointmentDate: {
+                    [Op.lte]: nextWeekStr
+                }
+            };
+            break;
+        case 'month':
+            const nextMonth = new Date(today);
+            nextMonth.setMonth(today.getMonth() + 1);
+            const nextMonthStr = nextMonth.toISOString().split('T')[0];
+            dateFilter = {
+                [Op.or]: [
+                    {
+                        appointmentDate: {
+                            [Op.gt]: todayStr
+                        }
+                    },
+                    {
+                        [Op.and]: [
+                            { appointmentDate: todayStr },
+                            { appointmentTime: { [Op.gte]: currentTimeStr } }
+                        ]
+                    }
+                ],
+                appointmentDate: {
+                    [Op.lte]: nextMonthStr
+                }
+            };
+            break;
+        case 'all':
+        default:
+            // All upcoming appointments
+            dateFilter = {
+                [Op.or]: [
+                    {
+                        appointmentDate: {
+                            [Op.gt]: todayStr
+                        }
+                    },
+                    {
+                        [Op.and]: [
+                            { appointmentDate: todayStr },
+                            { appointmentTime: { [Op.gte]: currentTimeStr } }
+                        ]
+                    }
+                ]
+            };
+            break;
+    }
+
+    const whereClause = {
+        doctorId,
+        ...dateFilter,
+        status: {
+            [Op.notIn]: ['canceled'] // Exclude canceled appointments
+        }
+    };
+
+    const appointments = await Appointments.findAll({
+        where: whereClause,
+        include: [
+            {
+                model: User,
+                as: 'User',
+                attributes: ['id', 'username', 'email']
+            }
+        ],
+        attributes: ['id', 'patientId', 'isInitial', 'appointmentDate', 'appointmentTime', 'status', 'price'],
+        order: [['appointmentDate', 'ASC'], ['appointmentTime', 'ASC']]
+    });
 
     return appointments;
 }
@@ -244,5 +388,6 @@ module.exports = {
     bookAppointment,
     cancelAppointment,
     getAppointmentsForPatient,
-    cancelAppointment
+    cancelAppointment, 
+    getAppointmentsForDoctor
 }
