@@ -7,11 +7,11 @@ function DoctorDashboard() {
             <div className="dash-card">
                 <div className="card-header">
                     <Calendar color='#00d062' size={32} />
-                    <h3 className="dash-card-title">Today's Appointments</h3>
+                    <h3 className="dash-card-title">Upcomming Appointments</h3>
                     <p className="dash-card-text">0 appointments scheduled for today</p>
                 </div>
                 <div className="card-content">
-                    <Link to={'/appointments'} className='dash-card-btn'>Appointments</Link>
+                    <Link to={'/upcomming-appointments'} className='dash-card-btn'>Appointments</Link>
                 </div>
             </div>
 
