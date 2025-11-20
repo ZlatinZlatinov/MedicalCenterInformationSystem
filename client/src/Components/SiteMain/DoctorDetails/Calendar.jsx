@@ -2,10 +2,14 @@ import { useState, useEffect } from "react";
 import { daysOfWeek, monthsOfYear } from "../../../Constants/calendar";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { bookAppointment } from "../../../services/appointmentsService";
+import { getDoctorSchedule } from "../../../services/doctorService";
+import { useAuth } from "../../../Hooks/useAuth";
 
-function CalendarApp() {
+function CalendarApp({ doctorId, doctorName }) {
     /* CALENDAR */
     const currentDate = new Date();
+    /*user state*/
+    const { authUserData } = useAuth();
 
     /* calendar state */
     const [currentMonth, setCurrMonth] = useState(currentDate.getMonth());
@@ -17,7 +21,7 @@ function CalendarApp() {
     const [timeSlots, setTimeSlots] = useState([]);
     const [bookedSlots, setBookedSlots] = useState([]);
     const [selectedSlot, setSelectedSlot] = useState(null);
-    const [loading, setLoading] = useState(false);
+    // const [loading, setLoading] = useState(false);
 
     const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
     const firstDayOfMonth = new Date(currentYear, currentMonth, 0).getDay();// not sure about this one, initially was 1
@@ -32,12 +36,24 @@ function CalendarApp() {
         setCurrYear((prevYear) => (currentMonth === 11 ? prevYear + 1 : prevYear))
     }
 
-    const handleDayClick = (day) => {
+    const handleDayClick = async (day) => {
         const clickedDate = new Date(currentYear, currentMonth, day);
         const today = new Date();
 
         if (clickedDate >= today || isSameDay(clickedDate, today)) {
             setSelectedDate(clickedDate);
+            try {
+                const clickedDay = clickedDate.getDate() < 10 ? `0${clickedDate.getDate()}` : clickedDate.getDate();
+                const clickedMonth = (clickedDate.getMonth() + 1) < 10 ? `0${clickedDate.getMonth() + 1}` : (clickedDate.getMonth() + 1);
+                const clickedYear = clickedDate.getFullYear();
+
+                const date = `${clickedYear}-${clickedMonth}-${clickedDay}`;
+                const newSchedule = await getDoctorSchedule(doctorId, date);
+                updateDoctorScheduleUI(newSchedule);
+            } catch (error) {
+                console.error(error);
+                alert("Something went wrong!");
+            }
         }
     }
 
@@ -99,58 +115,52 @@ function CalendarApp() {
 
     //Handle slot selection
     const handleSlotSelect = (slot) => {
-        console.log(slot);
         if (!isSlotBooked(slot.time)) {
             setSelectedSlot(slot);
         }
     };
-
-    // Demo data - replace with actual API calls
-    const doctorId = 2;
 
     async function handleBookAppointment() {
         const payload = {
             doctorId,
             appointmentDate: selectedDate,
             appointmentTime: selectedSlot.time,
+            doctorName,
             izNzok: false,
             isInitial: true,
-            price: 100,
         }
 
         try {
-            await bookAppointment(payload);
+            console.log(payload);
+
+            await bookAppointment(payload, authUserData.accessToken);
             alert("Appointment booked");
         } catch (error) {
             console.log("Oops something went wrong\n", error);
         }
     }
 
+    //Update doctorSchedule
+    function updateDoctorScheduleUI(docSchedule) {
+        setDoctorSchedule(docSchedule.schedule);
+        setBookedSlots(docSchedule.bookedSlots);
+        const slots = generateTimeSlots(docSchedule.schedule);
+        setTimeSlots(slots);
+    }
+
     // Simulate selecting today
     useEffect(() => {
         const today = new Date().toISOString().split('T')[0];
+        async function fetchNewSchedule() {
+            try {
+                const newSchedule = await getDoctorSchedule(doctorId, today);
+                updateDoctorScheduleUI(newSchedule);
+            } catch (error) {
+                console.error(error);
+            }
+        }
 
-        // Mock schedule data
-        const mockSchedule = {
-            schedule: {
-                dayOfWeek: 'Tuesday',
-                isAvailable: true,
-                startTime: '09:00:00',
-                endTime: '16:30:00',
-                duration: 30,
-                price: 50.00
-            },
-            bookedSlots: [
-                { time: '10:00' },
-                { time: '14:30' }
-            ]
-        };
-
-        // setSelectedDate(today);
-        setDoctorSchedule(mockSchedule.schedule);
-        setBookedSlots(mockSchedule.bookedSlots);
-        const slots = generateTimeSlots(mockSchedule.schedule);
-        setTimeSlots(slots);
+        fetchNewSchedule();
     }, []);
 
     return (
@@ -218,7 +228,11 @@ function CalendarApp() {
             </div>
 
             <div className="book-btn">
-                <button className="book-appointment-btn" onClick={handleBookAppointment}>Book Appointment</button>
+                <button
+                    className="book-appointment-btn"
+                    disabled={!authUserData.isLoggedIn}
+                    onClick={handleBookAppointment}
+                >Book Appointment</button>
             </div>
         </div>
     );
