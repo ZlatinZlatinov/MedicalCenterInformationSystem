@@ -1,5 +1,7 @@
 const { DataTypes } = require('sequelize');
 const { sequelize } = require('../config/db');
+const Doctor = require('./Doctor');
+const User = require('./User');
 
 const Appointments = sequelize.define('Appointments', {
     id: {
@@ -100,6 +102,9 @@ const Appointments = sequelize.define('Appointments', {
         }
     ],
 });
+
+Appointments.belongsTo(Doctor, {foreignKey: 'doctorId', as: 'Doctor'});
+Appointments.belongsTo(User, {foreignKey: 'patientId', as: 'User'});
 
 // Add validation hooks
 Appointments.beforeCreate(async (appointment, options) => {
