@@ -13,6 +13,7 @@ import DoctorsList from './DoctorsList/DoctorsList';
 import DoctorRegister from './DoctorRegister/DoctorRegister';
 import AuthenticatedUser from './ProtectedRoutes/AuthenticatedUser';
 import AuthenticatedDoctor from './ProtectedRoutes/AuthenticatedDoctor';
+import UpcommingAppointments from './Upcomming/Upcomming';
 
 function SiteMain() {
     return (
@@ -27,13 +28,14 @@ function SiteMain() {
 
                 {/* Protected Routes for Users */}
                 <Route element={<AuthenticatedUser />}>
-                    <Route path='/dashboard' element={<Dashboard />} /> {/*Should be protected*/}
-                    <Route path='/become-a-doctor' element={<DoctorRegister />} /> {/*Should be protected*/}
+                    <Route path='/dashboard' element={<Dashboard />} />
+                    <Route path='/become-a-doctor' element={<DoctorRegister />} />
+                    <Route path='upcomming-appointments' element={<UpcommingAppointments />} />
                 </Route>
 
                 {/* Protected Routes for Doctors */}
                 <Route element={<AuthenticatedDoctor />}>
-                    <Route path='/schedule' element={<DoctorSchedule />} /> {/*Should be protected*/}
+                    <Route path='/schedule' element={<DoctorSchedule />} />
                 </Route>
 
                 <Route path='/doctors' element={<DoctorsList />} />

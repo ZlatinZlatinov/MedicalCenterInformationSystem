@@ -1,0 +1,48 @@
+#upcomming-appointments {
+    padding-top: 2rem;
+} 
+
+.upcomming-options {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 2rem;
+} 
+
+.upcomming-options h2 {
+    font-size: 1.8rem;
+} 
+
+.upcomming-table-header ul {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    font-size: 1.3rem;
+    font-weight: bold;
+    color: var(--primary-text-color);
+    margin-bottom: 1rem;
+} 
+
+.upcomming-table-content {
+    display: flex;
+    flex-direction: column;
+} 
+
+.upcomming-card {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    border-top: var(--primary-border);
+    border-width: var(--border-width);
+    padding: 1rem 0rem;
+    font-size: 1.2rem;
+} 
+
+.upcomming-card .upcomming-card-actions {
+    display: flex;
+    gap: 1rem;
+} 
+
+.upcomming-card-actions button {
+    width: 100%;
+    border: var(--primary-border);
+    border-width: var(--border-width);
+    border-radius: var(--border-radius);
+}

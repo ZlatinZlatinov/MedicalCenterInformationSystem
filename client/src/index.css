@@ -6,6 +6,7 @@
 @import url('./styles/schedule.css');
 @import url('./styles/doctorsList.css');
 @import url('./styles/doctorDetails.css');
+@import url('./styles/upcomming.css');
 
 * {
     margin: 0;
