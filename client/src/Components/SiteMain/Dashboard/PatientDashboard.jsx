@@ -11,7 +11,7 @@ function PatientDashboard() {
                     <p className="dash-card-text">Find and book appointment with specialist</p>
                 </div>
                 <div className="card-content">
-                    <Link to={'/appointments'} className='dash-card-btn'>Find Doctors</Link>
+                    <Link to={'/doctors'} className='dash-card-btn'>Find Doctors</Link>
                 </div>
             </div>
 
@@ -22,7 +22,7 @@ function PatientDashboard() {
                     <p className="dash-card-text">View your scheduled appointments</p>
                 </div>
                 <div className="card-content">
-                    <Link to={'/schedule'} className='dash-card-btn'>View All</Link>
+                    <Link to={'/upcomming-appointments'} className='dash-card-btn'>View All</Link>
                 </div>
             </div>
         </>
