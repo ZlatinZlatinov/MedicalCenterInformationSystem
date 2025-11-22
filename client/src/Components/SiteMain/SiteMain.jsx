@@ -30,7 +30,7 @@ function SiteMain() {
                 <Route element={<AuthenticatedUser />}>
                     <Route path='/dashboard' element={<Dashboard />} />
                     <Route path='/become-a-doctor' element={<DoctorRegister />} />
-                    <Route path='upcomming-appointments' element={<UpcommingAppointments />} />
+                    <Route path='/upcomming-appointments'  element={<UpcommingAppointments />} />
                 </Route>
 
                 {/* Protected Routes for Doctors */}
