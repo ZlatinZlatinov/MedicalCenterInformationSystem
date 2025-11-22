@@ -1,12 +1,46 @@
 import { Calendar } from 'lucide-react';
-
+import { useEffect, useState } from 'react';
+import { useSearchParams } from 'react-router';
+import { getDoctorAppointments } from '../../../services/appointmentsService';
+import UpcommingCard from './UpcommingCard';
+import { useAuth } from '../../../Hooks/useAuth';
+// TODO: doctorId is hardcoded, need to fix that!
 function UpcommingAppointments() {
+    const [searchParams, setSearchParams] = useSearchParams();
+    const [appointments, setAppointments] = useState([]);
+    const { authUserData } = useAuth();
+
+    const filter = searchParams.get('filter') || "today";
+
+    function handleOnchange(e) {
+        setSearchParams({ filter: e.target.value });
+    }
+
+    useEffect(() => {
+        async function fetchUpcommingAppointments() {
+            try {
+                const data = await getDoctorAppointments(authUserData.accessToken, 12, filter);
+                setAppointments(data);
+            } catch (error) {
+                console.error(error);
+                alert("Fetching appointments failed!");
+            }
+        }
+
+        fetchUpcommingAppointments();
+    }, [filter]);
+
     return (
         <section id="upcomming-appointments">
             <div className='upcomming-options'>
-                <h2><Calendar size={24} color='#3c83f6'/> Upcomming appointments</h2>
-                
-                <select name="next-appointments" id="next-appointments">
+                <h2><Calendar size={24} color='#3c83f6' /> Upcomming appointments</h2>
+
+                <select
+                    name="upcomming-filter"
+                    id="upcomming-filter"
+                    value={filter}
+                    onChange={handleOnchange}
+                >
                     <option value="today">Today</option>
                     <option value="week">Next Week</option>
                     <option value="month">Next Month</option>
@@ -26,29 +60,18 @@ function UpcommingAppointments() {
                 </div>
 
                 <div className="upcomming-table-content">
-                    <div className="upcomming-card">
-                        <div className="upcomming-card-patient">
-                            <p>John Cena</p>
-                            <span>john_cena@wwe.com</span>
-                        </div>
-                        <div className="upcomming-card-date">
-                            <p>11/21/2025</p>
-                            <span>09:00:00</span>
-                        </div>
-                        <div className="upcomming-card-status">
-                            <p>scheduled</p>
-                        </div>
-                        <div className="upcomming-card-notes">
-                            <p>Regular checkup</p>
-                        </div>
-                        <div className="upcomming-card-actions">
-                            <button>Complete</button>
-                            <button>Cancel</button>
-                        </div>
-                    </div>
+                    {appointments[0] ? appointments.map((app) => {
+                        return (<UpcommingCard key={app.id}
+                            username={app.username}
+                            email={app.email}
+                            appointmentDate={app.appointmentDate}
+                            appointmentTime={app.appointmentTime}
+                            status={app.status}
+                            isInitial={app.isInitial}
+                        />);
+                    }) : <p>No appointments found</p>}
                 </div>
             </div>
-
         </section>
     );
 }
