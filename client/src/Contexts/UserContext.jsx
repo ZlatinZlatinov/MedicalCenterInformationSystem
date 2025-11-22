@@ -20,9 +20,10 @@ function AuthProvider({ children }) {
                 id: '',
                 role: '',
                 email: '',
+                username: '',
                 isLoggedIn: false,
                 accessToken: sessionStorage.getItem("accessToken")
-            })
+            });
         }
     }
 
