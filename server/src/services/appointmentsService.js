@@ -224,7 +224,7 @@ async function getAppointmentsForPatient(where) {
     const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
     const todayStr = today.toISOString().split('T')[0];
     const currentTimeStr = now.toTimeString().slice(0, 8);
-    
+
     // Filter for upcoming appointments only
     const whereClause = {
         patientId: where.patientId,
@@ -270,7 +270,7 @@ async function getAppointmentsForPatient(where) {
         ],
         attributes: ['id', 'patientId', 'doctorId', 'isInitial', 'appointmentDate', 'appointmentTime', 'status', 'price'],
         order: [['appointmentDate', 'ASC'], ['appointmentTime', 'ASC']]
-    }); 
+    });
 
     return appointments;
 }
@@ -375,11 +375,26 @@ async function getAppointmentsForDoctor(doctorId, filter = 'all') {
                 attributes: ['id', 'username', 'email']
             }
         ],
-        attributes: ['id', 'patientId', 'isInitial', 'appointmentDate', 'appointmentTime', 'status', 'price'],
+        attributes: ['id', 'patientId', 'isInitial', 'appointmentDate', 'appointmentTime', 'status'],
         order: [['appointmentDate', 'ASC'], ['appointmentTime', 'ASC']]
     });
 
-    return appointments;
+    const payload = appointments.map((appointment) => {
+        const appointmentData = appointment.get({ plain: true });
+
+        return {
+            id: appointmentData.id,
+            patientId: appointmentData.User.id,
+            username: appointmentData.User.username,
+            email: appointmentData.User.email,
+            appointmentDate: appointmentData.appointmentDate,
+            appointmentTime: appointmentData.appointmentTime,
+            status: appointmentData.status,
+            isInitial: appointmentData.isInitial
+        };
+    });
+
+    return payload;
 }
 
 module.exports = {
@@ -388,6 +403,6 @@ module.exports = {
     bookAppointment,
     cancelAppointment,
     getAppointmentsForPatient,
-    cancelAppointment, 
+    cancelAppointment,
     getAppointmentsForDoctor
 }
