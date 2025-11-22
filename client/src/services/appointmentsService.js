@@ -18,3 +18,14 @@ export async function bookAppointment(payload, accessToken) {
 
     return data;
 }
+
+export async function getDoctorAppointments(accessToken, doctorId, filter) {
+    const response = await fetch(import.meta.env.VITE_SERVER_URL + END_POINT + `/doctor/${doctorId}?filter=${filter}`, {
+        headers: {
+            'Authorization': `Bearer ${accessToken}`
+        }
+    });
+
+    const data = await response.json();
+    return data;
+}
