@@ -1,7 +1,7 @@
 const doctorController = require('express').Router();
 const { body, validationResult, param, header, query } = require('express-validator');
 
-const { isDoctor, hasUser } = require('../middlewares/guard');
+const { isDoctor, hasUser, isAdmin } = require('../middlewares/guard');
 const { createScheduleForAllDays } = require('../services/doctorSchedule');
 const { getDoctorById, getDoctorsByFilters, createDoctor } = require('../services/doctorService');
 const { errorParser } = require('../utils/errorParser');
@@ -64,12 +64,12 @@ doctorController.get('/:doctorId',
 
 //Get all doctors 
 doctorController.get('/',
-    query('departmentId').optional().isInt()
-        .withMessage('Invalid department id'),
-    query('specialtyId').optional().isInt()
-        .withMessage('Invalid specialty id'),
+    query('department').optional().trim().isString()
+        .withMessage('Department must be a valid string.'),
+    query('specialty').optional().trim().isString()
+        .withMessage('Specialty must be a valid string.'),
     async (req, res) => {
-        const query = req.query;
+        const queryParams = req.query;
 
         try {
             const errors = validationResult(req);
@@ -78,10 +78,13 @@ doctorController.get('/',
                 return res.status(400).json(errors.array());
             }
 
-            const filters = {
-                departmentId: query.departmentId,
-                specialtyId: query.specialtyId,
-            };
+            const filters = {};
+            if (queryParams.department) {
+                filters.department = queryParams.department;
+            }
+            if (queryParams.specialty) {
+                filters.specialty = queryParams.specialty;
+            }
 
             const payload = await getDoctorsByFilters(filters);
             res.json(payload);
