@@ -30,34 +30,44 @@ async function getDoctorById(doctorId) {
 }
 
 async function getDoctorsByFilters(filters) {
-    const where = {};
+    // Build include array with conditional filtering on related tables
+    const includes = [
+        {
+            model: User,
+            as: 'User',
+            attributes: ['username'],
+            required: false
+        }
+    ];
 
-    // Dynamically add filters based on available query parameters
-    if (filters.departmentId) where.departmentId = filters.departmentId;
-    if (filters.specialtyId) where.specialtyId = filters.specialtyId;
+    // Add Department include with conditional filtering
+    const departmentInclude = {
+        model: Departments,
+        as: 'Department',
+        attributes: ['name'],
+        required: false,
+    };
+    if (filters.department) {
+        departmentInclude.where = { name: filters.department };
+        departmentInclude.required = true;
+    }
+    includes.push(departmentInclude);
+
+    // Add Specialty include with conditional filtering
+    const specialtyInclude = {
+        model: Specialties,
+        as: 'Specialty',
+        attributes: ['name'],
+        required: false,
+    };
+    if (filters.specialty) {
+        specialtyInclude.where = { name: filters.specialty };
+        specialtyInclude.required = true;
+    }
+    includes.push(specialtyInclude);
 
     const doctors = await Doctor.findAll({
-        where,
-        include: [
-            {
-                model: User,
-                as: 'User',
-                attributes: ['username'],
-                required: false
-            },
-            {
-                model: Departments,
-                as: 'Department',
-                attributes: ['name'],
-                required: false
-            },
-            {
-                model: Specialties,
-                as: 'Specialty',
-                attributes: ['name'],
-                required: false
-            }
-        ],
+        include: includes,
         attributes: ['id', 'profilePicture', 'experience']
     });
 
