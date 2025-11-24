@@ -17,8 +17,16 @@ export async function createSchedule(payload) { //TODO: Add authorization header
     return data;
 }
 
-export async function getAllDoctors() {
-    const response = await fetch(import.meta.env.VITE_SERVER_URL + END_POINT + '/')
+export async function getAllDoctors(department, specialty) {
+    let url = import.meta.env.VITE_SERVER_URL + END_POINT + '/';
+
+    if (department) {
+        url += `?department=${department}`;
+    } else if (specialty) {
+        url += `?specialty=${specialty}`
+    }
+
+    const response = await fetch(url);
 
     if (response.status !== 200) {
         throw new Error("Doctors not found");
