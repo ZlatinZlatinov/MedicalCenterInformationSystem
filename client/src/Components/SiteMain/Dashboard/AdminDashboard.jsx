@@ -11,7 +11,7 @@ function AdminDashboard() {
                     <p className="dash-card-text">Add and configure user accounts</p>
                 </div>
                 <div className="card-content">
-                    <Link to={'/appointments'} className='dash-card-btn'>Manage Users</Link>
+                    <Link to={'/manage-users'} className='dash-card-btn'>Manage Users</Link>
                 </div>
             </div> 
 
@@ -22,7 +22,7 @@ function AdminDashboard() {
                     <p className="dash-card-text">Manage medical staff</p>
                 </div>
                 <div className="card-content">
-                    <Link to={'/appointments'} className='dash-card-btn'>Manage Staff</Link>
+                    <Link to={'/manage-staff'} className='dash-card-btn'>Manage Staff</Link>
                 </div>
             </div> 
 
@@ -33,7 +33,7 @@ function AdminDashboard() {
                     <p className="dash-card-text">Configure departments and specialties</p>
                 </div>
                 <div className="card-content">
-                    <Link to={'/appointments'} className='dash-card-btn'>Manage Departments</Link>
+                    <Link to={'/manage-departments'} className='dash-card-btn'>Manage Departments</Link>
                 </div>
             </div> 
 
@@ -44,7 +44,7 @@ function AdminDashboard() {
                     <p className="dash-card-text">Manage User permissions</p>
                 </div>
                 <div className="card-content">
-                    <Link to={'/appointments'} className='dash-card-btn'>Configure Access</Link>
+                    <Link to={'/access-control'} className='dash-card-btn'>Configure Access</Link>
                 </div>
             </div>
         </>
