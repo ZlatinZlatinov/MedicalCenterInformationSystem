@@ -4,7 +4,7 @@ import { useSearchParams } from 'react-router';
 import { getDoctorAppointments } from '../../../services/appointmentsService';
 import UpcommingCard from './UpcommingCard';
 import { useAuth } from '../../../Hooks/useAuth';
-// TODO: doctorId is hardcoded, need to fix that!
+
 function UpcommingAppointments() {
     const [searchParams, setSearchParams] = useSearchParams();
     const [appointments, setAppointments] = useState([]);
@@ -19,7 +19,7 @@ function UpcommingAppointments() {
     useEffect(() => {
         async function fetchUpcommingAppointments() {
             try {
-                const data = await getDoctorAppointments(authUserData.accessToken, 12, filter);
+                const data = await getDoctorAppointments(authUserData.accessToken, authUserData.id, filter);
                 setAppointments(data);
             } catch (error) {
                 console.error(error);
