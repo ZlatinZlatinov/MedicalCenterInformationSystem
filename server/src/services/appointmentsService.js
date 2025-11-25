@@ -359,7 +359,6 @@ async function getAppointmentsForDoctor(doctorId, filter = 'all') {
     }
 
     const whereClause = {
-        doctorId,
         ...dateFilter,
         status: {
             [Op.notIn]: ['canceled'] // Exclude canceled appointments
@@ -369,6 +368,7 @@ async function getAppointmentsForDoctor(doctorId, filter = 'all') {
     const appointments = await Appointments.findAll({
         where: whereClause,
         include: [
+            { model: Doctor, as: 'Doctor', where: { userId: doctorId }, attributes: ['id', 'userId'] },
             {
                 model: User,
                 as: 'User',
@@ -404,5 +404,6 @@ module.exports = {
     cancelAppointment,
     getAppointmentsForPatient,
     cancelAppointment,
-    getAppointmentsForDoctor
+    getAppointmentsForDoctor,
+    testingGetAppointmentsForDoctor
 }

@@ -1,6 +1,6 @@
 const { sendAppointmentConfirmationEmail } = require('../config/mail');
 const { hasUser, isDoctor } = require('../middlewares/guard');
-const { bookAppointment, getAppointmentsForPatient, cancelAppointment, getAppointmentsForDoctor } = require('../services/appointmentsService');
+const { bookAppointment, getAppointmentsForPatient, cancelAppointment, getAppointmentsForDoctor, testingGetAppointmentsForDoctor } = require('../services/appointmentsService');
 const { errorParser } = require('../utils/errorParser');
 const { param, query, validationResult } = require('express-validator');
 
@@ -75,8 +75,8 @@ appontintmentsController.get('/patient/:patientId',
 
             // Authorization: Users can only view their own appointments (or admin)
             if (req.user.id !== patientId && req.user.role !== 'admin') {
-                return res.status(403).json({ 
-                    message: 'You are not authorized to view these appointments' 
+                return res.status(403).json({
+                    message: 'You are not authorized to view these appointments'
                 });
             }
 
@@ -99,7 +99,7 @@ appontintmentsController.get('/patient/:patientId',
 appontintmentsController.get('/doctor/:doctorId',
     isDoctor(),
     param('doctorId')
-        .isInt({ min: 1 })
+        .isUUID()
         .withMessage('Invalid doctor ID format'),
     query('filter')
         .optional()
@@ -112,21 +112,19 @@ appontintmentsController.get('/doctor/:doctorId',
                 return res.status(400).json({ errors: errors.array() });
             }
 
-            const doctorId = parseInt(req.params.doctorId);
+            const doctorId = req.params.doctorId;
             const { filter = 'all' } = req.query;
 
-            // Authorization: Check if user is the doctor or admin
-            // Need to verify if req.user.id matches the doctor's userId
-            const Doctor = require('../models/Doctor');
-            const doctor = await Doctor.findByPk(doctorId);
-            
+            const User = require('../models/User');
+            const doctor = await User.findByPk(doctorId);
+
             if (!doctor) {
                 return res.status(404).json({ message: 'Doctor not found' });
             }
 
-            if (req.user.role !== 'admin' && req.user.id !== doctor.userId) {
-                return res.status(403).json({ 
-                    message: 'You are not authorized to view these appointments' 
+            if (req.user.role !== 'admin' && req.user.id !== doctor.id) {
+                return res.status(403).json({
+                    message: 'You are not authorized to view these appointments'
                 });
             }
 
