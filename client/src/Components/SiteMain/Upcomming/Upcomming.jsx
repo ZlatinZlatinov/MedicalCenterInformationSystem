@@ -31,8 +31,8 @@ function UpcommingAppointments() {
     }, [filter]);
 
     return (
-        <section id="upcomming-appointments">
-            <div className='upcomming-options'>
+        <section id="upcomming-appointments" className='management-section'>
+            <div className='management-options'>
                 <h2><Calendar size={24} color='#3c83f6' /> Upcomming appointments</h2>
 
                 <select
@@ -48,8 +48,8 @@ function UpcommingAppointments() {
                 </select>
             </div>
 
-            <div className="upcomming-table">
-                <div className="upcomming-table-header">
+            <div className="management-table">
+                <div className="management-table-header">
                     <ul>
                         <li>Patient</li>
                         <li>Date & Time</li>
@@ -59,7 +59,7 @@ function UpcommingAppointments() {
                     </ul>
                 </div>
 
-                <div className="upcomming-table-content">
+                <div className="management-table-content">
                     {appointments[0] ? appointments.map((app) => {
                         return (<UpcommingCard key={app.id}
                             username={app.username}

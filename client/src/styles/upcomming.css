@@ -1,18 +1,26 @@
-#upcomming-appointments {
+.management-section {
     padding-top: 2rem;
 } 
 
-.upcomming-options {
+.management-options {
     display: flex;
     justify-content: space-between;
     margin-bottom: 2rem;
 } 
 
-.upcomming-options h2 {
+.management-options h2 {
     font-size: 1.8rem;
 } 
 
-.upcomming-table-header ul {
+.management-options select {
+    padding: 0rem 2rem;
+    border: var(--primary-border);
+    border-width: var(--border-width);
+    border-radius: var(--border-radius);
+    font-size: 1.3rem;
+}
+
+.management-table-header ul {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
     font-size: 1.3rem;
@@ -21,12 +29,12 @@
     margin-bottom: 1rem;
 } 
 
-.upcomming-table-content {
+.management-table-content {
     display: flex;
     flex-direction: column;
 } 
 
-.upcomming-card {
+.management-card {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
     border-top: var(--primary-border);
@@ -35,14 +43,15 @@
     font-size: 1.2rem;
 } 
 
-.upcomming-card .upcomming-card-actions {
+.management-card .management-card-actions {
     display: flex;
     gap: 1rem;
 } 
 
-.upcomming-card-actions button {
+.management-card-actions button {
     width: 100%;
     border: var(--primary-border);
     border-width: var(--border-width);
     border-radius: var(--border-radius);
+    padding: 0.5rem 0rem;
 }
