@@ -89,8 +89,50 @@ async function createDoctor(payload) {
     return Doctor.create(payload);
 }
 
+async function approveDoctor(doctorId) {
+    const doctor = await Doctor.findByPk(doctorId);
+
+    await doctor.update({
+        isActive: true
+    });
+
+    const doctorData = doctor.get({ plain: true });
+
+    return {
+        imgSrc: doctorData.profilePicture,
+        doctorName: doctorData.User?.username,
+        department: doctorData.Department?.name || null,
+        specialty: doctorData.Specialty.name || null,
+        experience: doctorData.experience,
+        description: doctorData.description,
+        education: doctorData.education
+    }
+} 
+
+async function declineDoctor(doctorId) {
+    const doctor = await Doctor.findByPk(doctorId);
+
+    await doctor.update({
+        isActive: false
+    });
+
+    const doctorData = doctor.get({ plain: true });
+
+    return {
+        imgSrc: doctorData.profilePicture,
+        doctorName: doctorData.User?.username,
+        department: doctorData.Department?.name || null,
+        specialty: doctorData.Specialty.name || null,
+        experience: doctorData.experience,
+        description: doctorData.description,
+        education: doctorData.education
+    }
+}
+
 module.exports = {
     getDoctorById,
     getDoctorsByFilters,
-    createDoctor
+    createDoctor,
+    approveDoctor, 
+    declineDoctor
 }
