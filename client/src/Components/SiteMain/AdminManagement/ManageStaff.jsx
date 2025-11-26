@@ -42,8 +42,7 @@ function ManageStaff() {
                     onChange={handleOnchange}
                 >
                     <option value="pending">Pending</option>
-                    <option value="doctors">Doctors</option>
-                    <option value="nurses">Nurses</option>
+                    <option value="doctors">All Doctors</option>
                     <option value="approved">Approved</option>
                     <option value="declined">Declined</option>
                 </select>
@@ -65,7 +64,9 @@ function ManageStaff() {
                         key={s.userId}
                         username={s.username}
                         type={s.type}
-                        email={s.email} specialization={s.specialization} />)
+                        email={s.email} specialization={s.specialization}
+                        accessToken={authUserData.accessToken}
+                        doctorId={s.doctorId} />)
                         : <p>No staff found by criteria: {filter}</p>
                     }
 
