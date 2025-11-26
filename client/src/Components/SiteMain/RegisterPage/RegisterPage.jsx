@@ -1,13 +1,15 @@
 import { Link } from 'react-router';
-import { Activity, MoveLeft } from 'lucide-react';
+import { Activity, MoveLeft, TriangleAlert } from 'lucide-react';
 import { useState } from 'react';
 import { registerUser } from '../../../services/authService';
-//TODO: Add error handlig, and update UI
+
+const initialMessage = "Join MediCare today";
+
 function RegisterPage() {
-    const [formMessage, setFormMessage] = useState("Join MediCare today");
+    const [formMessage, setFormMessage] = useState(initialMessage);
     const [formData, setFormData] = useState({
-        firstName: '',
-        lastName: '',
+        username: '',
+        phoneNumber: '',
         email: '',
         password: '',
         confirmPassword: ''
@@ -26,9 +28,20 @@ function RegisterPage() {
     async function handleOnSubmit(e) {
         e.preventDefault();
 
+        if (!formData.username || !formData.email || !formData.phoneNumber || !formData.password || !formData.confirmPassword) {
+            setFormMessage("All fields are required!");
+            return;
+        }
+
+        if (formData.password !== formData.confirmPassword) {
+            setFormMessage("Password and Confirm Password fields should be equal!");
+            return;
+        }
+
         try {
             await registerUser({
-                username: `${formData.firstName} ${formData.lastName}`,
+                username: formData.username,
+                phoneNumber: formData.phoneNumber,
                 email: formData.email,
                 password: formData.password,
                 confirmPassword: formData.confirmPassword,
@@ -45,7 +58,8 @@ function RegisterPage() {
             <form id="register-form" className='auth-form' onSubmit={handleOnSubmit}>
                 <div className="form-header">
                     <p className="form-logo">
-                        <Activity className="activity" />
+                        {formMessage === initialMessage ? <Activity className="activity" /> :
+                            <TriangleAlert color='red' size={32} />}
                     </p>
                     <h2 className='form-heading'>Create Account</h2>
                     <span>{formMessage}</span>
@@ -53,23 +67,27 @@ function RegisterPage() {
 
                 <div className="form-fields">
                     <div className="input-field">
-                        <label htmlFor="firstName">First Name</label>
+                        <label htmlFor="username">First & Last Name</label>
                         <input
                             type="text"
-                            name="firstName"
-                            id="firstName"
-                            value={formData.firstName}
+                            name="username"
+                            id="username"
+                            minLength={5}
+                            maxLength={50}
+                            value={formData.username}
                             onChange={handleOnChange}
                         />
                     </div>
 
                     <div className="input-field">
-                        <label htmlFor="lastName">Last Name</label>
+                        <label htmlFor="phoneNumber">Phone Number</label>
                         <input
                             type="text"
-                            name="lastName"
-                            id="lastName"
-                            value={formData.lastName}
+                            name="phoneNumber"
+                            id="phoneNumber"
+                            minLength={10}
+                            maxLength={13}
+                            value={formData.phoneNumber}
                             onChange={handleOnChange}
                         />
                     </div>
@@ -91,6 +109,7 @@ function RegisterPage() {
                             type="password"
                             name="password"
                             id="password"
+                            minLength={6}
                             value={formData.password}
                             onChange={handleOnChange}
                         />
@@ -102,6 +121,7 @@ function RegisterPage() {
                             type="password"
                             name="confirmPassword"
                             id="confirmPassword"
+                            minLength={6}
                             value={formData.confirmPassword}
                             onChange={handleOnChange}
                         />

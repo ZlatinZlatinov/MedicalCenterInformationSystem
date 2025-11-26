@@ -1,13 +1,15 @@
 import { Link, useNavigate } from "react-router";
-import { Activity, MoveLeft } from 'lucide-react';
+import { Activity, MoveLeft, TriangleAlert } from 'lucide-react';
 import { useState } from "react";
 import { loginUser } from "../../../services/authService";
 import { useAuth } from "../../../Hooks/useAuth";
 
+const initialMessage = "Sign in to access your MediCare account";
+
 function LoginPage() {
     const { setAuthUserData } = useAuth();
     const navigate = useNavigate();
-    const [formMessage, setFormMessage] = useState("Sign in to access your MediCare account");
+    const [formMessage, setFormMessage] = useState(initialMessage);
     const [formData, setFormData] = useState({
         email: '',
         password: ''
@@ -25,6 +27,11 @@ function LoginPage() {
 
     async function handleOnSubmit(e) {
         e.preventDefault();
+
+        if (!formData.email || !formData.password) {
+            setFormMessage("All fields a required!");
+            return;
+        }
 
         try {
             const authData = await loginUser(formData);
@@ -49,7 +56,8 @@ function LoginPage() {
             <form id="login-form" className="auth-form" onSubmit={handleOnSubmit}>
                 <div className="form-header">
                     <p className="form-logo">
-                        <Activity className="activity" />
+                        {formMessage === initialMessage ? <Activity className="activity" /> :
+                            <TriangleAlert color='red' size={32} />}
                     </p>
                     <h2 className="form-heading">Welcome Back</h2>
                     <span>{formMessage}</span>
@@ -73,6 +81,7 @@ function LoginPage() {
                             type="password"
                             name="password"
                             id="password"
+                            minLength={6}
                             value={formData.password}
                             onChange={handleOnChange}
                         />
