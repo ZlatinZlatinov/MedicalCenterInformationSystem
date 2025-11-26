@@ -91,6 +91,7 @@
 
 .doctor-card-heading {
     padding: 2rem 0rem;
+    grid-column: 2 / span 2;
 }
 
 .doctor-card-heading .doctor-card-title {
