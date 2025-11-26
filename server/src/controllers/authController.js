@@ -39,6 +39,8 @@ authController.post('/register', isGuest(),
         .withMessage("Username is required!"),
     body('email').trim().notEmpty().escape().bail().isEmail()
         .withMessage("Please enter valid email addres!"),
+    body('phoneNumber').trim().notEmpty().escape().bail().isLength({min: 10, max: 13}).isMobilePhone('bg-BG')
+        .withMessage("Please enter valid phone nubmer!"),
     body('password').trim().notEmpty().escape().bail().isLength({ min: 6 })
         .withMessage("Password should be atleast 6 characters long!"),
     body("confirmPassword").trim().notEmpty().escape().bail().isLength({ min: 6 })
@@ -46,6 +48,7 @@ authController.post('/register', isGuest(),
     async (req, res) => {
         const username = req.body.username;
         const email = req.body.email;
+        const phoneNumber = req.body.phoneNumber;
         const password = req.body.password;
         const confirmPassword = req.body.confirmPassword;
 
@@ -66,7 +69,7 @@ authController.post('/register', isGuest(),
                 return res.status(409).json({ message: "User already exists!" });
             }
 
-            const user = await createUser({ username, email, password });
+            const user = await createUser({ username, email, password, phoneNumber });
             const token = await createVerificationToken(user.id);
 
             await sendVerificationEmail(email, token.token);
