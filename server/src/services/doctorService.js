@@ -1,3 +1,4 @@
+const { sendDoctorApprovalEmail } = require('../config/mail');
 const Departments = require('../models/Departments');
 const Doctor = require('../models/Doctor');
 const Specialties = require('../models/Specialties');
@@ -90,27 +91,43 @@ async function createDoctor(payload) {
 }
 
 async function approveDoctor(doctorId) {
-    const doctor = await Doctor.findByPk(doctorId);
+    const doctor = await Doctor.findOne({
+        where: {
+            id: doctorId
+        },
+        include: [
+            { model: User, as: 'User', attributes: ['email', 'username'] },
+            { model: Specialties, as: 'Specialty', attributes: ['name'] }
+        ]
+    });
 
     await doctor.update({
         isActive: true
     });
 
     const doctorData = doctor.get({ plain: true });
+    await sendDoctorApprovalEmail(doctorData.User.email, doctorData.User.username);
 
     return {
         imgSrc: doctorData.profilePicture,
         doctorName: doctorData.User?.username,
-        department: doctorData.Department?.name || null,
         specialty: doctorData.Specialty.name || null,
         experience: doctorData.experience,
         description: doctorData.description,
         education: doctorData.education
     }
-} 
+}
 
 async function declineDoctor(doctorId) {
-    const doctor = await Doctor.findByPk(doctorId);
+    const doctor = await Doctor.findOne({
+        where: {
+            id: doctorId
+        },
+        include: [
+            { model: User, as: 'User', attributes: ['email', 'username'] },
+            { model: Specialties, as: 'Specialty', attributes: ['name'] }
+        ]
+    });
 
     await doctor.update({
         isActive: false
@@ -121,7 +138,6 @@ async function declineDoctor(doctorId) {
     return {
         imgSrc: doctorData.profilePicture,
         doctorName: doctorData.User?.username,
-        department: doctorData.Department?.name || null,
         specialty: doctorData.Specialty.name || null,
         experience: doctorData.experience,
         description: doctorData.description,
@@ -133,6 +149,6 @@ module.exports = {
     getDoctorById,
     getDoctorsByFilters,
     createDoctor,
-    approveDoctor, 
+    approveDoctor,
     declineDoctor
 }
