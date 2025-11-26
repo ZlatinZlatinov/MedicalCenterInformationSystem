@@ -10,7 +10,7 @@ async function getDoctorById(doctorId) {
             id: doctorId
         },
         include: [
-            { model: User, as: 'User', attributes: ['username'], required: false },
+            { model: User, as: 'User', attributes: ['username', 'phoneNumber'], required: false },
             { model: Departments, as: 'Department', attributes: ['name'] },
             { model: Specialties, as: 'Specialty', attributes: ['name'] },
         ],
@@ -23,10 +23,11 @@ async function getDoctorById(doctorId) {
         imgSrc: doctorData.profilePicture,
         doctorName: doctorData.User?.username,
         department: doctorData.Department?.name || null,
-        specialty: doctorData.Specialty.name || null,
+        specialty: doctorData.Specialty?.name || null,
         experience: doctorData.experience,
         description: doctorData.description,
-        education: doctorData.education
+        education: doctorData.education,
+        phoneNumber: doctorData.User?.phoneNumber
     };
 }
 
