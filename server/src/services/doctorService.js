@@ -14,7 +14,7 @@ async function getDoctorById(doctorId) {
             { model: Departments, as: 'Department', attributes: ['name'] },
             { model: Specialties, as: 'Specialty', attributes: ['name'] },
         ],
-        attributes: ['profilePicture', 'education', 'description', 'experience'],
+        attributes: ['profilePicture', 'education', 'description', 'experience', 'isNzok'],
     });
 
     const doctorData = doctor.get({ plain: true });
@@ -27,7 +27,8 @@ async function getDoctorById(doctorId) {
         experience: doctorData.experience,
         description: doctorData.description,
         education: doctorData.education,
-        phoneNumber: doctorData.User?.phoneNumber
+        phoneNumber: doctorData.User?.phoneNumber,
+        isNzok: doctorData.isNzok
     };
 }
 
