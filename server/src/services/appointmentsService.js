@@ -404,6 +404,5 @@ module.exports = {
     cancelAppointment,
     getAppointmentsForPatient,
     cancelAppointment,
-    getAppointmentsForDoctor,
-    testingGetAppointmentsForDoctor
+    getAppointmentsForDoctor
 }

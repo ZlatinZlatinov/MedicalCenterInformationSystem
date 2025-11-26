@@ -1,6 +1,6 @@
 const { sendAppointmentConfirmationEmail } = require('../config/mail');
 const { hasUser, isDoctor } = require('../middlewares/guard');
-const { bookAppointment, getAppointmentsForPatient, cancelAppointment, getAppointmentsForDoctor, testingGetAppointmentsForDoctor } = require('../services/appointmentsService');
+const { bookAppointment, getAppointmentsForPatient, cancelAppointment, getAppointmentsForDoctor } = require('../services/appointmentsService');
 const { errorParser } = require('../utils/errorParser');
 const { param, query, validationResult } = require('express-validator');
 
