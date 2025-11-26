@@ -4,21 +4,22 @@
     gap: 2rem;
     padding: 4rem 0rem;
     position: relative;
+    min-height: 90vh;
 }
 
 .doctor-details-content {
     grid-column-end: span 2;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
 }
 
 .details-main-info,
-.details-education {
+.details-education,
+.details-phone {
     border: 1px solid var(--primary-text-color);
     border-radius: var(--border-radius);
     padding: 1.5rem;
-}
-
-.details-main-info {
-    margin-bottom: 2rem;
 }
 
 .details-main-info .main-info-header {
@@ -52,6 +53,7 @@
 
 .main-info-details h4,
 .details-education h4,
+.details-phone h4,
 .book-doctor-heading h4 {
     font-size: 1.3rem;
 }
@@ -61,13 +63,15 @@
     color: var(--secondary-text-color);
 }
 
-.details-education ul {
+.details-education ul,
+.details-phone ul {
     display: flex;
     flex-direction: column;
     gap: 0.7rem;
 }
 
-.details-education li {
+.details-education li,
+.details-phone li {
     font-size: 1.1rem;
     color: var(--secondary-text-color);
 }
@@ -98,7 +102,30 @@
 .book-doctor-btn:hover {
     cursor: pointer;
     color: var(--primary-white);
+} 
+
+.nhif-logo {
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-end;
+} 
+
+.nhif-logo img {
+    width: 4rem;
+    height: 4rem;
+} 
+
+.nhif-logo p {
+    font-size: 1.2rem;
+} 
+
+.nhif-logo div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
 }
+
 /*CALENDAR*/
 .book-calendar {
     border-radius: 3rem;

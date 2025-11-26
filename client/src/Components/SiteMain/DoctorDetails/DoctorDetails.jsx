@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router";
-import { CircleCheck, Calendar, CircleX } from "lucide-react";
+import { GraduationCap, CircleCheck, Calendar, CircleX, Phone } from "lucide-react";
 import CalendarApp from "./Calendar";
 import { getDoctorById } from "../../../services/doctorService";
 
@@ -8,7 +8,9 @@ function DoctorDetails() {
     const params = useParams();
     const [isHidden, setIsHidden] = useState(false);
     const [doctorDetails, setDoctrorDetails] = useState({
-        imgSrc: '', doctorName: '', department: '', specialty: '', experience: 0, description: '', education: ''
+        imgSrc: '', doctorName: '', department: '',
+        specialty: '', experience: 0, description: '',
+        education: '', phoneNumber: '', isNzok: false
     });
     const doctorId = params.doctorId;
 
@@ -16,6 +18,8 @@ function DoctorDetails() {
         async function fetchDoctorDetails() {
             try {
                 const data = await getDoctorById(doctorId);
+                console.log(data);
+                
                 setDoctrorDetails(data);
             } catch (error) {
                 console.error(error);
@@ -30,10 +34,9 @@ function DoctorDetails() {
             <div className="doctor-details-content">
                 {/* Main Info */}
                 <div className="details-main-info">
-
                     <div className="main-info-header">
                         <div className="main-info-img">
-                            <img src={"/public/images/bezos.png"} alt="Doctor profile picture" />
+                            <img src={"/images/bezos.png"} alt="Doctor profile picture" />
                         </div>
 
                         <div className="main-info-heading">
@@ -42,6 +45,13 @@ function DoctorDetails() {
                             <span className="main-infor-specialty">{doctorDetails.specialty}</span> {/*Specialty */}
                             <p className="doctor-card-experience">{doctorDetails.experience} years experience</p>
                         </div>
+
+                        {doctorDetails.isNzok && <div className="nhif-logo">
+                            <div>
+                                <img src="/images/nhifLogo.svg" alt="nhif logo" />
+                                <p><CircleCheck size={16} color="green" /> Works with NHIF</p>
+                            </div>
+                        </div> }
                     </div>
 
                     <div className="main-info-details">
@@ -55,10 +65,15 @@ function DoctorDetails() {
                     <h4>Education</h4>
 
                     <ul>
-                        <li><CircleCheck size={18} color="#00d062" /> <span>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Obcaecati, reiciendis praesentium accusantium fugiat mollitia, aperiam pariatur cum vel exercitationem quod dolorum! Sed est aliquam officiis assumenda libero ut aspernatur voluptas!</span></li>
-                        <li><CircleCheck size={18} color="#00d062" /> <span>Voluptatum cum debitis, autem aspernatur cupiditate fuga velit, corporis voluptatibus deserunt, itaque perspiciatis. Odio mollitia quisquam est ipsam nemo architecto et, molestias dolorem aspernatur veniam ut, cupiditate modi nobis exercitationem?</span></li>
-                        <li><CircleCheck size={18} color="#00d062" /> <span>Repellat, numquam nemo! Quasi nulla sequi, voluptatem quae impedit amet nam odio nemo reiciendis vel, molestiae distinctio voluptatum voluptate minus repudiandae ab officiis nobis est veritatis quaerat neque nisi sit?</span></li>
-                        <li><CircleCheck size={18} color="#00d062" /> <span>Perferendis molestias aut maxime aliquid saepe! Molestias totam magni cum similique ad, culpa dignissimos libero nam explicabo tempore adipisci! Repellendus quam nostrum fugit. Quis, quod iure. Voluptatum recusandae ullam omnis.</span></li>
+                        <li><GraduationCap size={22} color="#00d062" /> <span>{doctorDetails.education}</span></li>
+                    </ul>
+                </div>
+
+                <div className="details-phone">
+                    <h4>Phone Number</h4>
+
+                    <ul>
+                        <li><Phone size={20} color="#00d062" /> <span>{doctorDetails.phoneNumber}</span></li>
                     </ul>
                 </div>
             </div>
