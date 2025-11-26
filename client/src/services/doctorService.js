@@ -73,3 +73,29 @@ export async function getDoctorSchedule(doctorId, date) {
 
     return data;
 }
+
+export async function approveDoctor(accessToken, doctorId) {
+    const response = await fetch(import.meta.env.VITE_SERVER_URL + END_POINT + `/${doctorId}/approve`, {
+        method: 'PATCH',
+        headers: {
+            'Authorization': `Bearer ${accessToken}`
+        }
+    });
+
+    const data = await response.json();
+
+    return data;
+} 
+
+export async function declineDoctor(accessToken, doctorId) {
+    const response = await fetch(import.meta.env.VITE_SERVER_URL + END_POINT + `/${doctorId}/decline`, {
+        method: 'PATCH',
+        headers: {
+            'Authorization': `Bearer ${accessToken}`
+        }
+    });
+
+    const data = await response.json();
+
+    return data;
+}
