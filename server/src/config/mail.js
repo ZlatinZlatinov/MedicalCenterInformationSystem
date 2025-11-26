@@ -39,14 +39,31 @@ async function sendAppointmentConfirmationEmail(to, doctorName, appointmentDate,
         <p>You have sucessfully booked an appointment for Dr. ${doctorName}</p>
         <p>at ${appointmentDate}, ${appointmentTime}</p>
         `
-    }; 
+    };
 
-    await transporter.sendMail(message); 
+    await transporter.sendMail(message);
     console.log('Confirmation appointment email sent!');
 }
 
-module.exports = { 
-    transporter, 
+async function sendDoctorApprovalEmail(to, doctorName) {
+    const message = {
+        from: process.env.SMTP_SENDER,
+        to,
+        subject: 'Doctor approval',
+        html: `
+        <p>Congratulations Dr. ${doctorName},</p>
+        <p>You have been approved as a Doctor at MediCare!</p>
+        <p>You can now go to your dashboard and manage your schedule.</p>
+        `
+    };
+
+    await transporter.sendMail(message);
+    console.log('Doctor approval email sent!');
+}
+
+module.exports = {
+    transporter,
     sendVerificationEmail,
-    sendAppointmentConfirmationEmail
+    sendDoctorApprovalEmail,
+    sendAppointmentConfirmationEmail,
 };
