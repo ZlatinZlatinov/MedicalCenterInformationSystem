@@ -3,7 +3,7 @@ const { body, validationResult, param, header, query } = require('express-valida
 
 const { isDoctor, hasUser, isAdmin } = require('../middlewares/guard');
 const { createScheduleForAllDays } = require('../services/doctorSchedule');
-const { getDoctorById, getDoctorsByFilters, createDoctor } = require('../services/doctorService');
+const { getDoctorById, getDoctorsByFilters, createDoctor, approveDoctor, declineDoctor } = require('../services/doctorService');
 const { errorParser } = require('../utils/errorParser');
 const { upload } = require('../config/fileStorage');
 const { getAvailableSlots } = require('../services/appointmentsService');
@@ -143,6 +143,32 @@ doctorController.get('/:doctorId/schedule', async (req, res) => {
     } catch (error) {
         console.log("Oops, something went wrong: ", error);
         res.status(400).json({ message: "Failed to fetch schedule." });
+    }
+});
+
+doctorController.patch('/:doctorId/approve', isAdmin(), async (req, res) => {
+    const doctorId = req.params.doctorId;
+
+    try {
+        const payload = await approveDoctor(doctorId);
+        res.json(payload);
+    } catch (error) {
+        console.error(error);
+        const message = errorParser(error);
+        res.status(400).json({ message });
+    }
+}); 
+
+doctorController.patch('/:doctorId/decline', isAdmin(), async (req, res) => {
+    const doctorId = req.params.doctorId;
+
+    try {
+        const payload = await declineDoctor(doctorId);
+        res.json(payload);
+    } catch (error) {
+        console.error(error);
+        const message = errorParser(error);
+        res.status(400).json({ message });
     }
 });
 
