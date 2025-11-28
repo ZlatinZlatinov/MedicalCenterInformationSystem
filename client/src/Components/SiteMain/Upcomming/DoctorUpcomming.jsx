@@ -40,6 +40,8 @@ function DoctorUpcomming({filter, handleOnchange, appointments}) {
                             appointmentTime={app.appointmentTime}
                             status={app.status}
                             isInitial={app.isInitial}
+                            appointmentId={app.id}
+                            accessToken={accessToken}
                         />);
                     }) : <p>No appointments found</p>}
                 </div>

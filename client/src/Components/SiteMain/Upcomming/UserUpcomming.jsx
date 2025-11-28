@@ -1,7 +1,7 @@
 import { Calendar } from 'lucide-react';
 import UpcommingCard from './UpcommingCard';
 
-function UserUpcomming({ status, handleOnchange, appointments }) {
+function UserUpcomming({ status, handleOnchange, appointments, accessToken }) {
     return (
         <section id="upcomming-appointments" className='management-section'>
             <div className='management-options'>
@@ -40,6 +40,8 @@ function UserUpcomming({ status, handleOnchange, appointments }) {
                             appointmentTime={app.appointmentTime}
                             status={app.status}
                             isInitial={app.isInitial}
+                            appointmentId={app.id}
+                            accessToken={accessToken}
                         />);
                     }) : <p>No appointments found</p>}
                 </div>

@@ -33,8 +33,8 @@ function UpcommingAppointments() {
     }, [query]);
 
     return (
-        path === 'doctor' ? <DoctorUpcomming filter={query} handleOnchange={handleOnchange} appointments={appointments} />
-            : < UserUpcomming handleOnchange={handleOnchange} status={query} appointments={appointments} />
+        path === 'doctor' ? <DoctorUpcomming accessToken={authUserData.accessToken} filter={query} handleOnchange={handleOnchange} appointments={appointments} />
+            : < UserUpcomming accessToken={authUserData.accessToken} handleOnchange={handleOnchange} status={query} appointments={appointments} />
     );
 }
 
