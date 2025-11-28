@@ -272,7 +272,22 @@ async function getAppointmentsForPatient(where) {
         order: [['appointmentDate', 'ASC'], ['appointmentTime', 'ASC']]
     });
 
-    return appointments;
+    const payload = appointments.map((app) => {
+        const appointmentData = app.get({plain: true}); 
+
+        return {
+            id: appointmentData.id,
+            doctorId: appointmentData.doctorId,
+            username: appointmentData.Doctor?.User?.username,
+            email: appointmentData.Doctor?.User?.email,
+            appointmentDate: appointmentData.appointmentDate,
+            appointmentTime: appointmentData.appointmentTime,
+            status: appointmentData.status,
+            isInitial: appointmentData.isInitial
+        };
+    }); 
+
+    return payload;
 }
 
 async function getAppointmentsForDoctor(doctorId, filter = 'all') {
