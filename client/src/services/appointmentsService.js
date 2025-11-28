@@ -30,3 +30,18 @@ export async function getUpcommingAppointments(accessToken, doctorId, filter, pa
     const data = await response.json();
     return data;
 }
+
+export async function cancelAppointment(id, accessToken, reason = 'Cancelled by user') {
+    const response = await fetch(import.meta.env.VITE_SERVER_URL + `/${id}/cancel`, {
+        method: 'POST',
+        headers: {
+            'Authorization': `Bearer ${accessToken}`,
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ reason })
+    });
+
+    const data = await response.json();
+
+    return data;
+}
