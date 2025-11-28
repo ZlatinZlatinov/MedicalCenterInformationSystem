@@ -139,20 +139,22 @@ appontintmentsController.get('/doctor/:doctorId',
 );
 
 // Cancel an appointment 
-appontintmentsController.patch('/:id/cancel', async (req, res) => {
-    const { id } = req.params;
-    const { reason } = req.body;
-    const userId = req.user.id;
+appontintmentsController.patch('/:id/cancel',
+    hasUser(),
+    async (req, res) => {
+        const { id } = req.params;
+        const { reason } = req.body;
+        const userId = req.user.id;
 
-    try {
-        const appointment = await cancelAppointment(id, userId, reason);
-        res.json(appointment);
-    } catch (error) {
-        console.error("Oops, something went wrong: ", error);
+        try {
+            const appointment = await cancelAppointment(id, userId, reason);
+            res.json(appointment);
+        } catch (error) {
+            console.error("Oops, something went wrong: ", error);
 
-        res.status(400).json({ message: "Failed to cancel appointment" });
-    }
-});
+            res.status(400).json({ message: "Failed to cancel appointment" });
+        }
+    });
 
 module.exports = {
     appontintmentsController
