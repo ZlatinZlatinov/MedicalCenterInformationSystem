@@ -1,25 +1,27 @@
-import { Calendar } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router';
-import { getDoctorAppointments } from '../../../services/appointmentsService';
-import UpcommingCard from './UpcommingCard';
+import { getUpcommingAppointments } from '../../../services/appointmentsService';
 import { useAuth } from '../../../Hooks/useAuth';
+import DoctorUpcomming from './DoctorUpcomming';
+import UserUpcomming from './UserUpcomming';
 
 function UpcommingAppointments() {
     const [searchParams, setSearchParams] = useSearchParams();
     const [appointments, setAppointments] = useState([]);
     const { authUserData } = useAuth();
 
-    const filter = searchParams.get('filter') || "today";
+    const query = searchParams.get('filter') || searchParams.get('status') ||
+        (authUserData.role === 'doctor' ? 'today' : 'confirmed');
+    const path = authUserData.role === 'doctor' ? 'doctor' : 'patient';
 
-    function handleOnchange(e) {
-        setSearchParams({ filter: e.target.value });
+    function handleOnchange(value, queryOptions) {
+        setSearchParams({ [queryOptions]: value });
     }
 
     useEffect(() => {
         async function fetchUpcommingAppointments() {
             try {
-                const data = await getDoctorAppointments(authUserData.accessToken, authUserData.id, filter);
+                const data = await getUpcommingAppointments(authUserData.accessToken, authUserData.id, query, path);
                 setAppointments(data);
             } catch (error) {
                 console.error(error);
@@ -28,51 +30,11 @@ function UpcommingAppointments() {
         }
 
         fetchUpcommingAppointments();
-    }, [filter]);
+    }, [query]);
 
     return (
-        <section id="upcomming-appointments" className='management-section'>
-            <div className='management-options'>
-                <h2><Calendar size={24} color='#3c83f6' /> Upcomming appointments</h2>
-
-                <select
-                    name="upcomming-filter"
-                    id="upcomming-filter"
-                    value={filter}
-                    onChange={handleOnchange}
-                >
-                    <option value="today">Today</option>
-                    <option value="week">Next Week</option>
-                    <option value="month">Next Month</option>
-                    <option value="all">All</option>
-                </select>
-            </div>
-
-            <div className="management-table">
-                <div className="management-table-header">
-                    <ul>
-                        <li>Patient</li>
-                        <li>Date & Time</li>
-                        <li>Status</li>
-                        <li>Notes</li>
-                        <li>Actions</li>
-                    </ul>
-                </div>
-
-                <div className="management-table-content">
-                    {appointments[0] ? appointments.map((app) => {
-                        return (<UpcommingCard key={app.id}
-                            username={app.username}
-                            email={app.email}
-                            appointmentDate={app.appointmentDate}
-                            appointmentTime={app.appointmentTime}
-                            status={app.status}
-                            isInitial={app.isInitial}
-                        />);
-                    }) : <p>No appointments found</p>}
-                </div>
-            </div>
-        </section>
+        path === 'doctor' ? <DoctorUpcomming accessToken={authUserData.accessToken} filter={query} handleOnchange={handleOnchange} appointments={appointments} />
+            : < UserUpcomming accessToken={authUserData.accessToken} handleOnchange={handleOnchange} status={query} appointments={appointments} />
     );
 }
 

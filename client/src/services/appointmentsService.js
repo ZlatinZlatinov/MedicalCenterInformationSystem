@@ -19,13 +19,29 @@ export async function bookAppointment(payload, accessToken) {
     return data;
 }
 
-export async function getDoctorAppointments(accessToken, doctorId, filter) {
-    const response = await fetch(import.meta.env.VITE_SERVER_URL + END_POINT + `/doctor/${doctorId}?filter=${filter}`, {
+export async function getUpcommingAppointments(accessToken, doctorId, filter, path) {
+    const query = path === 'doctor' ? 'filter' : 'status';
+    const response = await fetch(import.meta.env.VITE_SERVER_URL + END_POINT + `/${path}/${doctorId}?${query}=${filter}`, {
         headers: {
             'Authorization': `Bearer ${accessToken}`
         }
     });
 
     const data = await response.json();
+    return data;
+}
+
+export async function cancelAppointment(id, accessToken, reason = 'Cancelled by user') {
+    const response = await fetch(import.meta.env.VITE_SERVER_URL + `/${id}/cancel`, {
+        method: 'POST',
+        headers: {
+            'Authorization': `Bearer ${accessToken}`,
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ reason })
+    });
+
+    const data = await response.json();
+
     return data;
 }
