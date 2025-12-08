@@ -1,7 +1,7 @@
 import { Calendar } from 'lucide-react';
 import UpcommingCard from './UpcommingCard';
 
-function DoctorUpcomming({filter, handleOnchange, appointments}) {
+function DoctorUpcomming({filter, handleOnchange, appointments, accessToken}) {
     return (
         <section id="upcomming-appointments" className='management-section'>
             <div className='management-options'>
