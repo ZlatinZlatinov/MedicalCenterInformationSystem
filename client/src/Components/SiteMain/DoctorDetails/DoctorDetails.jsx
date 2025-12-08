@@ -8,7 +8,7 @@ function DoctorDetails() {
     const params = useParams();
     const [isHidden, setIsHidden] = useState(false);
     const [doctorDetails, setDoctrorDetails] = useState({
-        imgSrc: '', doctorName: '', department: '',
+        imgSrc: null, doctorName: '', department: '',
         specialty: '', experience: 0, description: '',
         education: '', phoneNumber: '', isNzok: false
     });
