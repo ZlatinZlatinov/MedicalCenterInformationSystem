@@ -16,7 +16,7 @@ function UserUpcomming({ status, handleOnchange, appointments, accessToken }) {
                     <option value="confirmed">Confirmed</option>
                     <option value="pending">Pending</option>
                     <option value="completed">Completed</option>
-                    <option value="canceled">Canceled</option>
+                    <option value="cancelled">Cancelled</option>
                 </select>
             </div>
 

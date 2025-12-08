@@ -333,7 +333,7 @@ async function seedAppointments(doctors, users, transaction) {
     const patientUsers = users.filter(u => u.role === 'user');
     const activeDoctors = doctors.filter(d => d.isActive);
     const appointments = [];
-    const statuses = ['pending', 'confirmed', 'completed', 'canceled', 'no-show'];
+    const statuses = ['pending', 'confirmed', 'completed', 'cancelled', 'no-show'];
     
     // Track used time slots to avoid duplicates (doctorId + date + time)
     const usedSlots = new Set();
@@ -386,8 +386,8 @@ async function seedAppointments(doctors, users, transaction) {
             price: price
         };
 
-        // Add cancellation info if canceled
-        if (status === 'canceled') {
+        // Add cancellation info if cancelled
+        if (status === 'cancelled') {
             appointment.cancelledAt = new Date(appointmentDate.getTime() - getRandomInt(1, 7) * 24 * 60 * 60 * 1000);
             appointment.cancelledBy = Math.random() > 0.5 ? patient.id : null;
             appointment.cancellationReason = getRandomElement([

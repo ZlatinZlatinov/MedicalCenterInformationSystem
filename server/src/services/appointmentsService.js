@@ -245,12 +245,12 @@ async function getAppointmentsForPatient(where) {
 
     // Handle status filtering
     if (where.status) {
-        // If status is explicitly provided, use it (including 'canceled')
+        // If status is explicitly provided, use it (including 'cancelled')
         whereClause.status = where.status;
     } else {
-        // Exclude canceled appointments by default
+        // Exclude cancelled appointments by default
         whereClause.status = {
-            [Op.notIn]: ['canceled']
+            [Op.notIn]: ['cancelled']
         };
     }
 
@@ -376,7 +376,7 @@ async function getAppointmentsForDoctor(doctorId, filter = 'all') {
     const whereClause = {
         ...dateFilter,
         status: {
-            [Op.notIn]: ['canceled'] // Exclude canceled appointments
+            [Op.notIn]: ['cancelled'] // Exclude cancelled appointments
         }
     };
 

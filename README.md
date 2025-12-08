@@ -41,7 +41,7 @@ A comprehensive full-stack web application for managing medical center operation
 - **Appointment System**
   - Book appointments with available doctors
   - View upcoming appointments
-  - Appointment status tracking (pending, confirmed, completed, canceled, no-show)
+  - Appointment status tracking (pending, confirmed, completed, cancelled, no-show)
   - Appointment cancellation with reason tracking
   - Support for initial and follow-up appointments
   - Appointment duration and pricing management
@@ -363,7 +363,7 @@ SMTP_SENDER=your_email@gmail.com
 - `patientId` (UUID) - Foreign key to User
 - `appointmentDate` - Date of appointment
 - `appointmentTime` - Time of appointment
-- `status` - Enum: 'pending', 'confirmed', 'completed', 'canceled', 'no-show'
+- `status` - Enum: 'pending', 'confirmed', 'completed', 'cancelled', 'no-show'
 - `isInitial` - Initial consultation flag
 - `isNzok` - NHOK coverage flag
 - `duration` - Appointment duration in minutes

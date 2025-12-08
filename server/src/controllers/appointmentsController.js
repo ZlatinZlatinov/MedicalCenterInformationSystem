@@ -61,8 +61,8 @@ appontintmentsController.get('/patient/:patientId',
         .withMessage('Invalid patient ID format'),
     query('status')
         .optional()
-        .isIn(['pending', 'confirmed', 'completed', 'canceled', 'no-show'])
-        .withMessage('Invalid status. Must be one of: pending, confirmed, completed, canceled, no-show'),
+        .isIn(['pending', 'confirmed', 'completed', 'cancelled', 'no-show'])
+        .withMessage('Invalid status. Must be one of: pending, confirmed, completed, cancelled, no-show'),
     async (req, res) => {
         try {
             const errors = validationResult(req);
