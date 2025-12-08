@@ -36,7 +36,7 @@ function DoctorDetails() {
                 <div className="details-main-info">
                     <div className="main-info-header">
                         <div className="main-info-img">
-                            <img src={"/images/bezos.png"} alt="Doctor profile picture" />
+                            <img src={doctorDetails.imgSrc} alt="Doctor profile picture" />
                         </div>
 
                         <div className="main-info-heading">

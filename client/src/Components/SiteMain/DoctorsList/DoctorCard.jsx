@@ -5,7 +5,7 @@ function DoctorCard({ doctorId, imgSrc, doctorName, department, specialty, exper
         <div className="doctor-card">
             <div className="doctor-card-header">
                 <div className="doctor-card-img">
-                    <img src={"./public/images/bezos.png"} alt="Doctor profile picture" />
+                    <img src={imgSrc} alt="Doctor profile picture" />
                 </div>
                 <div className="doctor-card-heading">
                     <h4 className="doctor-card-title">Dr. {doctorName}</h4>
