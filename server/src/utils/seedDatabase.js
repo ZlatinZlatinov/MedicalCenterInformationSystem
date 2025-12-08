@@ -7,67 +7,84 @@ const Doctor = require('../models/Doctor');
 const Nurse = require('../models/Nurse');
 const DoctorSchedule = require('../models/DoctorSchedule');
 const Appointments = require('../models/Appointment');
+const {
+    departmentNames,
+    specialtyNames,
+} = require('../constants/departments');
 
 // Unsplash photo IDs for profile pictures
 const DOCTOR_PHOTOS = [
-    '1559839734-2ae71ceb95a6', // Professional doctor
-    '1612349317150-e413f6a5b16d', // Female doctor
-    '1582750433139-0321e93e927f', // Doctor with stethoscope
-    '1551601651-2a8555f1a136', // Male doctor
-    '1576091160399-112ba8d25d1f', // Doctor portrait
-    '1607990281513-53c54ed90e93', // Professional female doctor
-    '1594824476965-e3819d0d8e5b', // Doctor in lab coat
-    '1607990281513-53c54ed90e93', // Medical professional
-    '1551601651-2a8555f1a136', // Doctor smiling
-    '1612349317150-e413f6a5b16d', // Healthcare professional
-    '1582750433139-0321e93e927f', // Doctor consultation
-    '1559839734-2ae71ceb95a6', // Medical expert
-    '1576091160399-112ba8d25d1f', // Healthcare provider
-    '1607990281513-53c54ed90e93', // Professional doctor
-    '1594824476965-e3819d0d8e5b'  // Medical staff
+    '1612349317150-e413f6a5b16d',
+    '1559839734-2b71ea197ec2',
+    '1582750433139-0321e93e927f',
+    '1551601651-2a8555f1a136',
+    '1576091160399-112ba8d25d1f',
+    '1607990281513-53c54ed90e93',
+    '1594824476965-e3819d0d8e5b',
+    '1607990281513-53c54ed90e93',
+    '1594824476967-48c8b964273f',
+    '1612349317150-e413f6a5b16d',
+    '1582750433139-0321e93e927f',
+    '1559839734-2ae71ceb95a6',
+    '1576091160399-112ba8d25d1f',
+    '1607990281513-53c54ed90e93',
+    '1594824476965-e3819d0d8e5b'
 ];
 
 const NURSE_PHOTOS = [
-    '1559839734-2ae71ceb95a6', // Professional nurse
-    '1612349317150-e413f6a5b16d', // Female nurse
-    '1582750433139-0321e93e927f', // Nurse with patient
-    '1551601651-2a8555f1a136', // Healthcare nurse
-    '1576091160399-112ba8d25d1f'  // Professional nurse
+    '1559839734-2ae71ceb95a6',
+    '1612349317150-e413f6a5b16d',
+    '1582750433139-0321e93e927f',
+    '1551601651-2a8555f1a136',
+    '1576091160399-112ba8d25d1f'
 ];
 
-// Mock data arrays
-const BULGARIAN_FIRST_NAMES = [
-    'Иван', 'Мария', 'Георги', 'Елена', 'Димитър', 'Анна', 'Петър', 'Светла',
-    'Николай', 'Ивана', 'Стоян', 'Румяна', 'Красимир', 'Весела', 'Борис',
-    'Даниела', 'Васил', 'Галина', 'Стефан', 'Йорданка', 'Александър', 'Пенка',
-    'Мартин', 'Радослава', 'Тодор', 'Снежана', 'Калин', 'Цветана', 'Росен', 'Симона'
+// English mock data arrays
+const ENGLISH_FIRST_NAMES = [
+    'John', 'Mary', 'George', 'Helen', 'Michael', 'Anna', 'Peter', 'Sophia',
+    'Nicholas', 'Emily', 'Daniel', 'Laura', 'Christopher', 'Grace', 'David',
+    'Natalie', 'Victor', 'Olivia', 'Stephen', 'Julia', 'Alexander', 'Emma',
+    'Martin', 'Rachel', 'Thomas', 'Samantha', 'Caleb', 'Chloe', 'Ryan', 'Simone'
 ];
 
-const BULGARIAN_LAST_NAMES = [
-    'Иванов', 'Петров', 'Георгиев', 'Димитров', 'Стоянов', 'Николов', 'Караджов',
-    'Попов', 'Тодоров', 'Ангелов', 'Василев', 'Стефанов', 'Марков', 'Кирилов',
-    'Атанасов', 'Христов', 'Янев', 'Стоилов', 'Павлов', 'Ковачев', 'Михайлов',
-    'Димитрова', 'Петрова', 'Иванова', 'Георгиева', 'Стоянова', 'Николова', 'Попова'
+const ENGLISH_LAST_NAMES = [
+    'Smith', 'Johnson', 'Brown', 'Taylor', 'Williams', 'Jones', 'Miller',
+    'Davis', 'Garcia', 'Rodriguez', 'Martinez', 'Hernandez', 'Lopez', 'Gonzalez',
+    'Wilson', 'Anderson', 'Thomas', 'Jackson', 'White', 'Harris', 'Martin',
+    'Thompson', 'Moore', 'Walker', 'Hall', 'Allen', 'Young', 'King'
 ];
 
 const MEDICAL_DESCRIPTIONS = [
-    'Опитен специалист с дългогодишен опит в диагностиката и лечението на различни заболявания.',
-    'Висококвалифициран лекар, посветен на предоставянето на най-добрата грижа за пациентите.',
-    'Специалист с доказан опит в областта, използващ най-модерните методи на лечение.',
-    'Предан професионалист, фокусиран върху превенцията и лечението на заболявания.',
-    'Опитен лекар с отлично разбиране на съвременната медицина и персонализиран подход.',
-    'Високо квалифициран специалист, известен с внимателния си подход към всеки пациент.',
-    'Професионалист с богат опит в диагностиката и лечението на сложни медицински случаи.',
-    'Посветен лекар, използващ най-новите постижения в медицината за оптимални резултати.'
+    'Experienced specialist focused on clear communication and patient outcomes.',
+    'Board-certified physician dedicated to evidence-based, compassionate care.',
+    'Clinician skilled in modern diagnostics and collaborative treatment plans.',
+    'Patient-centered professional emphasizing prevention and long-term health.',
+    'Physician with strong clinical judgment and a personalized care approach.',
+    'Known for thorough evaluations and practical, effective treatment plans.',
+    'Seasoned expert in managing complex medical cases with multidisciplinary care.',
+    'Committed to using up-to-date clinical guidelines to achieve the best results.'
 ];
 
 const EDUCATION_OPTIONS = [
-    'Медицински университет - София',
-    'Медицински университет - Пловдив',
-    'Медицински университет - Варна',
-    'Медицински университет - Плевен',
-    'Медицински университет - Стара Загора'
+    'Harvard Medical School',
+    'Johns Hopkins University School of Medicine',
+    'University of Oxford Medical Sciences',
+    'Stanford University School of Medicine',
+    'Mayo Clinic Alix School of Medicine'
 ];
+
+// Department to specialty mapping (prefer matched specialties; fallback allowed)
+const departmentSpecialtyMap = {
+    Cardiology: ['Cardiologist'],
+    Neurology: ['Neurologist'],
+    Pediatrics: ['Pediatrician'],
+    Orthopedics: ['Orthopedist'],
+    Dermatology: ['Dermatologist'],
+    Nephrology: ['Nephrologist'],
+    Ophthalmology: ['Ophthalmologist'],
+    Dentistry: ['Dentist'],
+    Psychiatry: ['Psychiatrist'],
+};
 
 // Helper function to get random element from array
 function getRandomElement(array) {
@@ -114,17 +131,7 @@ async function clearTables() {
 
 // Seed Departments
 async function seedDepartments(transaction) {
-    const departments = [
-        { name: 'Кардиология' },
-        { name: 'Неврология' },
-        { name: 'Педиатрия' },
-        { name: 'Ортопедия' },
-        { name: 'Дерматология' },
-        { name: 'Офталмология' },
-        { name: 'Стоматология' },
-        { name: 'Психиатрия' }
-    ];
-
+    const departments = departmentNames.map(name => ({ name }));
     const createdDepartments = await Departments.bulkCreate(departments, { transaction });
     console.log(`✓ Seeded ${createdDepartments.length} departments`);
     return createdDepartments;
@@ -132,24 +139,7 @@ async function seedDepartments(transaction) {
 
 // Seed Specialties
 async function seedSpecialties(transaction) {
-    const specialties = [
-        { name: 'Кардиолог' },
-        { name: 'Невролог' },
-        { name: 'Педиатър' },
-        { name: 'Ортопед' },
-        { name: 'Дерматолог' },
-        { name: 'Офталмолог' },
-        { name: 'Стоматолог' },
-        { name: 'Психиатър' },
-        { name: 'Хирург' },
-        { name: 'Гастроентеролог' },
-        { name: 'Ендокринолог' },
-        { name: 'Уролог' },
-        { name: 'Гинеколог' },
-        { name: 'Онколог' },
-        { name: 'Пулмолог' }
-    ];
-
+    const specialties = specialtyNames.map(name => ({ name }));
     const createdSpecialties = await Specialties.bulkCreate(specialties, { transaction });
     console.log(`✓ Seeded ${createdSpecialties.length} specialties`);
     return createdSpecialties;
@@ -158,13 +148,13 @@ async function seedSpecialties(transaction) {
 // Seed Users
 async function seedUsers(transaction) {
     const users = [];
-    const defaultPassword = 'Password123!';
-    
+    const defaultPassword =  '$2a$10$2Z/7V4Yb31SBjlJIHV5EcePr4fC7KIL8bGdWtgn8W32KQ0whkX7ne'; //Password123!
+
     // Admin users (1-2)
     const adminCount = getRandomInt(1, 2);
     for (let i = 0; i < adminCount; i++) {
-        const firstName = getRandomElement(BULGARIAN_FIRST_NAMES);
-        const lastName = getRandomElement(BULGARIAN_LAST_NAMES);
+        const firstName = getRandomElement(ENGLISH_FIRST_NAMES);
+        const lastName = getRandomElement(ENGLISH_LAST_NAMES);
         users.push({
             username: `${firstName.toLowerCase()}.${lastName.toLowerCase()}`,
             email: `admin${i + 1}@medicalcenter.bg`,
@@ -179,8 +169,8 @@ async function seedUsers(transaction) {
     // Patient users (5-10)
     const patientCount = getRandomInt(5, 10);
     for (let i = 0; i < patientCount; i++) {
-        const firstName = getRandomElement(BULGARIAN_FIRST_NAMES);
-        const lastName = getRandomElement(BULGARIAN_LAST_NAMES);
+        const firstName = getRandomElement(ENGLISH_FIRST_NAMES);
+        const lastName = getRandomElement(ENGLISH_LAST_NAMES);
         users.push({
             username: `${firstName.toLowerCase()}.${lastName.toLowerCase()}.patient`,
             email: `patient${i + 1}@example.bg`,
@@ -195,8 +185,8 @@ async function seedUsers(transaction) {
     // Doctor users (8-15)
     const doctorCount = getRandomInt(8, 15);
     for (let i = 0; i < doctorCount; i++) {
-        const firstName = getRandomElement(BULGARIAN_FIRST_NAMES);
-        const lastName = getRandomElement(BULGARIAN_LAST_NAMES);
+        const firstName = getRandomElement(ENGLISH_FIRST_NAMES);
+        const lastName = getRandomElement(ENGLISH_LAST_NAMES);
         users.push({
             username: `dr.${firstName.toLowerCase()}.${lastName.toLowerCase()}`,
             email: `doctor${i + 1}@medicalcenter.bg`,
@@ -211,8 +201,8 @@ async function seedUsers(transaction) {
     // Nurse users (3-5)
     const nurseCount = getRandomInt(3, 5);
     for (let i = 0; i < nurseCount; i++) {
-        const firstName = getRandomElement(BULGARIAN_FIRST_NAMES);
-        const lastName = getRandomElement(BULGARIAN_LAST_NAMES);
+        const firstName = getRandomElement(ENGLISH_FIRST_NAMES);
+        const lastName = getRandomElement(ENGLISH_LAST_NAMES);
         users.push({
             username: `${firstName.toLowerCase()}.${lastName.toLowerCase()}.nurse`,
             email: `nurse${i + 1}@medicalcenter.bg`,
@@ -234,12 +224,18 @@ async function seedDoctors(users, departments, specialties, transaction) {
     const doctorUsers = users.filter(u => u.role === 'doctor');
     const doctors = [];
     let photoIndex = 0;
+    const specialtiesByName = Object.fromEntries(specialties.map(s => [s.name, s]));
+    const fallbackSpecialties = specialties;
 
     for (let i = 0; i < doctorUsers.length; i++) {
         const user = doctorUsers[i];
         const department = getRandomElement(departments);
-        const specialty = getRandomElement(specialties);
-        
+        const allowedSpecialtyNames = departmentSpecialtyMap[department.name] || specialtyNames;
+        const allowedSpecialties = allowedSpecialtyNames
+            .map(name => specialtiesByName[name])
+            .filter(Boolean);
+        const specialty = getRandomElement(allowedSpecialties.length ? allowedSpecialties : fallbackSpecialties);
+
         doctors.push({
             userId: user.id,
             specialtyId: specialty.id,
@@ -265,12 +261,18 @@ async function seedNurses(users, departments, specialties, transaction) {
     const nurseUsers = users.filter(u => u.role === 'nurse');
     const nurses = [];
     let photoIndex = 0;
+    const specialtiesByName = Object.fromEntries(specialties.map(s => [s.name, s]));
+    const fallbackSpecialties = specialties;
 
     for (let i = 0; i < nurseUsers.length; i++) {
         const user = nurseUsers[i];
         const department = getRandomElement(departments);
-        const specialty = getRandomElement(specialties);
-        
+        const allowedSpecialtyNames = departmentSpecialtyMap[department.name] || specialtyNames;
+        const allowedSpecialties = allowedSpecialtyNames
+            .map(name => specialtiesByName[name])
+            .filter(Boolean);
+        const specialty = getRandomElement(allowedSpecialties.length ? allowedSpecialties : fallbackSpecialties);
+
         nurses.push({
             userId: user.id,
             departmentId: department.id,
@@ -307,7 +309,7 @@ async function seedDoctorSchedules(doctors, transaction) {
             const day = daysOfWeek[dayIndex];
             const timeSlot = getRandomElement(timeSlots);
             const isAvailable = Math.random() > 0.1; // 90% available
-            
+
             if (isAvailable) {
                 schedules.push({
                     doctorId: doctor.id,
@@ -334,10 +336,10 @@ async function seedAppointments(doctors, users, transaction) {
     const activeDoctors = doctors.filter(d => d.isActive);
     const appointments = [];
     const statuses = ['pending', 'confirmed', 'completed', 'cancelled', 'no-show'];
-    
+
     // Track used time slots to avoid duplicates (doctorId + date + time)
     const usedSlots = new Set();
-    
+
     // Generate appointments for the past 30 days and next 60 days
     const today = new Date();
     const pastDate = new Date(today);
@@ -348,32 +350,32 @@ async function seedAppointments(doctors, users, transaction) {
     const appointmentCount = getRandomInt(20, 40);
     let attempts = 0;
     const maxAttempts = appointmentCount * 10; // Prevent infinite loops
-    
+
     while (appointments.length < appointmentCount && attempts < maxAttempts) {
         attempts++;
         const doctor = getRandomElement(activeDoctors);
         const patient = getRandomElement(patientUsers);
         const appointmentDate = getRandomDate(pastDate, futureDate);
         const dateStr = appointmentDate.toISOString().split('T')[0];
-        
+
         // Generate random time between 8:00 and 17:00
         const hour = getRandomInt(8, 17);
         const minute = getRandomElement([0, 15, 30, 45]);
         const appointmentTime = formatTime(hour, minute);
-        
+
         // Check for duplicate slot
         const slotKey = `${doctor.id}-${dateStr}-${appointmentTime}`;
         if (usedSlots.has(slotKey)) {
             continue; // Skip this iteration, try again
         }
         usedSlots.add(slotKey);
-        
+
         const status = getRandomElement(statuses);
         const isInitial = Math.random() > 0.5;
         const isNzok = doctor.isNzok && Math.random() > 0.4;
         const duration = getRandomElement([30, 45, 60]);
         const price = isNzok ? 0 : getRandomInt(50, 200);
-        
+
         const appointment = {
             doctorId: doctor.id,
             patientId: patient.id,
@@ -391,10 +393,10 @@ async function seedAppointments(doctors, users, transaction) {
             appointment.cancelledAt = new Date(appointmentDate.getTime() - getRandomInt(1, 7) * 24 * 60 * 60 * 1000);
             appointment.cancelledBy = Math.random() > 0.5 ? patient.id : null;
             appointment.cancellationReason = getRandomElement([
-                'Промяна в графика',
-                'Лични причини',
-                'Заболяване',
-                'Друга причина'
+                'Schedule change',
+                'Personal reasons',
+                'Illness',
+                'Other reason'
             ]);
         }
 
@@ -413,7 +415,7 @@ async function seedAppointments(doctors, users, transaction) {
 // Main seeding function
 async function seedDatabase(clearFirst = false) {
     const transaction = await sequelize.transaction();
-    
+
     try {
         await sequelize.authenticate();
         console.log('Database connection established.');
@@ -434,7 +436,7 @@ async function seedDatabase(clearFirst = false) {
         const appointments = await seedAppointments(doctors, users, transaction);
 
         await transaction.commit();
-        
+
         console.log('\n✓ Database seeding completed successfully!');
         console.log('\nSummary:');
         console.log(`  - Departments: ${departments.length}`);
@@ -445,7 +447,7 @@ async function seedDatabase(clearFirst = false) {
         console.log(`  - Doctor Schedules: ${schedules.length}`);
         console.log(`  - Appointments: ${appointments.length}`);
         console.log('\nDefault password for all users: Password123!');
-        
+
         process.exit(0);
     } catch (error) {
         await transaction.rollback();
