@@ -22,7 +22,8 @@ doctorController.post('/schedule', isDoctor(),
         .withMessage("Enter valid price number between 0 and 500!"),
     body('doctorId').isInt().withMessage("Invalid doctor id!"),
     async (req, res) => {
-        const { weekDays, duration, isFree, price, doctorId } = req.body;
+        const { weekDays, duration, isFree, price } = req.body;
+        const userId = req.user.id;
 
         try {
             const errors = validationResult(req);
@@ -31,7 +32,7 @@ doctorController.post('/schedule', isDoctor(),
                 return res.status(400).json(errors.array());
             }
 
-            const payload = await createScheduleForAllDays(weekDays, duration, isFree, price, doctorId);
+            const payload = await createScheduleForAllDays(weekDays, duration, isFree, price, userId);
             res.json(payload);
         } catch (error) {
             const message = errorParser(error);
