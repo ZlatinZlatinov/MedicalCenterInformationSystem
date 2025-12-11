@@ -17,7 +17,8 @@
 .details-main-info,
 .details-education,
 .details-phone {
-    border: 1px solid var(--primary-text-color);
+    border: var(--primary-border);
+    border-width: var(--border-width);
     border-radius: var(--border-radius);
     padding: 1.5rem;
 }
@@ -77,7 +78,8 @@
 }
 
 .book-doctor {
-    border: 1px solid var(--primary-text-color);
+    border: var(--primary-border);
+    border-width: var(--border-width);
     border-radius: var(--border-radius);
     padding: 1.5rem;
     display: flex;

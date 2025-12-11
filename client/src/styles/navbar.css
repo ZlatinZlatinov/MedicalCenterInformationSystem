@@ -2,7 +2,8 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-bottom: 0.5px solid var(--primary-text-color);
+    border-bottom: var(--primary-border);
+    border-width: var(--border-width);
     padding: 0.5rem 0rem;
 } 
 

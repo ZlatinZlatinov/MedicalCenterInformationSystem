@@ -3,6 +3,8 @@
 }
 
 #doc-schedule-form fieldset {
+    border: var(--primary-border);
+    border-width: var(--border-width);
     border-radius: var(--border-radius);
     padding: 1rem;
     display: flex;
@@ -20,7 +22,8 @@
 
 #doc-schedule-form input,
 #doc-schedule-form select {
-    border: solid 1px var(--primary-text-color);
+    border: var(--primary-border);
+    border-width: var(--border-width);
     padding-left: 0.4rem;
     border-radius: var(--border-radius);
     font-size: 1.3rem;

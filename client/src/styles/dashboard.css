@@ -6,7 +6,8 @@
 } 
 
 .dash-card {
-    border: 1px solid var(--primary-text-color);
+    border: var(--primary-border);
+    border-width: var(--border-width);
     border-radius: var(--border-radius);
     padding: 2rem;
     font-size: 1.6rem;
@@ -25,12 +26,13 @@
 }
 
 .dash-card-btn {
+    border: var(--primary-border);
+    border-width: var(--border-width);
     border-radius: var(--border-radius);
     padding: 0.7rem 1.8rem;
     font-weight: bold;
     cursor: pointer;
     font-size: 1.3rem;
-    border: 1px solid var(--primary-text-color);
     width: 100%;
     display: block;
     text-align: center;

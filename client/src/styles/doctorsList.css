@@ -10,7 +10,7 @@
 } 
 
 .all-doctors .doctor-card {
-    border: 1px solid var(--primary-text-color);
+    border: var(--border-width) var(--primary-border);
     border-radius: var(--border-radius);
     padding: 1rem;
 } 
@@ -56,7 +56,8 @@
 .search-doctors select {
     font-size: 1.3rem;
     padding: 0.2rem;
-    border: 1px solid var(--primary-text-color);
+    border: var(--primary-border);
+    border-width: var(--border-width);
     border-radius: var(--border-radius);
 } 
 

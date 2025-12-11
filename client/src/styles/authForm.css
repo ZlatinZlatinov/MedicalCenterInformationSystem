@@ -12,7 +12,8 @@
 
 .auth-form {
     background-color: var(--primary-white);
-    border: 1px solid var(--primary-text-color);
+    border: var(--primary-border);
+    border-width: var(--border-width);
     border-radius: 12px;
     padding: 3rem 3rem;
     display: flex;
@@ -58,12 +59,12 @@
 .form-fields input,
 .form-fields select, 
 .form-fields textarea {
+    border: var(--primary-border);
+    border-width: var(--border-width);
     border-radius: var(--border-radius);
     padding: 0.5rem 0.6rem;
     font-size: 1.4rem;
-    /* padding-left: 0.6rem; */
     background-color: var(--primary-background-white);
-    border: 1px solid gray;
 } 
 
 .form-fields textarea {
