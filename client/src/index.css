@@ -25,7 +25,7 @@ html {
 
 #root {
     width: 100%;
-    max-width: 1280px;
+    max-width: 1660px;
     margin: 0 auto;
     padding: clamp(1.5rem, 3vw, 10rem) clamp(1.5rem, 3vw, 10rem);
     background-color: var(--primary-white);
