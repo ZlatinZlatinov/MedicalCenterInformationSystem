@@ -1,10 +1,11 @@
 const END_POINT = "/api/doctor";
 
-export async function createSchedule(payload) { //TODO: Add authorization header
+export async function createSchedule(payload, accessToken) {
     const response = await fetch(import.meta.env.VITE_SERVER_URL + END_POINT + '/schedule', {
         method: 'POST',
         headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${accessToken}`
         },
         body: JSON.stringify(payload)
     });
@@ -85,7 +86,7 @@ export async function approveDoctor(accessToken, doctorId) {
     const data = await response.json();
 
     return data;
-} 
+}
 
 export async function declineDoctor(accessToken, doctorId) {
     const response = await fetch(import.meta.env.VITE_SERVER_URL + END_POINT + `/${doctorId}/decline`, {

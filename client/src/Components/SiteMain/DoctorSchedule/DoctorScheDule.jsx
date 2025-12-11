@@ -1,12 +1,14 @@
 import { useState } from "react";
 import { createSchedule } from "../../../services/doctorService";
 import { useNavigate } from "react-router";
+import { useAuth } from "../../../Hooks/useAuth";
 
 const startTime = '09:00';
 const endTime = '17:00';
 
 function DoctorSchedule() {
     const navigate = useNavigate();
+    const { authUserData } = useAuth();
     const [formData, setFormData] = useState({
         duration: '15 minutes',
         isFree: false,
@@ -76,7 +78,7 @@ function DoctorSchedule() {
         }
 
         try {
-            await createSchedule(payload);
+            await createSchedule(payload, authUserData.accessToken);
             console.log("Schedule created!");
             navigate('/dashboard');
         } catch (error) {
