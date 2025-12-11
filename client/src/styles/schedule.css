@@ -1,5 +1,6 @@
 #doc-schedule-form {
-    min-width: 35%;
+    width: 100%;
+    max-width: 540px;
 }
 
 #doc-schedule-form fieldset {
@@ -32,6 +33,7 @@
 #doc-schedule-form .intput-container .input-field {
     display: flex;
     gap: 1rem;
+    flex-wrap: wrap;
 } 
 
 #doc-schedule-form .auth-btn {
@@ -44,5 +46,11 @@
 .intput-container h4 {
     font-size: 1.2rem;
     color: var(--primary-blue);
+}
+
+@media (max-width: 768px) {
+    #doc-schedule-form fieldset {
+        padding: 1.5rem;
+    }
 }
 

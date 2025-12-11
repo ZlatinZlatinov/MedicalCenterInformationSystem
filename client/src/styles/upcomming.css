@@ -5,7 +5,9 @@
 .management-options {
     display: flex;
     justify-content: space-between;
+    align-items: center;
     margin-bottom: 2rem;
+    gap: 1rem;
 } 
 
 .management-options h2 {
@@ -54,4 +56,32 @@
     border-width: var(--border-width);
     border-radius: var(--border-radius);
     padding: 0.5rem 0rem;
+}
+
+@media (max-width: 900px) {
+    .management-table-header {
+        display: none;
+    }
+
+    .management-card {
+        grid-template-columns: repeat(2, 1fr);
+        row-gap: 0.6rem;
+    }
+}
+
+@media (max-width: 640px) {
+    .management-options {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .management-card {
+        grid-template-columns: 1fr;
+        gap: 0.8rem;
+        padding: 1rem 0.5rem;
+    }
+
+    .management-card-actions {
+        width: 100%;
+    }
 }

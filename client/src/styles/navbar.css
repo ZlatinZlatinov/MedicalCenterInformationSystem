@@ -5,6 +5,7 @@
     border-bottom: var(--primary-border);
     border-width: var(--border-width);
     padding: 0.5rem 0rem;
+    gap: 2rem;
 } 
 
 #nav-bar > .main-nav {
@@ -56,4 +57,33 @@
     gap: 0.5rem;
     color: black;
     font-weight: bold;
+}
+
+@media (max-width: 900px) {
+    #site-header {
+        flex-wrap: wrap;
+        gap: 1.5rem;
+    }
+
+    #nav-bar > .main-nav {
+        flex-wrap: wrap;
+        gap: 1.5rem;
+    }
+
+    .auth-btns {
+        width: 100%;
+        justify-content: flex-start;
+        flex-wrap: wrap;
+    }
+}
+
+@media (max-width: 640px) {
+    #site-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .auth-btns {
+        gap: 1rem;
+    }
 }

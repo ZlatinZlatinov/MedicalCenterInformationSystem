@@ -5,11 +5,11 @@
 
 /* About Hero Section */
 .about-hero {
-    padding: 6rem 0;
+    padding: clamp(3.5rem, 6vw, 6rem) 0;
     text-align: center;
     background: linear-gradient(135deg, var(--primary-background-white) 0%, var(--primary-white) 100%);
     border-radius: var(--border-radius);
-    margin-bottom: 4rem;
+    margin-bottom: clamp(2.5rem, 4vw, 4rem);
 }
 
 .about-hero-content {
@@ -19,7 +19,7 @@
 }
 
 .about-hero-title {
-    font-size: 4.5rem;
+    font-size: clamp(2.8rem, 4vw, 4.2rem);
     font-weight: bold;
     color: var(--secondary-text-color);
     margin-bottom: 2rem;
@@ -33,12 +33,12 @@
 
 /* Mission & Vision Section */
 .mission-vision-section {
-    padding: 6rem 0;
+    padding: clamp(4rem, 6vw, 6rem) 0;
 }
 
 .mission-vision-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: 3rem;
 }
 
@@ -88,10 +88,10 @@
 
 /* Story Section */
 .story-section {
-    padding: 6rem 0;
+    padding: clamp(4rem, 6vw, 6rem) 0;
     background-color: var(--primary-background-white);
     border-radius: var(--border-radius);
-    margin: 4rem 0;
+    margin: clamp(3rem, 5vw, 4rem) 0;
 }
 
 .story-content {
@@ -133,7 +133,7 @@
 
 /* Values Section */
 .values-section {
-    padding: 6rem 0;
+    padding: clamp(4rem, 6vw, 6rem) 0;
 }
 
 .values-grid {
@@ -185,10 +185,10 @@
 
 /* Stats Section */
 .stats-section {
-    padding: 6rem 0;
+    padding: clamp(4rem, 6vw, 6rem) 0;
     background: linear-gradient(135deg, var(--primary-blue) 0%, var(--primary-orange) 100%);
     border-radius: var(--border-radius);
-    margin: 4rem 0;
+    margin: clamp(3rem, 5vw, 4rem) 0;
 }
 
 .stats-content {
@@ -231,7 +231,7 @@
 
 /* About CTA Section */
 .about-cta-section {
-    padding: 6rem 0;
+    padding: clamp(4rem, 6vw, 6rem) 0;
     text-align: center;
 }
 
@@ -283,19 +283,19 @@
 
 @media (max-width: 768px) {
     .about-hero-title {
-        font-size: 3rem;
+        font-size: 2.4rem;
     }
 
     .about-hero-subtitle {
-        font-size: 1.5rem;
+        font-size: 1.4rem;
     }
 
     .section-title {
-        font-size: 2.5rem;
+        font-size: 2.2rem;
     }
 
     .about-cta-content h2 {
-        font-size: 2.5rem;
+        font-size: 2.3rem;
     }
 
     .about-cta-buttons {

@@ -10,7 +10,6 @@
 @import url('./styles/homePage.css');
 @import url('./styles/aboutPage.css');
 @import url('./styles/footer.css');
-@import url('./styles/aboutPage.css');
 
 * {
     margin: 0;
@@ -24,6 +23,14 @@ html {
     font-size: 12px;
 }
 
+#root {
+    width: 100%;
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: clamp(1.5rem, 3vw, 10rem) clamp(1.5rem, 3vw, 10rem);
+    background-color: var(--primary-white);
+}
+
 a {
     text-decoration: none;
 }
@@ -34,12 +41,6 @@ label {
 
 ul {
     list-style: none;
-} 
-
-#root {
-    width: 100vw;
-    padding: 0rem 10rem;
-    background-color: var(--primary-white);
 } 
 
 .activity {

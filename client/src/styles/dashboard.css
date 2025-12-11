@@ -51,3 +51,19 @@
     background-color: var(--primary-orange);
     border-color: var(--primary-orange);
 }
+
+@media (max-width: 1024px) {
+    #dashboard {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    #dashboard {
+        grid-template-columns: 1fr;
+    }
+
+    .dash-card {
+        padding: 1.6rem;
+    }
+}

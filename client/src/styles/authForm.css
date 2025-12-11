@@ -20,7 +20,8 @@
     display: flex;
     flex-direction: column;
     gap: 2rem;
-    width: 30%;
+    width: 100%;
+    max-width: 480px;
 } 
 
 .auth-form label {
@@ -111,4 +112,18 @@
 
 .text-center {
     text-align: center;
+}
+
+@media (max-width: 768px) {
+    #login-page, 
+    #register-page,
+    #verify-email,
+    #doc-schedule,
+    #doctor-register {
+        padding: 2.5rem 0rem;
+    }
+
+    .auth-form {
+        padding: 2.4rem 2rem;
+    }
 }

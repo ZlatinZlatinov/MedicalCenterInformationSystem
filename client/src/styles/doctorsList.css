@@ -103,3 +103,48 @@
 .doctor-card-heading .doctor-card-department {
     font-size: 1.2rem;
 }
+
+@media (max-width: 1024px) {
+    #doctors-list .all-doctors{
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    #browse-doctors .search-doctors {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .doctor-card .doctor-card-header {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .doctor-card-heading {
+        grid-column: 1 / span 2;
+    }
+}
+
+@media (max-width: 768px) {
+    #doctors-list .all-doctors{
+        grid-template-columns: 1fr;
+    }
+
+    #browse-doctors .search-doctors {
+        grid-template-columns: 1fr;
+    }
+
+    .search-doctors input[name='searchDoctors'] {
+        grid-column-end: span 1;
+    }
+
+    .doctor-card .doctor-card-header {
+        grid-template-columns: 1fr;
+    }
+
+    .doctor-card-heading {
+        grid-column: 1 / span 1;
+        padding: 1rem 0rem;
+    }
+
+    .doctor-card {
+        gap: 1rem;
+    }
+}

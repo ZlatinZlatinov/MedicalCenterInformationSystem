@@ -29,8 +29,8 @@
 }
 
 .main-info-img {
-    width: 250px;
-    height: 250px;
+    width: 220px;
+    height: 220px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -157,7 +157,9 @@
 
 .calendar-app {
     /* width: 90%; */
-    min-width: 80vmin;
+    width: 100%;
+    max-width: 720px;
+    min-width: 0;
     aspect-ratio: 3 / 2;
     background-color: #f8f9fa;/*var(--primary-background-white);*/
     padding: 1rem 0rem;
@@ -332,6 +334,23 @@
 
 /* Tablet*/
 @media (max-width: 850px) {
+    #doctor-details {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .doctor-details-content {
+        grid-column: 1 / span 2;
+    }
+
+    .details-main-info .main-info-header {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+    }
+
+    .main-info-heading {
+        padding: 2rem 0rem;
+    }
+
     .calendar-app {
         flex-direction: column;
         row-gap: 2rem;
@@ -346,7 +365,39 @@
 
 /*Mobile*/
 @media (max-width: 500px) {
+    #doctor-details {
+        grid-template-columns: 1fr;
+        padding: 3rem 0rem;
+    }
+
+    .doctor-details-content {
+        grid-column: 1 / span 1;
+    }
+
+    .details-main-info .main-info-header {
+        grid-template-columns: 1fr;
+    }
+
+    .main-info-img {
+        width: 180px;
+        height: 180px;
+        margin: 0 auto;
+    }
+
+    .book-doctor {
+        gap: 2rem;
+    }
+
     .calendar-app {
         aspect-ratio: 10 / 9;
+    }
+
+    .time-slots {
+        grid-template-columns: repeat(2, 1fr);
+        width: 100%;
+    }
+
+    .book-appointment-btn {
+        font-size: 1.2rem;
     }
 }
