@@ -8,6 +8,7 @@
     align-items: center;
     padding: 4rem 0rem;
     background-color: var(--primary-background-white);
+    min-height: 80vh;
 } 
 
 .auth-form {
