@@ -9,13 +9,21 @@ async function loginUser(email, password) {
         throw new Error("Please verify your email!");
     }
 
-    const isValid = await user.validate(password);
+    const isValid = await user.validatePassword(password);
 
     if (!isValid) {
         throw new Error("Wrong email or password!");
     }
 
-    return createToken(user);
+    const token = createToken(user);
+
+    return {
+        id: user.id,
+        username: user.username,
+        email: user.email,
+        role: user.role,
+        accessToken: token
+    }
 }
 
 async function registerUser(userData) {

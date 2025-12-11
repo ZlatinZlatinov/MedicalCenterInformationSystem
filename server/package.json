@@ -5,7 +5,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon index.js",
-    "sync:db": "node ./src/utils/dbSync.js"
+    "sync:db": "node ./src/utils/dbSync.js",
+    "seed:db": "node ./src/utils/seedDatabase.js"
   },
   "keywords": [],
   "author": "",
@@ -17,7 +18,9 @@
     "dotenv": "^17.2.3",
     "express": "^5.1.0",
     "express-validator": "^7.2.1",
+    "helmet": "^8.1.0",
     "jsonwebtoken": "^9.0.2",
+    "multer": "^2.0.2",
     "mysql2": "^3.15.2",
     "nodemailer": "^7.0.9",
     "sequelize": "^6.37.7"

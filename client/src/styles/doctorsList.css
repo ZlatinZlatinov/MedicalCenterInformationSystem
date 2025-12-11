@@ -1,0 +1,150 @@
+#doctors-list {
+    padding: 2rem 0rem;
+}
+
+#doctors-list .all-doctors{
+    margin-top: 2rem;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+} 
+
+.all-doctors .doctor-card {
+    border: var(--border-width) var(--primary-border);
+    border-radius: var(--border-radius);
+    padding: 1rem;
+} 
+
+.doctor-card .doctor-card-header {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+} 
+
+.doctor-card-header .doctor-card-img {
+    width: 120px;
+    height: 120px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+} 
+
+.doctor-card-img img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+#browse-doctors .search-doctors {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+} 
+
+#browse-doctors h2 {
+    font-size: 1.6rem;
+    margin-bottom: 0.5rem;
+}
+
+.search-doctors input[name='searchDoctors'] {
+    grid-column-end: span 2;
+} 
+
+.search-doctors input, 
+.search-doctors select {
+    font-size: 1.3rem;
+    padding: 0.2rem;
+    border: var(--primary-border);
+    border-width: var(--border-width);
+    border-radius: var(--border-radius);
+} 
+
+.doctor-card-content .doctor-card-details {
+    border-radius: var(--border-radius);
+    padding: 0.6rem 1.2rem;
+    font-size: 1.2rem;
+    border: 1px solid var(--primary-blue);
+    width: 100%;
+    font-weight: bold;
+    display: block;
+    text-align: center;
+    text-decoration: none;
+    background-color: var(--primary-blue);
+    color: #f1f1f1;
+} 
+
+.doctor-card-content .doctor-card-details:hover {
+    cursor: pointer;
+    color: var(--primary-white);
+} 
+
+.doctor-card-experience {
+    border: 1px solid var(--primary-green);
+    background-color: var(--primary-green);
+    border-radius: var(--border-radius);
+    width: fit-content;
+    padding: 0.2rem 0.5rem;
+    color: var(--primary-white);
+    margin: 1rem 0rem;
+} 
+
+.doctor-card-heading {
+    padding: 2rem 0rem;
+    grid-column: 2 / span 2;
+}
+
+.doctor-card-heading .doctor-card-title {
+    font-size: 1.4rem;
+    font-weight: bold;
+} 
+
+.doctor-card-heading .doctor-card-department {
+    font-size: 1.2rem;
+}
+
+@media (max-width: 1024px) {
+    #doctors-list .all-doctors{
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    #browse-doctors .search-doctors {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .doctor-card .doctor-card-header {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .doctor-card-heading {
+        grid-column: 1 / span 2;
+    }
+}
+
+@media (max-width: 768px) {
+    #doctors-list .all-doctors{
+        grid-template-columns: 1fr;
+    }
+
+    #browse-doctors .search-doctors {
+        grid-template-columns: 1fr;
+    }
+
+    .search-doctors input[name='searchDoctors'] {
+        grid-column-end: span 1;
+    }
+
+    .doctor-card .doctor-card-header {
+        grid-template-columns: 1fr;
+    }
+
+    .doctor-card-heading {
+        grid-column: 1 / span 1;
+        padding: 1rem 0rem;
+    }
+
+    .doctor-card {
+        gap: 1rem;
+    }
+}

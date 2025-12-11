@@ -1,0 +1,129 @@
+#login-page, 
+#register-page,
+#verify-email,
+#doc-schedule,
+#doctor-register {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 4rem 0rem;
+    background-color: var(--primary-background-white);
+    min-height: 80vh;
+} 
+
+.auth-form {
+    background-color: var(--primary-white);
+    border: var(--primary-border);
+    border-width: var(--border-width);
+    border-radius: 12px;
+    padding: 3rem 3rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    width: 100%;
+    max-width: 480px;
+} 
+
+.auth-form label {
+    font-size: 1.5rem;
+} 
+
+.auth-form div,
+.auth-form input,
+.auth-form select,
+.auth-form textarea {
+    width: 100%;
+}
+
+.auth-form .form-header {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    gap: 1rem;
+} 
+
+.form-header span {
+    color: var(--primary-text-color);
+    font-size: 1.2rem;
+}
+
+.form-heading {
+    font-size: 2.2rem;
+} 
+
+.form-fields {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    gap: 1rem;
+}
+
+.form-fields input,
+.form-fields select, 
+.form-fields textarea {
+    border: var(--primary-border);
+    border-width: var(--border-width);
+    border-radius: var(--border-radius);
+    padding: 0.5rem 0.6rem;
+    font-size: 1.4rem;
+    background-color: var(--primary-background-white);
+} 
+
+.form-fields textarea {
+    height: 10rem;
+}
+
+.form-btn {
+    margin-top: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+} 
+
+.form-footer {
+    text-align: center;
+    font-size: 1.05rem;
+} 
+
+.form-redirect {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.2rem;
+    color: var(--primary-blue);
+    margin-top: 0.2rem;
+} 
+
+.form-btn .auth-btn {
+    border: 1px solid var(--primary-blue);
+    background-color: var(--primary-blue);
+    color: #ececec;
+} 
+
+.auth-btn:hover {
+    cursor: pointer;
+    color: var(--primary-white);
+} 
+
+.blue-redirect {
+    color: var(--primary-blue);
+    text-decoration: underline;
+} 
+
+.text-center {
+    text-align: center;
+}
+
+@media (max-width: 768px) {
+    #login-page, 
+    #register-page,
+    #verify-email,
+    #doc-schedule,
+    #doctor-register {
+        padding: 2.5rem 0rem;
+    }
+
+    .auth-form {
+        padding: 2.4rem 2rem;
+    }
+}

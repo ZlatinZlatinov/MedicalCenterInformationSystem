@@ -1,0 +1,56 @@
+#doc-schedule-form {
+    width: 100%;
+    max-width: 540px;
+}
+
+#doc-schedule-form fieldset {
+    border: var(--primary-border);
+    border-width: var(--border-width);
+    border-radius: var(--border-radius);
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+} 
+
+#doc-schedule-form legend {
+    font-size: 1.4rem;
+} 
+
+#doc-schedule-form select {
+    width: 100%;
+} 
+
+#doc-schedule-form input,
+#doc-schedule-form select {
+    border: var(--primary-border);
+    border-width: var(--border-width);
+    padding-left: 0.4rem;
+    border-radius: var(--border-radius);
+    font-size: 1.3rem;
+}
+
+#doc-schedule-form .intput-container .input-field {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+} 
+
+#doc-schedule-form .auth-btn {
+    border-color: var(--primary-blue);
+    padding: 0.4rem 0rem;
+    font-weight: bold;
+    font-size: 1.5rem;
+}
+
+.intput-container h4 {
+    font-size: 1.2rem;
+    color: var(--primary-blue);
+}
+
+@media (max-width: 768px) {
+    #doc-schedule-form fieldset {
+        padding: 1.5rem;
+    }
+}
+

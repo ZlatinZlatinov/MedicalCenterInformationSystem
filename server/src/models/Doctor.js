@@ -1,6 +1,9 @@
 const { DataTypes } = require('sequelize');
-const { sequelize } = require('../config/db'); 
-
+const { sequelize } = require('../config/db');
+const User = require('./User');
+const Departments = require('./Departments');
+const Specialties = require('./Specialties');
+//TODO: Update doctor model, too much collumns
 const Doctor = sequelize.define('Doctor', {
     id: {
         type: DataTypes.INTEGER,
@@ -25,7 +28,7 @@ const Doctor = sequelize.define('Doctor', {
             key: 'id',
         },
     },
-    departmentId:{
+    departmentId: {
         type: DataTypes.INTEGER,
         allowNull: false,
         references: {
@@ -38,7 +41,7 @@ const Doctor = sequelize.define('Doctor', {
         allowNull: false,
     },
     education: {
-        type: DataTypes.STRING, 
+        type: DataTypes.STRING,
     },
     description: {
         type: DataTypes.TEXT,
@@ -57,31 +60,20 @@ const Doctor = sequelize.define('Doctor', {
         allowNull: false,
         defaultValue: false,
     },
-    pricePerHour: {
-        type: DataTypes.DECIMAL(10, 2),
-        allowNull: false,
-        defaultValue: 0,
-    },
     profilePicture: {
         type: DataTypes.STRING,
         allowNull: false,
         defaultValue: 'default.jpg',
     },
-    availability: {
-        type: DataTypes.JSON,
-        allowNull: false,
-        defaultValue: [],
-    },
 }, {
     tableName: 'doctors',
     timestamps: true,
     underscored: true,
-    freezeTableName: true,
-    hooks: {
-        beforeCreate: async (doctor) => {
-            doctor.availability = JSON.stringify(doctor.availability);
-        },
-    }
-}); 
+    freezeTableName: true
+});
+
+Doctor.belongsTo(User, { foreignKey: 'userId', as: 'User' });
+Doctor.belongsTo(Departments, { foreignKey: 'departmentId', as: 'Department' });
+Doctor.belongsTo(Specialties, { foreignKey: 'specialtyId', as: 'Specialty' });
 
 module.exports = Doctor;

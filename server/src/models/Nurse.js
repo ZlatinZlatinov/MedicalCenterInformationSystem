@@ -1,5 +1,5 @@
 const { DataTypes } = require('sequelize');
-const { sequelize } = require('../config/db');  
+const { sequelize } = require('../config/db');
 
 const Nurse = sequelize.define('Nurse', {
     id: {
@@ -50,6 +50,10 @@ const Nurse = sequelize.define('Nurse', {
         allowNull: false,
         defaultValue: false,
     },
+}, {
+    tableName: 'nurse',
+    timestamps: true,
+    underscored: true,
 });
 
 module.exports = Nurse;

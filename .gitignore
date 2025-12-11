@@ -10,6 +10,7 @@
 .sass-cache
 connect.lock
 typings
+*/uploads
 
 # Logs
 logs
