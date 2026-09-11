@@ -1,4 +1,4 @@
-import { useAuth } from '../../../hooks/useAuth';
+import { useAuth } from '../../../Hooks/useAuth';
 import PatientDashboard from './PatientDashboard';
 import DoctorDashboard from './DoctorDashboard';
 import AdminDashboard from './AdminDashboard';
