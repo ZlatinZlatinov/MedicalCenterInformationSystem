@@ -5,7 +5,7 @@ const { isDoctor, hasUser, isAdmin } = require('../middlewares/guard');
 const { createScheduleForAllDays } = require('../services/doctorSchedule');
 const { getDoctorById, getDoctorsByFilters, createDoctor, approveDoctor, declineDoctor } = require('../services/doctorService');
 const { errorParser } = require('../utils/errorParser');
-const { upload } = require('../config/fileStorage');
+const { upload, handleMulterError, resolveProfilePictureUrl } = require('../config/fileStorage');
 const { getAvailableSlots } = require('../services/appointmentsService');
 
 // Create schedule
@@ -97,14 +97,19 @@ doctorController.get('/',
     });
 
 // Register for a doctor
-doctorController.post('/register', hasUser(), upload.single('profilePicture'),
+doctorController.post('/register', hasUser(), upload.single('profilePicture'), handleMulterError,
     async (req, res) => {
         const { specialtyId, departmentId, licenseNumber,
             education, description, experience } = req.body;
         const userId = req.user.id;
-        const profilePicture = `${process.env.SERVER_URL}/uploads/${req.file.filename}`;
 
         try {
+            if (!req.file) {
+                return res.status(400).json({ message: 'Profile picture is required.' });
+            }
+
+            const profilePicture = await resolveProfilePictureUrl(req.file);
+
             const payload = await createDoctor({
                 userId,
                 specialtyId,
