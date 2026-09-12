@@ -4,6 +4,8 @@ import { registerDoctor } from '../../../services/doctorService';
 import { useAuth } from '../../../Hooks/useAuth';
 import { useNavigate } from 'react-router';
 
+const MAX_IMAGE_SIZE = 5 * 1024 * 1024;
+
 function DoctorRegister() {
     const navigate = useNavigate();
     const { authUserData } = useAuth();
@@ -37,6 +39,23 @@ function DoctorRegister() {
 
     async function handleOnSubmit(e) {
         e.preventDefault();
+
+        const image = formData.profilePicture;
+        if (!image) {
+            setFormMessage('Profile picture is required.');
+            return;
+        }
+
+        const isJpegOrPng = image.type === 'image/jpeg' || image.type === 'image/png';
+        if (!isJpegOrPng) {
+            setFormMessage('Only JPEG and PNG images are allowed.');
+            return;
+        }
+
+        if (image.size > MAX_IMAGE_SIZE) {
+            setFormMessage('Image must be 5MB or smaller.');
+            return;
+        }
 
         const payload = new FormData();
         for (let key of Object.keys(formData)) {
@@ -128,6 +147,7 @@ function DoctorRegister() {
                             type="file"
                             name="profilePicture"
                             id="profilePicture"
+                            accept="image/jpeg,image/png,.jpg,.jpeg,.png"
                             onChange={handleOnChange}
                         />
                     </div>
