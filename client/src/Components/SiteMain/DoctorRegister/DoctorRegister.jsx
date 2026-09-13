@@ -111,6 +111,7 @@ function DoctorRegister() {
                     <div className="input-field">
                         <label htmlFor="departmentId">Department</label>
                         <select name="departmentId" id="departmentId" onChange={handleOnChange}>
+                            <option selected>--Choose One--</option>
                             {specDeptData.departments.map((d) => (
                                 <option value={d.id} key={d.id}>{d.name}</option>
                             ))}
@@ -121,6 +122,7 @@ function DoctorRegister() {
                     <div className="input-field">
                         <label htmlFor="specialtyId">Specialty</label>
                         <select name="specialtyId" id="specialtyId" onChange={handleOnChange}>
+                            <option selected>--Choose One--</option>
                             {specDeptData.specialties.map((s) => (
                                 <option value={s.id} key={s.id}>{s.name}</option>
                             ))}
