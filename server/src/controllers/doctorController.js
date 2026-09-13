@@ -10,17 +10,14 @@ const { getAvailableSlots } = require('../services/appointmentsService');
 
 // Create schedule
 doctorController.post('/schedule', isDoctor(),
-    header('Authorization').trim().notEmpty().isJWT().bail()
+    header('Authorization').trim().notEmpty().bail()
         .withMessage("Authorization header is required!"),
-    body('weekdays').notEmpty().isArray()
-        .withMessage("Enter valid weekdays format!"),
     body('duration').isInt({ gt: 0, lt: 60 })
         .withMessage("Enter valid schedule duration!"),
     body('isFree').isBoolean()
         .withMessage("Enter valid boolean option!"),
-    body('price').isFloat({ gt: 0, lt: 500 })
+    body('price').optional().isNumeric({ gt: 0, lt: 500 })
         .withMessage("Enter valid price number between 0 and 500!"),
-    body('doctorId').isInt().withMessage("Invalid doctor id!"),
     async (req, res) => {
         const { weekDays, duration, isFree, price } = req.body;
         const userId = req.user.id;
