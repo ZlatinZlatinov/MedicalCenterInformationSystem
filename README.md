@@ -227,7 +227,17 @@ DB_SSL=false
 ```env
 PORT=3033
 CLIENT_URL=http://localhost:5173
+SERVER_URL=http://localhost:3033
 NODE_ENV=development
+```
+
+#### Cloudinary (required when `NODE_ENV=production`)
+Profile pictures are stored locally under `uploads/` in development. In production they are uploaded to Cloudinary (JPEG/PNG, max 5MB).
+
+```env
+CLOUDINARY_CLOUD_NAME=your_cloud_name
+CLOUDINARY_API_KEY=your_api_key
+CLOUDINARY_API_SECRET=your_api_secret
 ```
 
 #### JWT Configuration

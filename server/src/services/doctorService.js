@@ -98,13 +98,21 @@ async function approveDoctor(doctorId) {
             id: doctorId
         },
         include: [
-            { model: User, as: 'User', attributes: ['email', 'username'] },
+            { model: User, as: 'User', attributes: ['email', 'username', 'role', 'id'] },
             { model: Specialties, as: 'Specialty', attributes: ['name'] }
         ]
     });
 
+    if (!doctor) {
+        throw new Error('Doctor not found!');
+    }
+
     await doctor.update({
-        isActive: true
+        isActive: true,
+    });
+
+    await doctor.User.update({
+        role: 'doctor'
     });
 
     const doctorData = doctor.get({ plain: true });
