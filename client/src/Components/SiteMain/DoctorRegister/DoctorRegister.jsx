@@ -1,8 +1,9 @@
 import { Activity } from 'lucide-react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { registerDoctor } from '../../../services/doctorService';
 import { useAuth } from '../../../Hooks/useAuth';
 import { useNavigate } from 'react-router';
+import { getSpecialtiesAndDepartments } from '../../../services/internalService';
 
 const MAX_IMAGE_SIZE = 5 * 1024 * 1024;
 
@@ -18,6 +19,10 @@ function DoctorRegister() {
         experience: 0,
         profilePicture: '',
         description: ''
+    });
+    const [specDeptData, setSpecDep] = useState({
+        specialties: [{ name: 'Loading...', id: 1 }],
+        departments: [{ name: 'Loading...', id: 2 }],
     });
 
     function handleOnChange(e) {
@@ -71,6 +76,20 @@ function DoctorRegister() {
         }
     }
 
+    useEffect(() => {
+        async function fetchSpecialtiesAndDepartments() {
+            try {
+                const data = await getSpecialtiesAndDepartments(authUserData.accessToken);
+                setSpecDep(old => data);
+            } catch (error) {
+                setFormMessage(error.message);
+                console.error(error);
+            }
+        }
+
+        fetchSpecialtiesAndDepartments();
+    }, []);
+
     return (
         <section id="doctor-register">
             <form
@@ -90,17 +109,21 @@ function DoctorRegister() {
                 <div className="form-fields">
                     {/* Department */}
                     <div className="input-field">
-                        <label htmlFor="department">Department</label>
-                        <select name="department" id="department">
-                            <option value="Cardiology">Cardiology</option>
+                        <label htmlFor="departmentId">Department</label>
+                        <select name="departmentId" id="departmentId" onChange={handleOnChange}>
+                            {specDeptData.departments.map((d) => (
+                                <option value={d.id} key={d.id}>{d.name}</option>
+                            ))}
                         </select>
                     </div>
 
                     {/* Specialty */}
                     <div className="input-field">
-                        <label htmlFor="specialty">Specialty</label>
-                        <select name="specialty" id="specialty">
-                            <option value="Cardiologist">Cardiologist</option>
+                        <label htmlFor="specialtyId">Specialty</label>
+                        <select name="specialtyId" id="specialtyId" onChange={handleOnChange}>
+                            {specDeptData.specialties.map((s) => (
+                                <option value={s.id} key={s.id}>{s.name}</option>
+                            ))}
                         </select>
                     </div>
 
