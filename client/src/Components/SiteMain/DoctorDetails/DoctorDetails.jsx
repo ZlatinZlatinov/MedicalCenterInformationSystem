@@ -18,8 +18,6 @@ function DoctorDetails() {
         async function fetchDoctorDetails() {
             try {
                 const data = await getDoctorById(doctorId);
-                console.log(data);
-                
                 setDoctrorDetails(data);
             } catch (error) {
                 console.error(error);
