@@ -4,7 +4,7 @@ const { errorParser } = require('../utils/errorParser');
 
 const internalController = require('express').Router();
 
-internalCOntroller.get('/specialties-departments', hasUser(), async (req, res) => {
+internalController.get('/specialties-departments', hasUser(), async (req, res) => {
     try {
         const result = await getSpecialtiesAndDepartments();
         res.json(result);
