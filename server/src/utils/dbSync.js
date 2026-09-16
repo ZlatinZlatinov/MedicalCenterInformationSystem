@@ -7,6 +7,7 @@ const Doctor = require('../models/Doctor');
 const DoctorSchedule = require('../models/DoctorSchedule');
 const Appointments = require('../models/Appointment');
 const Nurse = require('../models/Nurse');
+const Document = require('../models/Document');
 
 async function syncDatabase(force = flase) {
     try {
