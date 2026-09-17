@@ -1,0 +1,76 @@
+#page-not-found {
+    width: 100%;
+    min-height: clamp(32rem, calc(100vh - 20rem), 60rem);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: clamp(2rem, 5vw, 5rem) 0;
+}
+
+.page-not-found-panel {
+    width: min(100%, 900px);
+    padding: clamp(3.5rem, 7vw, 7rem) clamp(2rem, 6vw, 6rem);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    background: linear-gradient(135deg, var(--primary-background-white) 0%, var(--primary-white) 100%);
+    border: var(--border-width) var(--primary-border);
+    border-radius: var(--border-radius);
+}
+
+.page-not-found-icon {
+    width: clamp(3.5rem, 7vw, 5.5rem);
+    height: clamp(3.5rem, 7vw, 5.5rem);
+    margin-bottom: 1.5rem;
+    color: var(--primary-orange);
+}
+
+.page-not-found-panel h1 {
+    margin-bottom: 1.5rem;
+    color: var(--secondary-text-color);
+    font-size: clamp(7rem, 16vw, 14rem);
+    line-height: 0.85;
+}
+
+.page-not-found-message {
+    margin-bottom: 1rem;
+    color: var(--primary-text-color);
+    font-size: clamp(1.7rem, 2.5vw, 2.4rem);
+    line-height: 1.4;
+}
+
+.page-not-found-supporting-text {
+    max-width: 620px;
+    margin-bottom: 2.5rem;
+    color: var(--primary-text-color);
+    font-size: clamp(1.3rem, 1.8vw, 1.6rem);
+    line-height: 1.6;
+}
+
+@media (max-width: 768px) {
+    #page-not-found {
+        min-height: clamp(28rem, calc(100vh - 16rem), 44rem);
+    }
+
+    .page-not-found-panel {
+        padding: 3.5rem 1.5rem;
+    }
+
+    .page-not-found-panel h1 {
+        font-size: clamp(6rem, 22vw, 9rem);
+    }
+
+    .page-not-found-message {
+        font-size: 1.5rem;
+    }
+
+    .page-not-found-supporting-text {
+        font-size: 1.3rem;
+    }
+
+    .page-not-found-panel .btn {
+        width: 100%;
+        text-align: center;
+    }
+}

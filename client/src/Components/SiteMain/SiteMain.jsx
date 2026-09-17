@@ -16,6 +16,7 @@ import AuthenticatedDoctor from './ProtectedRoutes/AuthenticatedDoctor';
 import UpcommingAppointments from './Upcomming/Upcomming';
 import AuthenticatedAdmin from './ProtectedRoutes/AuthenticatedAdmin';
 import ManageStaff from './AdminManagement/ManageStaff';
+import PageNotFound from './PageNotFound/PageNotFound';
 
 function SiteMain() {
     return (
@@ -47,6 +48,7 @@ function SiteMain() {
 
                 <Route path='/doctors' element={<DoctorsList />} />
                 <Route path='/doctors/:doctorId' element={<DoctorDetails />} />
+                <Route path='*' element={<PageNotFound />} />
             </Routes>
         </main>
     );
