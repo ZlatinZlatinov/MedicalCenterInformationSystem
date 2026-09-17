@@ -21,7 +21,7 @@ function Footer() {
             </ul>
 
             <div className="footer-meta">
-                <p>MediCare &copy; 2025</p>
+                <p>MediCare &copy; {(new Date()).getFullYear()}</p>
                 <p className="footer-links">
                     <Link to='/privacy'>Privacy</Link>
                     <span className="divider">|</span>

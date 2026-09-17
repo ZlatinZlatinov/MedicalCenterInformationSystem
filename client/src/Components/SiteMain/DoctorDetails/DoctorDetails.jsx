@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import { GraduationCap, CircleCheck, Calendar, CircleX, Phone } from "lucide-react";
 import CalendarApp from "./Calendar";
 import { getDoctorById } from "../../../services/doctorService";
@@ -12,6 +12,7 @@ function DoctorDetails() {
         specialty: '', experience: 0, description: '',
         education: '', phoneNumber: '', isNzok: false
     });
+    const navigate = useNavigate();
     const doctorId = params.doctorId;
 
     useEffect(() => {
@@ -20,6 +21,7 @@ function DoctorDetails() {
                 const data = await getDoctorById(doctorId);
                 setDoctrorDetails(data);
             } catch (error) {
+                navigate('*');
                 console.error(error);
             }
         }
