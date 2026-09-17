@@ -2,11 +2,12 @@ import { useEffect, useState } from "react";
 import { getAllDoctors } from "../../../services/doctorService";
 import DoctorCard from "./DoctorCard";
 import { departmentNames, specialtyNames } from "../../../Constants/departments";
-import { useSearchParams } from "react-router";
+import { useSearchParams, useNavigate } from "react-router";
 
 function DoctorsList() {
     const [searchParams, setSearchParams] = useSearchParams();
     const [doctorsList, setDoctorsList] = useState([]);
+    const navigate = useNavigate();
 
     const department = searchParams.get('department') || "";
     const specialty = searchParams.get('specialty') || "";
@@ -23,8 +24,8 @@ function DoctorsList() {
                 const data = await getAllDoctors(department, specialty);
                 setDoctorsList(data);
             } catch (error) {
+                navigate('*');
                 console.error(error);
-                alert(error);
             }
         }
 
