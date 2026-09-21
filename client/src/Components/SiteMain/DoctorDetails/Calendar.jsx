@@ -4,6 +4,7 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 import { bookAppointment } from "../../../services/appointmentsService";
 import { getDoctorSchedule } from "../../../services/doctorService";
 import { useAuth } from "../../../Hooks/useAuth";
+import { toDateString } from "../../../utils/date";
 
 function CalendarApp({ doctorId, doctorName }) {
     /* CALENDAR */
@@ -43,11 +44,7 @@ function CalendarApp({ doctorId, doctorName }) {
         if (clickedDate >= today || isSameDay(clickedDate, today)) {
             setSelectedDate(clickedDate);
             try {
-                const clickedDay = clickedDate.getDate() < 10 ? `0${clickedDate.getDate()}` : clickedDate.getDate();
-                const clickedMonth = (clickedDate.getMonth() + 1) < 10 ? `0${clickedDate.getMonth() + 1}` : (clickedDate.getMonth() + 1);
-                const clickedYear = clickedDate.getFullYear();
-
-                const date = `${clickedYear}-${clickedMonth}-${clickedDay}`;
+                const date = toDateString(clickedDate);
                 const newSchedule = await getDoctorSchedule(doctorId, date);
                 updateDoctorScheduleUI(newSchedule);
             } catch (error) {
@@ -110,7 +107,7 @@ function CalendarApp({ doctorId, doctorName }) {
 
     // Check if slot is booked
     const isSlotBooked = (slotTime) => {
-        return bookedSlots.some(slot => slot.time === slotTime);
+        return bookedSlots.some(slot => slot.time.slice(0, 5) === slotTime);
     };
 
     //Handle slot selection
@@ -123,7 +120,7 @@ function CalendarApp({ doctorId, doctorName }) {
     async function handleBookAppointment() {
         const payload = {
             doctorId,
-            appointmentDate: selectedDate,
+            appointmentDate: toDateString(selectedDate),
             appointmentTime: selectedSlot.time,
             doctorName,
             izNzok: false,
@@ -148,7 +145,7 @@ function CalendarApp({ doctorId, doctorName }) {
 
     // Simulate selecting today
     useEffect(() => {
-        const today = new Date().toISOString().split('T')[0];
+        const today = toDateString(new Date());
         async function fetchNewSchedule() {
             try {
                 const newSchedule = await getDoctorSchedule(doctorId, today);
