@@ -17,7 +17,7 @@ const sequelize = new Sequelize(
             idle: 10000
         },
         dialectOptions: {
-            ssl: process.env.DB_SSL === "true" ? { rejectUnauthorized: true } : undefined,
+            ssl: process.env.DB_SSL === "true" ? { require: true, rejectUnauthorized: true } : undefined,
         },
         define: {
             timestamps: true, 
