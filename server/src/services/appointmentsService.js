@@ -4,6 +4,7 @@ const { sequelize } = require('../config/db');
 const { Transaction, Op } = require('sequelize');
 const Doctor = require('../models/Doctor');
 const User = require('../models/User');
+const { getDayOfWeek, nowInClinic } = require('../utils/clinicTime');
 //TODO: Doctors should not be able to book appointment for themselves
 
 async function createAppointment(appointmentData) {
@@ -14,7 +15,7 @@ async function createAppointment(appointmentData) {
 
 async function getAvailableSlots(doctorId, date) {
     // Get day of week
-    const dayOfWeek = new Date(date).toLocaleDateString('en-US', { weekday: 'long' });
+    const dayOfWeek = getDayOfWeek(date);
 
     // Get doctor's schedule for this day
     const schedule = await DoctorSchedule.findOne({
@@ -103,7 +104,7 @@ async function bookAppointment(appointmentData) {
     }, async (t) => {
 
         // 1. Check if doctor has schedule for this day/time
-        const dayOfWeek = new Date(appointmentDate).toLocaleDateString('en-US', { weekday: 'long' });
+        const dayOfWeek = getDayOfWeek(appointmentDate);
 
         const schedule = await DoctorSchedule.findOne({
             where: {
@@ -220,10 +221,9 @@ function formatTime(minutes) {
 }
 
 async function getAppointmentsForPatient(where) {
-    const now = new Date();
-    const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-    const todayStr = today.toISOString().split('T')[0];
-    const currentTimeStr = now.toTimeString().slice(0, 8);
+    const now = nowInClinic();
+    const todayStr = now.toISODate();
+    const currentTimeStr = now.toFormat('HH:mm:ss');
 
     // Filter for upcoming appointments only
     const whereClause = {
@@ -291,11 +291,9 @@ async function getAppointmentsForPatient(where) {
 }
 
 async function getAppointmentsForDoctor(doctorId, filter = 'all') {
-    const now = new Date();
-    const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-    today.setHours(0, 0, 0, 0);
-    const todayStr = today.toISOString().split('T')[0];
-    const currentTimeStr = now.toTimeString().slice(0, 8);
+    const now = nowInClinic();
+    const todayStr = now.toISODate();
+    const currentTimeStr = now.toFormat('HH:mm:ss');
 
     let dateFilter = {};
 
@@ -307,9 +305,7 @@ async function getAppointmentsForDoctor(doctorId, filter = 'all') {
             };
             break;
         case 'week':
-            const nextWeek = new Date(today);
-            nextWeek.setDate(today.getDate() + 7);
-            const nextWeekStr = nextWeek.toISOString().split('T')[0];
+            const nextWeekStr = now.plus({days: 7}).toISODate();
             dateFilter = {
                 [Op.or]: [
                     {
@@ -330,9 +326,7 @@ async function getAppointmentsForDoctor(doctorId, filter = 'all') {
             };
             break;
         case 'month':
-            const nextMonth = new Date(today);
-            nextMonth.setMonth(today.getMonth() + 1);
-            const nextMonthStr = nextMonth.toISOString().split('T')[0];
+            const nextMonthStr = now.plus({months: 1}).toISODate();
             dateFilter = {
                 [Op.or]: [
                     {
@@ -418,6 +412,5 @@ module.exports = {
     bookAppointment,
     cancelAppointment,
     getAppointmentsForPatient,
-    cancelAppointment,
     getAppointmentsForDoctor
 }
