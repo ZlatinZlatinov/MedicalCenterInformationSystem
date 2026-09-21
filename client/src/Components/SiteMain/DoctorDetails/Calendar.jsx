@@ -131,8 +131,6 @@ function CalendarApp({ doctorId, doctorName }) {
         }
 
         try {
-            console.log(payload);
-
             await bookAppointment(payload, authUserData.accessToken);
             alert("Appointment booked");
         } catch (error) {
