@@ -79,6 +79,6 @@ const Document = sequelize.define('Document', {
 });
 
 Document.belongsTo(User, { foreignKey: 'ownerId', as: 'User' });
-Document.belongsTo(User, { foreignKey: 'uploadedBy', as: 'User' });
+Document.belongsTo(User, { foreignKey: 'uploadedBy', as: 'UploadedBy' });
 
 module.exports = Document;
