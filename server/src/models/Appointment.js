@@ -2,6 +2,7 @@ const { DataTypes } = require('sequelize');
 const { sequelize } = require('../config/db');
 const Doctor = require('./Doctor');
 const User = require('./User');
+const { toClinicDateTime } = require('../utils/clinicTime');
 
 const Appointments = sequelize.define('Appointments', {
     id: {
@@ -108,17 +109,12 @@ Appointments.belongsTo(User, {foreignKey: 'patientId', as: 'User'});
 
 // Add validation hooks
 Appointments.beforeCreate(async (appointment, options) => {
-    // Combine date and time into dateTime
-    const dateStr = appointment.appointmentDate;
-    const timeStr = appointment.appointmentTime;
-    appointment.dateTime = new Date(`${dateStr}T${timeStr}`);
+    appointment.dateTime = toClinicDateTime(appointment.appointmentDate, appointment.appointmentTime);
 });
 
 Appointments.beforeUpdate(async (appointment, options) => {
     if (appointment.changed('appointmentDate') || appointment.changed('appointmentTime')) {
-        const dateStr = appointment.appointmentDate;
-        const timeStr = appointment.appointmentTime;
-        appointment.dateTime = new Date(`${dateStr}T${timeStr}`);
+        appointment.dateTime = toClinicDateTime(appointment.appointmentDate, appointment.appointmentTime);
     }
 });
 

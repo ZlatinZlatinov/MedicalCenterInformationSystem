@@ -1,5 +1,6 @@
 const { DataTypes } = require('sequelize');
 const { sequelize } = require('../config/db');
+const User = require('./User');
 
 const Document = sequelize.define('Document', {
     documentId: {
@@ -76,5 +77,8 @@ const Document = sequelize.define('Document', {
     freezeTableName: true,
     paranoid: true,
 });
+
+Document.belongsTo(User, { foreignKey: 'ownerId', as: 'User' });
+Document.belongsTo(User, { foreignKey: 'uploadedBy', as: 'UploadedBy' });
 
 module.exports = Document;

@@ -84,6 +84,6 @@
     }
 
     .auth-btns {
-        gap: 1rem;
+        justify-content: space-between;
     }
 }

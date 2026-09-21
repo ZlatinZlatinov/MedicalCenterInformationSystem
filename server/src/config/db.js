@@ -23,7 +23,8 @@ const sequelize = new Sequelize(
             timestamps: true, 
             underscored: true,
             freezeTableName: true
-        }
+        },
+        timezone: '+00:00'
     }
 );
 
