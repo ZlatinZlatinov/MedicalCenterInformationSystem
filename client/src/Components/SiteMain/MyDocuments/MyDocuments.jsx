@@ -74,7 +74,7 @@ function MyDocuments() {
         <section id="my-documents">
             <form
                 id="upload-documents-from"
-                className="auth-from"
+                className="auth-form"
                 encType="multipart/form-data"
                 onSubmit={handleOnSubmit}>
 
@@ -109,15 +109,16 @@ function MyDocuments() {
                             value={formData.documentType}
                             required
                             onChange={handleOnChange}
-                        />
-                        {/*'discharge_summary', 'lab_result', 'imaging_result', 'prescription', 'referral', 'other'*/}
-                        <option selected>--Choose One--</option>
-                        <option value="discharge_summary">Discharge Summary</option>
-                        <option value="lab_result">Lab Result</option>
-                        <option value="imaging_result">Imaging result</option>
-                        <option value="prescription">Prescription</option>
-                        <option value="referral">Referral</option>
-                        <option value="other">Other</option>
+                        >
+                            {/*'discharge_summary', 'lab_result', 'imaging_result', 'prescription', 'referral', 'other'*/}
+                            <option selected>--Choose One--</option>
+                            <option value="discharge_summary">Discharge Summary</option>
+                            <option value="lab_result">Lab Result</option>
+                            <option value="imaging_result">Imaging result</option>
+                            <option value="prescription">Prescription</option>
+                            <option value="referral">Referral</option>
+                            <option value="other">Other</option>
+                        </select>
                     </div>
 
                     {/* Document */}
