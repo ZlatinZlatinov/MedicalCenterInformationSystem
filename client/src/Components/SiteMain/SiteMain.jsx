@@ -17,6 +17,7 @@ import UpcommingAppointments from './Upcomming/Upcomming';
 import AuthenticatedAdmin from './ProtectedRoutes/AuthenticatedAdmin';
 import ManageStaff from './AdminManagement/ManageStaff';
 import PageNotFound from './PageNotFound/PageNotFound';
+import MyDocuments from './MyDocuments/MyDocuments';
 
 function SiteMain() {
     return (
@@ -34,6 +35,7 @@ function SiteMain() {
                     <Route path='/dashboard' element={<Dashboard />} />
                     <Route path='/become-a-doctor' element={<DoctorRegister />} />
                     <Route path='/upcomming-appointments' element={<UpcommingAppointments />} />
+                    <Route path='/my-documents' element={<MyDocuments />} />
                 </Route>
 
                 {/* Protected Routes for Doctors */}

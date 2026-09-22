@@ -9,7 +9,7 @@ documentController.post('/', uploadDocument.single('file'), async (req, res, nex
         if (!req.file) {
             return res.status(400).json({ message: 'No file uploaded' });
         }
-        const { documentType, ownerId } = req.body;
+        const { documentType, ownerId, documentName } = req.body;
         if (!documentType) {
             return res.status(400).json({ message: 'documentType is required' });
         }
@@ -22,6 +22,7 @@ documentController.post('/', uploadDocument.single('file'), async (req, res, nex
             ownerId: resolvedOwnerId,
             uploadedBy: req.user.id,
             documentType,
+            documentName
         });
 
         res.status(201).json({

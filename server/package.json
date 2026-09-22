@@ -7,7 +7,6 @@
     "dev": "nodemon index.js",
     "sync:db": "node ./src/utils/dbSync.js",
     "start": "node index.js",
-    "prestart": "node ./src/utils/dbSync.js",
     "seed:db": "node ./src/utils/seedDatabase.js"
   },
   "keywords": [],

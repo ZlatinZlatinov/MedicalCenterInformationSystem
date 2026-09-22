@@ -2,7 +2,8 @@
 #register-page,
 #verify-email,
 #doc-schedule,
-#doctor-register {
+#doctor-register,
+#my-documents {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -119,7 +120,8 @@
     #register-page,
     #verify-email,
     #doc-schedule,
-    #doctor-register {
+    #doctor-register,
+    #my-documents {
         padding: 2.5rem 0rem;
     }
 
