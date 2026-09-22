@@ -7,7 +7,7 @@ function computeChecksum(buffer) {
     return crypto.createHash('sha256').update(buffer).digest('hex');
 }
 
-async function createDocument({ file, ownerId, uploadedBy, documentType }) {
+async function createDocument({ file, ownerId, uploadedBy, documentType, documentName }) {
     const documentId = uuidv4();
     const safeName = file.originalname.replace(/[^a-zA-Z0-9._-]/g, '_');
     const blobName = `${ownerId}/${documentId}-${safeName}`;
@@ -20,7 +20,7 @@ async function createDocument({ file, ownerId, uploadedBy, documentType }) {
         documentId,
         ownerId,
         uploadedBy,
-        documentName: file.originalname,
+        documentName: documentName || file.originalname,
         documentPath: blobName,
         documentType,
         mimeType: file.mimetype,
