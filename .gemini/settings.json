@@ -1,0 +1,12 @@
+{
+  "context": {
+    "fileName": ["AGENTS.md"]
+  },
+  "mcpServers": {
+    "my-project": {
+      "command": "node",
+      "args": ["mcp-server/server.js"],
+      "env": { "MCP_TOKEN": "$MCP_TOKEN" }
+    }
+  }
+}
