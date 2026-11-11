@@ -1,0 +1,9 @@
+{
+  "//": "Facts about YOUR copy of this repository that nobody can work out by reading the code. Keep it current: the exercise self-checks read it.",
+
+  "//mcp": "Exercise 1. The command that starts your MCP server, from this folder. An npm script is the tidiest: add \"mcp\": \"node mcp-server/server.js\" to package.json and leave this as it is.",
+  "mcp": "npm run mcp",
+
+  "//liveUrl": "Exercise 4. Where your deployed application answers, with no trailing slash.",
+  "liveUrl": ""
+}
